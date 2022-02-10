@@ -1,0 +1,14 @@
+.wrapper {
+    display: grid;
+    grid-template-rows: 60px 1fr 60px;
+    grid-template-columns: 20% 1fr 15%;
+    grid-gap: 10px;
+    /*height: 100vh;*/
+    margin: 0;
+    height: 600px;
+    border: 1px red solid;
+}
+
+.content {
+    border: 3px blue solid;
+}
