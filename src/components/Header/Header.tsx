@@ -1,20 +1,21 @@
 import React from 'react';
 import s from "./Header.module.css";
+import {NavLink} from "react-router-dom";
 
 export const Header = () => {
     return (
-        <div className={s.test}>
+        <div className={s.header}>
             <div>
-                <a href="">Home</a>
+                <NavLink to="/home" className={pressed => pressed.isActive ? s.active : s.link}>Home</NavLink>
             </div>
             <div>
-                <a href="#">Messages</a>
+                <NavLink to="/messages" className={pressed => pressed.isActive ? s.active : s.link}>Messages</NavLink>
             </div>
             <div>
-                <a href="">Settings</a>
+                <NavLink to="/friends" className={pressed => pressed.isActive ? s.active : s.link}>Friends</NavLink>
             </div>
             <div>
-                <a href="">Friends</a>
+                <NavLink to="/settings" className={pressed => pressed.isActive ? s.active : s.link}>Settings</NavLink>
             </div>
         </div>
     );
