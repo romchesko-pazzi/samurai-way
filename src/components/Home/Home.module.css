@@ -1,0 +1,13 @@
+.home {
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.avatar img {
+    height: 100px;
+    width: 100px;
+}
+
+.blockForTextarea {
+    display: flex;
+}
