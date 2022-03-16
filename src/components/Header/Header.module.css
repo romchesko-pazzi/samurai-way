@@ -1,21 +1,36 @@
 .header {
     display: flex;
-    justify-content: space-evenly;
-    flex: 0 1 100%;
-    margin: 20px 0 20px 0;
-    border: 1px #a2fca2 solid;
+    justify-content: space-between;
+    padding: 10px;
+    background: #689CD2;
+    color: #fff;
+    font-family: cursive;
 }
 
-.link {
+.item a {
     text-decoration: none;
-    font-size: 27px;
-    color: black;
-    font-family: sans-serif;
+    font-size: 24px;
+}
+
+.item {
+    padding: 10px 15px;
+    margin-left: 30px;
+}
+
+.item:hover {
+    background-color: #c7ffac;
+    border-radius: 4px;
+}
+
+.section {
+    display: flex;
+    align-items: center;
 }
 
 .active {
-    text-decoration: none;
-    font-size: 27px;
-    color: #ff0044;
-    font-family: sans-serif;
+    color: gold;
+}
+
+.link {
+    color: #1e0525;
 }

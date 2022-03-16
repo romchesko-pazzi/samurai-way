@@ -5,13 +5,13 @@ export const Home = () => {
     return (
         <div className={s.home}>
             <div className={s.avatar}>
-                <img src="https://www.iconninja.com/files/691/206/532/avatar-ninja-samurai-warrior-icon.svg" alt=""/>
+                avatar
             </div>
-            <div className={s.blockForTextarea}>
-                <textarea placeholder={"What's new?"}>
-
-                </textarea>
-                <button>add</button>
+            <div className={s.info}>
+                Name Surname
+                Date of Birth:
+                City:
+                Education:
             </div>
         </div>
     );

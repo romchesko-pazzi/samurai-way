@@ -1,4 +1,33 @@
 .messages {
-    /*flex: 0 1 50%;*/
-    border: 3px blue solid;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex: 0 1 25%;
+    border: 2px green solid;
+}
+
+.users a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+    font-family: cursive;
+
+}
+
+.users a:hover {
+    background-color: #c7ffac;
+    border-radius: 4px;
+}
+
+.dialogWithUsers {
+    flex: 0 1 75%;
+    border: 2px purple solid;
 }

@@ -7,19 +7,23 @@ import {Home} from "./components/Home/Home";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Settings} from "./components/Settings/Settings";
 import {Friends} from "./components/Friends/Friends";
+import {LogIn} from "./components/LogIn/LogIn";
 
 const App = () => {
     return (
         <BrowserRouter>
+            <Header/>
             <div className={s.wrapper}>
-                <Header/>
                 <Sidebar/>
+                <div className={s.content}>
                     <Routes>
-                        <Route path={"/home"} element={<Home/>}/>
-                        <Route path={"/messages"} element={<Messages/>}/>
-                        <Route path={"/friends"} element={<Friends/>}/>
-                        <Route path={"/settings"} element={<Settings/>}/>
+                        <Route path={"home/*"} element={<Home/>}/>
+                        <Route path={"messages/*"} element={<Messages/>}/>
+                        <Route path={"friends/*"} element={<Friends/>}/>
+                        <Route path={"logIn/*"} element={<LogIn/>}/>
+                        <Route path={"settings/*"} element={<Settings/>}/>
                     </Routes>
+                </div>
             </div>
         </BrowserRouter>
     )
