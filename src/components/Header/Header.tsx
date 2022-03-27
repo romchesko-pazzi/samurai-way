@@ -9,8 +9,8 @@ export const Header = () => {
             <div className={s.section}>
                 <Reddit fontSize={"large"}/>
                 <div className={s.item}>
-                    <NavLink to="/home"
-                             className={pressed => pressed.isActive ? s.active : s.link}>Home</NavLink>
+                    <NavLink to="/profile"
+                             className={pressed => pressed.isActive ? s.active : s.link}>Profile</NavLink>
                 </div>
                 <div className={s.item}>
                     <NavLink to="/messages"

@@ -1,26 +1,22 @@
 import React from 'react';
 import s from "./Messages.module.css"
-import {User} from './User';
-import {Chats} from "./Chats";
+import {User} from './User/User';
+import {MessagePage} from "../../store/store";
 
-export const Messages = () => {
 
-    const messagesData = [
-        {id: 1, name: "User1"},
-        {id: 2, name: "User2"},
-        {id: 3, name: "User3"},
-        {id: 4, name: "User4"},
-    ]
+export const Messages: React.FC<MessagePage> = (props) => {
 
-    const mappedUsers = messagesData.map(m => <User name={m.name} id={m.id}/>);
+    const {users, messages} = props
+
+    // const mappedUsers = users.map(m => <User key={m.id} name={m.name} id={m.id}/>);
+    // const mappedMessages = messages.map(m => <Chat key={m.id} id={m.id} message={m.message}/>)
 
     return (
         <div className={s.messages}>
-            <div className={s.users}>
-                {mappedUsers}
-            </div>
-            <div className={s.chats}>
-                <Chats/>
+            <div className={s.mainBox}>
+                <div className={s.boxForFullUser}>
+                    <User users={users} messages={messages}/>
+                </div>
             </div>
         </div>
     );
