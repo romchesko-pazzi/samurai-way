@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from "./Profile.module.css";
 import {MyPosts} from "./My Posts/MyPosts";
-import {ProfilePage} from "../../store/store";
+import {PostsType, ProfilePage} from "../../store/store";
 
-export const Profile: React.FC<ProfilePage> = (props) => {
+type ProfilePageType = {
+    posts: Array<PostsType>,
+    addPostCallback: (post: string) => void,
+    changeAreaCallback: (value: string) => void,
+}
 
-    const {posts} = props;
+
+export const Profile: React.FC<ProfilePageType> = (props) => {
+
+    const {posts,addPostCallback,changeAreaCallback} = props;
+
 
     return (
         <div className={s.profile}>
@@ -15,7 +23,7 @@ export const Profile: React.FC<ProfilePage> = (props) => {
                          alt="avatar"/>
                 </div>
             </div>
-            <MyPosts posts={posts} />
+            <MyPosts posts={posts} addPostCallback={addPostCallback} changeAreaCallback={changeAreaCallback}/>
         </div>
     );
 };

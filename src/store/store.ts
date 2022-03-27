@@ -1,16 +1,19 @@
+import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
+
 export type UserType = {
     name: string,
-    id: number,
+    id: string,
     message: string,
 }
 
 export type MessageType = {
-    id: number,
+    id: string,
     message: string,
 }
 
 export type PostsType = {
-    id: number,
+    id: string,
     message: string,
     likesCount: number,
 }
@@ -33,24 +36,35 @@ export type StateType = {
 export const state: StateType = {
     profilePage: {
         posts: [
-            {id: 1, message: "Hi", likesCount: 10},
-            {id: 2, message: "How are you", likesCount: 12},
-            {id: 3, message: "Hey", likesCount: 16},
-            {id: 4, message: "HOUA", likesCount: 7},
+            {id: v1(), message: "Hi", likesCount: 10},
+            {id: v1(), message: "How are you", likesCount: 12},
+            {id: v1(), message: "Hey", likesCount: 16},
+            {id: v1(), message: "HOUA", likesCount: 7},
         ],
     },
     messagePage: {
         users: [
-            {id: 1, name: "User1", message: "Hi"},
-            {id: 2, name: "User2", message: "How are you"},
-            {id: 3, name: "User3", message: "Hey"},
-            {id: 4, name: "User4", message: "HOUA"},
+            {id: v1(), name: "User1", message: "Hi"},
+            {id: v1(), name: "User2", message: "How are you"},
+            {id: v1(), name: "User3", message: "Hey"},
+            {id: v1(), name: "User4", message: "HOUA"},
         ],
         messages: [
-            {id: 1, message: "Hi"},
-            {id: 2, message: "How are you"},
-            {id: 3, message: "Hey"},
-            {id: 4, message: "HOUA"},
+            {id: v1(), message: "Hi"},
+            {id: v1(), message: "How are you"},
+            {id: v1(), message: "Hey"},
+            {id: v1(), message: "HOUA"},
         ],
     }
+}
+
+export const addPost = (post: string) => {
+    let newPost = {id: v1(), message: post, likesCount: 0}
+    state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state);
+}
+
+export const changeArea = (value: string) => {
+    console.log(value);
+    // rerenderEntireTree(state);
 }

@@ -1,17 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {rerenderEntireTree} from "./render";
 import {state} from "./store/store";
 
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App profilePage={state.profilePage} messagePage={state.messagePage}/>
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+rerenderEntireTree(state);
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

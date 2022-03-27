@@ -9,8 +9,14 @@ export const User: React.FC<MessagePage> = (props) => {
     const {users} = props;
     // const path = "/messages/" + id;
 
+    const textAreaRef = React.createRef<HTMLTextAreaElement>();
 
-    const mappedUsers = users.map(m => <div className={s.user}>
+    const xxxx = () => {
+        alert(textAreaRef.current?.value);
+    }
+
+
+    const mappedUsers = users.map(m => <div key={m.id} className={s.user}>
         <img src="https://i1.sndcdn.com/artworks-VTCwyUVS9pbVSztP-IyNZmA-t500x500.jpg" alt=""/>
         <div className={s.boxForNameAndText}>
             <div>
@@ -19,6 +25,10 @@ export const User: React.FC<MessagePage> = (props) => {
             <div>
                 {m.message}
             </div>
+        </div>
+        <div>
+            <textarea ref={textAreaRef}> </textarea>
+            <button onClick={xxxx}>post</button>
         </div>
     </div>);
 
