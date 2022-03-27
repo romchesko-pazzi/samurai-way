@@ -1,0 +1,17 @@
+.main{
+    border: 1px red solid;
+    margin-top: 100px;
+    height: 500px;
+}
+
+.input {
+    margin-top: 40px;
+}
+
+.boxForPosts {
+    padding: 10px 15px;
+    margin-top: 50px;
+    border: 2px green solid;
+    height: 300px;
+    width: 450px;
+}

@@ -11,8 +11,7 @@
 }
 
 .content {
+    flex: 0 1 95%;
     background-color: #faedff;
-    border: 3px red solid;
-    width: 1400px;
     height: 800px;
 }

@@ -1,0 +1,18 @@
+.profile {
+    padding: 10px 15px;
+}
+
+.avatar img {
+    width: 150px;
+    height: 150px;
+    border: 3px #1e0525 solid;
+    /*margin-left: 10px;*/
+    /*margin-top: 10px;*/
+}
+
+.backgroundImage {
+    margin: 10px 0 0 10px;
+}
+
+.aboutInfo {}
+
