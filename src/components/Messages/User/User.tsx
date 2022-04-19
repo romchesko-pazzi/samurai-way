@@ -11,7 +11,7 @@ type UserType = {
 
 
 export const User: React.FC<UserType> = (props) => {
-    console.log("User")
+    console.log("User");
     const {messageText, mappedUsers, mappedMessages, onChangeHandler, onClickHandler} = props;
 
     return (
