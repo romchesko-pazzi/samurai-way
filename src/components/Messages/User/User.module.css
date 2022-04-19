@@ -10,12 +10,9 @@
     height: 40px;
 }
 
-.boxForNameAndText{
-
+.boxForName {
     margin-left: 14px;
     border: 1px red solid;
-    /*display: flex;*/
-    /*flex-direction: column;*/
 }
 
 .userMain {

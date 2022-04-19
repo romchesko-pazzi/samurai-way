@@ -13,5 +13,5 @@
 .content {
     flex: 0 1 95%;
     background-color: #faedff;
-    height: 800px;
+    height: 100vh;
 }
