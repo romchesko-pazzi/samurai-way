@@ -1,17 +1,16 @@
 import React from 'react';
 import s from "./Profile.module.css";
-import {ProfilePage} from "../../store/custom-redux";
 import {MyPostsContainer} from "./My Posts/MyPostsContainer";
 
-type ProfilePageType = {
-    profilePage: ProfilePage
-}
+// type ProfilePageType = {
+//     profilePage: ProfilePage
+// }
+
+//До 45 выпуска. 45-> переход на connect()
+// const {profilePage} = props;
 
 
-export const Profile: React.FC<ProfilePageType> = (props) => {
-
-    const {profilePage} = props;
-
+export const Profile = () => {
     return (
         <div className={s.profile}>
             <div className={s.aboutInfo}>
@@ -20,9 +19,7 @@ export const Profile: React.FC<ProfilePageType> = (props) => {
                          alt="avatar"/>
                 </div>
             </div>
-            <MyPostsContainer
-                profilePage={profilePage}
-            />
+            <MyPostsContainer/>
         </div>
     );
 };

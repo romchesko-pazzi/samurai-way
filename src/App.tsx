@@ -8,15 +8,12 @@ import {Settings} from "./components/Settings/Settings";
 import {Friends} from "./components/Friends/Friends";
 import {LogIn} from "./components/LogIn/LogIn";
 import {Profile} from "./components/Profile/Profile";
-import {useSelector} from "react-redux";
-import {RootStateType} from "./store/store";
-import {MessagePage, ProfilePage} from "./store/custom-redux";
 
 
 const App = () => {
-
-    const profilePage = useSelector<RootStateType, ProfilePage>(state => state.profilePage);
-    const messagePage = useSelector<RootStateType, MessagePage>(state => state.messagePage);
+    //До 45 выпуска. 45-> переход на connect()
+    // const profilePage = useSelector<RootStateType, ProfilePage>(state => state.profilePage);
+    // const messagePage = useSelector<RootStateType, MessagePage>(state => state.messagePage);
 
     return (
         <BrowserRouter>
@@ -26,9 +23,9 @@ const App = () => {
                 <div className={s.content}>
                     <Routes>
                         <Route path={"profile/*"}
-                               element={<Profile profilePage={profilePage}/>}/>
+                               element={<Profile/>}/>
                         <Route path={"messages/*"}
-                               element={<Messages messagePage={messagePage}/>}/>
+                               element={<Messages/>}/>
                         <Route path={"friends/*"} element={<Friends/>}/>
                         <Route path={"logIn/*"} element={<LogIn/>}/>
                         <Route path={"settings/*"} element={<Settings/>}/>
