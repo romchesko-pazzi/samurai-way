@@ -1,11 +1,20 @@
 import React from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {rerenderEntireTree} from "./render";
-import {state} from "./store/store";
+import ReactDOM from "react-dom";
+import App from "./App";
+import {store} from "./store/store";
+import {Provider} from "react-redux";
 
 
-rerenderEntireTree(state);
+const mainDiv = document.getElementById('root')
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>, mainDiv
+);
+
 
 
 // If you want to start measuring performance in your app, pass a function

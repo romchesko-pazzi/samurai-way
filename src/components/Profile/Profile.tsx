@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from "./Profile.module.css";
-import {MyPosts} from "./My Posts/MyPosts";
-import {PostsType, ProfilePage} from "../../store/store";
+import {ProfilePage} from "../../store/custom-redux";
+import {MyPostsContainer} from "./My Posts/MyPostsContainer";
 
 type ProfilePageType = {
-    posts: Array<PostsType>,
-    addPostCallback: (post: string) => void,
-    changeAreaCallback: (value: string) => void,
+    profilePage: ProfilePage
 }
 
 
 export const Profile: React.FC<ProfilePageType> = (props) => {
 
-    const {posts,addPostCallback,changeAreaCallback} = props;
-
+    const {profilePage} = props;
 
     return (
         <div className={s.profile}>
@@ -23,7 +20,9 @@ export const Profile: React.FC<ProfilePageType> = (props) => {
                          alt="avatar"/>
                 </div>
             </div>
-            <MyPosts posts={posts} addPostCallback={addPostCallback} changeAreaCallback={changeAreaCallback}/>
+            <MyPostsContainer
+                profilePage={profilePage}
+            />
         </div>
     );
 };
