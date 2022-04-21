@@ -2,7 +2,7 @@ import {v1} from "uuid";
 // import {rerenderEntireTree} from "../index";
 import {MessagesReducer} from "./MessagesReducer";
 import {ProfileReducer} from "./ProfileReducer";
-import {ACTIONS_TYPE, ActionType, GeneralMessagesType, GeneralProfileType} from "./actions";
+import {ActionType} from "./actions";
 
 export type UserType = {
     name: string
@@ -41,6 +41,7 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionType) => void
 }
+
 
 
 export const store: StoreType = {

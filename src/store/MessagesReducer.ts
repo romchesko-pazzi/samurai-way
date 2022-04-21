@@ -21,7 +21,7 @@ const initialState: MessagePage = {
 }
 
 
-export const MessagesReducer = (state: MessagePage = initialState, action: ActionType): MessagePage => {
+export const MessagesReducer = (state = initialState, action: ActionType): MessagePage => {
     switch (action.type) {
         case ACTIONS_TYPE.ADD_NEW_MESSAGE_TEXT: {
             return {...state, messageText: action.payload.newMessageText};

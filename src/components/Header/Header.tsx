@@ -17,8 +17,8 @@ export const Header = () => {
                              className={pressed => pressed.isActive ? s.active : s.link}>Messages</NavLink>
                 </div>
                 <div className={s.item}>
-                    <NavLink to="/friends"
-                             className={pressed => pressed.isActive ? s.active : s.link}>Friends</NavLink>
+                    <NavLink to="/users"
+                             className={pressed => pressed.isActive ? s.active : s.link}>Users</NavLink>
                 </div>
             </div>
             <div className={s.section}>

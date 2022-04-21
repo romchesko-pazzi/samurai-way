@@ -5,7 +5,7 @@
 }
 
 .wrapper {
-    border: 1px blue solid;
+    border: 1px #ff0059 solid;
     display: flex;
     flex-wrap: wrap;
 }

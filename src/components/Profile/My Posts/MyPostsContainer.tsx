@@ -31,7 +31,7 @@ import {Dispatch} from "redux";
 
 const mapStateToProps = (state: RootStateType) => {
     return {
-        mappedPosts: state.profilePage.posts,
+        posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
     }
 }
