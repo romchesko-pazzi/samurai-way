@@ -5,10 +5,6 @@ export enum ACTIONS_TYPE {
     SEND_NEW_MESSAGE = "SEND-NEW-MESSAGE",
 }
 
-export type GeneralMessagesType = SendNewMessageType | AddNewMessageType;
-
-export type GeneralProfileType = AddPostType | UpdatePostTextType;
-
 export type ActionType = AddPostType | UpdatePostTextType | SendNewMessageType | AddNewMessageType
 
 type AddPostType = {

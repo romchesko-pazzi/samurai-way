@@ -1,18 +1,11 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from "./MyPosts.module.css";
-import {PostsType} from "../../../store/custom-redux";
+import {MapDispatchToPropsType, ProfilePage} from "./MyPostsContainer";
 
-
-type MyPostsPropsType = {
-    onChangeHandler: (e: ChangeEvent<HTMLTextAreaElement>) => void
-    newPostText: string
-    onClickHandler: () => void
-    mappedPosts: Array<PostsType>
-}
+type MyPostsPropsType = MapDispatchToPropsType & ProfilePage
 
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
-    const {onChangeHandler, newPostText, onClickHandler, mappedPosts} = props;
-    console.log(mappedPosts)
+    const {onChangeHandler, newPostText, onClickHandler, posts} = props;
     return (
         <div className={s.main}>
             <h3>My posts</h3>
@@ -21,7 +14,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                 <button onClick={onClickHandler}>add post</button>
             </div>
             <div className={s.boxForPosts}>
-                {mappedPosts.map(p => <div key={p.id}>{p.message}</div>)}
+                {posts.map(p => <div key={p.id}>{p.message}</div>)}
             </div>
         </div>
     );

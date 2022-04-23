@@ -2,14 +2,6 @@ import React from 'react';
 import s from "./Profile.module.css";
 import {MyPostsContainer} from "./My Posts/MyPostsContainer";
 
-// type ProfilePageType = {
-//     profilePage: ProfilePage
-// }
-
-//До 45 выпуска. 45-> переход на connect()
-// const {profilePage} = props;
-
-
 export const Profile = () => {
     return (
         <div className={s.profile}>

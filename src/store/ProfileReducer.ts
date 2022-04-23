@@ -1,6 +1,7 @@
-import {ACTIONS_TYPE, ActionType} from "./actions";
+import {ACTIONS_TYPE, ActionType} from "./ProfileAndMessagesActions";
 import {v1} from "uuid";
-import {ProfilePage} from "./custom-redux";
+import {ProfilePage} from "../components/Profile/My Posts/MyPostsContainer";
+
 
 const initialState: ProfilePage = {
     newPostText: "",
