@@ -1,0 +1,48 @@
+.main {
+    margin: 50px 0 0 50px;
+    width: 600px;
+}
+
+.user {
+    display: flex;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 2px #356bc9 solid;
+    border-radius: 10px;
+}
+
+.leftBlock {
+    margin-right: 30px;
+}
+
+.leftBlock img {
+    width: 40px;
+    height: 40px;
+}
+
+.rightBlock {
+    width: 100vh;
+    display: flex;
+    justify-content: space-between;
+    font: 1.2em "Fira Sans", sans-serif;
+    color: #150101;
+}
+
+.btn {
+    width: 50px;
+}
+
+.location {
+    width: 70px;
+    margin-right: 20px;
+}
+
+.userName {
+    margin-bottom: 10px;
+}
+
+.cityName {
+    margin-bottom: 10px;
+}
+
+
