@@ -1,39 +1,13 @@
 import {v1} from "uuid";
-// import {rerenderEntireTree} from "../index";
 import {MessagesReducer} from "./MessagesReducer";
 import {ProfileReducer} from "./ProfileReducer";
-import {ActionType} from "./actions";
-
-export type UserType = {
-    name: string
-    id: string
-}
-
-export type MessageType = {
-    id: string
-    message: string
-}
-
-export type PostsType = {
-    id: string
-    message: string
-    likesCount: number
-}
-
-export type ProfilePage = {
-    posts: Array<PostsType>
-    newPostText: string
-}
-
-export type MessagePage = {
-    users: Array<UserType>
-    messageText: string,
-    messages: Array<MessageType>
-}
+import {ActionType} from "./ProfileAndMessagesActions";
+import {ProfilePage} from "../components/Profile/My Posts/MyPostsContainer";
+import {MessagePageType} from "../components/Messages/User/UserContainer";
 
 export type RootStateType = {
     profilePage: ProfilePage
-    messagePage: MessagePage
+    messagePage: MessagePageType
 }
 
 export type StoreType = {
@@ -41,8 +15,6 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionType) => void
 }
-
-
 
 export const store: StoreType = {
     _state: {
@@ -80,3 +52,24 @@ export const store: StoreType = {
         // rerenderEntireTree(this._state);
     }
 }
+
+let x = [
+    {
+        id: v1(), isFriend: true, name: "Sasha", status: "I am looking for a job", location: {
+            city: "Kiev",
+            country: "Ukraine"
+        }
+    },
+    {
+        id: v1(), isFriend: true, name: "Roma", status: "I am looking for a job", location: {
+            city: "Minsk",
+            country: "Belarus"
+        }
+    },
+    {
+        id: v1(), isFriend: false, name: "Nikolai", status: "I am looking for a workers", location: {
+            city: "Berlin",
+            country: "Germany"
+        }
+    },
+]

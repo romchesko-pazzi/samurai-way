@@ -10,7 +10,7 @@ export const UsersReducer = (state = initialState, action: ActionType): UsersPag
         case ACTIONS_TYPE.FOLLOW: {
             return {
                 ...state,
-                users: state.users.map(m => m.id === action.payload.userId ? {...m, isFriend: !m.isFriend} : m)
+                users: state.users.map(m => m.id === action.payload.userId ? {...m, followed: !m.followed} : m)
             }
         }
         case ACTIONS_TYPE.SET_USERS:{
