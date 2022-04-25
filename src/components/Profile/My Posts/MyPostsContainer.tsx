@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {MyPosts} from "./MyPosts";
 import {Dispatch} from "redux";
 import {RootStateType} from "../../../store/store";
+import {MyPostsClass} from "./MyPostsClass";
 
 export type ProfilePage = {
     posts: Array<PostsType>
@@ -39,4 +40,4 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionType>): MapDispatchToPropsT
     }
 }
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPostsClass)

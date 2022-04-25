@@ -3,13 +3,15 @@ import {Users} from "./Users";
 import {ActionType, followAC, setUsersAC} from "../../store/UsersActions";
 import {Dispatch} from "redux";
 import {RootStateType} from "../../store/store";
+import {UsersClass} from "./UsersClass";
 
 export type UserType = {
     id: string
-    isFriend: boolean
     name: string
     status: string
     location: { city: string, country: string }
+    photos: { small: string, large: string }
+    followed: boolean
 }
 
 export type UsersPageType = {
@@ -42,4 +44,4 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionType>): MapDispatchToPropsT
 }
 
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClass);
