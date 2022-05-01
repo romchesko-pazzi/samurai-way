@@ -45,4 +45,13 @@
     margin-bottom: 10px;
 }
 
+.paginationBlock span {
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.selectedPage{
+    font-weight: bold;
+}
+
 
