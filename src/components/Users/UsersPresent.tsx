@@ -1,40 +1,35 @@
 import React from 'react';
 import s from "./Users.module.css";
-import {UsersPropsType} from "./UsersContainer";
-import axios from "axios";
+import {UserType} from "./UsersContainer";
 
-export const Users: React.FC<UsersPropsType> = (props) => {
-    const {users, follow, setUsers, totalCount, setTotalUsersCount, currentPage, setCurrentPage, pageSize} = props;
+type UsersPresentPropsType = {
+    currentPage: number
+    choosePage: (chosedPage: number) => void
+    users: Array<UserType>
+    follow: (userId: string) => void
+    totalCount: number
+    pageSize: number
+}
 
-    if (users.length === 0) {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${currentPage}`).then(response => {
-            setUsers(response.data.items);
-            setTotalUsersCount(response.data.totalCount);
-        })
-    }
+export const UsersPresent: React.FC<UsersPresentPropsType> = (props) => {
 
-    const choosePage = (currentMappedPage: number) => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${currentMappedPage}`).then(response => {
-            setUsers(response.data.items);
-            setCurrentPage(currentMappedPage);
-        })
-    }
+    const {currentPage, pageSize, choosePage, totalCount, users, follow} = props
 
-    const totalPages = Math.ceil(totalCount / pageSize);
-    const pagesArray = []
-    for (let i = 1; i <= totalPages; i++) {
-        pagesArray.push(i);
+    const pagesCount = Math.ceil(totalCount / pageSize);
+    const pagesCountArray = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pagesCountArray.push(i);
     }
 
     return (
         <div className={s.main}>
             <div className={s.paginationBlock}>
-                {pagesArray.map((m, i) => <span
-                    key={i}
-                    className={currentPage === m
-                        ? s.selectedPage : ""}
-                    onClick={() => choosePage(m)}
-                >{m}</span>)}
+                {pagesCountArray.map((m, index) => {
+                        return <span key={index}
+                                     className={currentPage === m ? s.selectedPage : ""}
+                                     onClick={() => choosePage(m)}>{m}</span>
+                    }
+                )}
             </div>
             {users.map(m =>
                 <div key={m.id} className={s.user}>
