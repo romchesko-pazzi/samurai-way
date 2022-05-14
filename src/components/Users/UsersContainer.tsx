@@ -1,11 +1,10 @@
 import {connect} from "react-redux";
-import {ActionType, followAC, setCurrentPageAC, setUsersAC, setTotalUsersCountAC} from "../../store/UsersActions";
-import {Dispatch} from "redux";
+import {follow, setCurrentPage, setLoadingIcon, setTotalUsersCount, setUsers} from "../../store/UsersActions";
 import {RootStateType} from "../../store/store";
-import {Users} from "./Users";
 import React from "react";
 import axios from "axios";
 import {UsersPresent} from "./UsersPresent";
+import {Preloader} from "../Preloader/Preloader";
 
 export type UsersPropsType = MapDispatchToPropsType & UsersPageType;
 
@@ -23,6 +22,7 @@ export type UsersPageType = {
     totalCount: number
     currentPage: number
     pageSize: number
+    isLoading: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -30,6 +30,7 @@ type MapDispatchToPropsType = {
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (pageNumber: number) => void
     setTotalUsersCount: (usersCount: number) => void
+    setLoadingIcon: (isLoading: boolean) => void
 }
 
 const mapStateToProps = (state: RootStateType): UsersPageType => {
@@ -38,58 +39,58 @@ const mapStateToProps = (state: RootStateType): UsersPageType => {
         totalCount: state.usersPage.totalCount,
         currentPage: state.usersPage.currentPage,
         pageSize: state.usersPage.pageSize,
-    }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch<ActionType>): MapDispatchToPropsType => {
-    return {
-        follow: (userId) => {
-            dispatch(followAC(userId));
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users));
-        },
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageAC(pageNumber));
-        },
-        setTotalUsersCount: (usersCount) => {
-            dispatch(setTotalUsersCountAC(usersCount))
-        }
-
+        isLoading: state.usersPage.isLoading,
     }
 }
 
 export class UsersContainer extends React.Component<UsersPropsType> {
-    constructor(props: UsersPropsType) {
-        super(props);
-    }
-
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
-            this.props.setUsers(response.data.items);
-            this.props.setTotalUsersCount(response.data.totalCount);
-        })
+        this.props.setLoadingIcon(true);
+        axios
+            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+                withCredentials: true,
+            })
+            .then(response => {
+                this.props.setLoadingIcon(false);
+                this.props.setUsers(response.data.items);
+                this.props.setTotalUsersCount(response.data.totalCount);
+            })
     }
 
     choosePage = (m: number) => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${m}&count=${this.props.pageSize}`).then(response => {
-            this.props.setUsers(response.data.items);
-            this.props.setCurrentPage(m);
-        })
-
+        this.props.setLoadingIcon(true);
+        axios
+            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${m}&count=${this.props.pageSize}`, {
+                withCredentials: true,
+            })
+            .then(response => {
+                this.props.setUsers(response.data.items);
+                this.props.setCurrentPage(m);
+                this.props.setLoadingIcon(false);
+            })
     }
 
     render() {
-
-        return <UsersPresent
-            currentPage={this.props.currentPage}
-            choosePage={this.choosePage}
-            users={this.props.users}
-            follow={this.props.follow}
-            totalCount={this.props.totalCount}
-            pageSize={this.props.pageSize}
-        />
+        return (
+            <div>
+                {this.props.isLoading ? <Preloader/> : ""}
+                <UsersPresent
+                    currentPage={this.props.currentPage}
+                    choosePage={this.choosePage}
+                    users={this.props.users}
+                    follow={this.props.follow}
+                    totalCount={this.props.totalCount}
+                    pageSize={this.props.pageSize}
+                />
+            </div>
+        )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    follow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    setLoadingIcon,
+})(UsersContainer);

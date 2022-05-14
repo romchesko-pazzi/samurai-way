@@ -6,6 +6,7 @@ const initialState: UsersPageType = {
     totalCount: 0,
     pageSize: 4,
     currentPage: 1,
+    isLoading: false
 }
 
 export const UsersReducer = (state = initialState, action: ActionType): UsersPageType => {
@@ -16,8 +17,9 @@ export const UsersReducer = (state = initialState, action: ActionType): UsersPag
                 users: state.users.map(m => m.id === action.payload.userId ? {...m, followed: !m.followed} : m)
             }
         }
+        case ACTIONS_TYPE.SET_LOADING_ICON:
         case ACTIONS_TYPE.SET_USERS: {
-            return {...state, users: action.payload.users}
+            return {...state, ...action.payload}
         }
         case ACTIONS_TYPE.SET_CURRENT_PAGE: {
             return {...state, currentPage: action.payload.pageNumber}

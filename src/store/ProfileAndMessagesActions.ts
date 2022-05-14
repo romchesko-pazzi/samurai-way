@@ -3,9 +3,10 @@ export enum ACTIONS_TYPE {
     UPDATE_POST_TEXT = "UPDATE-POST-TEXT",
     ADD_NEW_MESSAGE_TEXT = "ADD-NEW-MESSAGE-TEXT",
     SEND_NEW_MESSAGE = "SEND-NEW-MESSAGE",
+    SET_USER_PROFILE = "SET-USER-PROFILE",
 }
 
-export type ActionType = AddPostType | UpdatePostTextType | SendNewMessageType | AddNewMessageType
+export type ActionType = AddPostType | UpdatePostTextType | SendNewMessageType | AddNewMessageType | SetUserProfileType
 
 type AddPostType = {
     type: ACTIONS_TYPE.ADD_POST
@@ -27,6 +28,7 @@ type AddNewMessageType = {
     }
 }
 
+type SetUserProfileType = ReturnType<typeof setUserProfile>
 
 export const addPostAC = (): AddPostType => {
     return {
@@ -49,4 +51,11 @@ export const addNewMessageText = (newMessageText: string): AddNewMessageType => 
         type: ACTIONS_TYPE.ADD_NEW_MESSAGE_TEXT,
         payload: {newMessageText}
     }
+}
+
+export const setUserProfile = (profile:any) => {
+    return {
+        type: ACTIONS_TYPE.SET_USER_PROFILE,
+        payload: {profile}
+    } as const
 }
