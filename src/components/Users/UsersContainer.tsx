@@ -2,9 +2,9 @@ import {connect} from "react-redux";
 import {follow, setCurrentPage, setLoadingIcon, setTotalUsersCount, setUsers} from "../../store/UsersActions";
 import {RootStateType} from "../../store/store";
 import React from "react";
-import axios from "axios";
 import {UsersPresent} from "./UsersPresent";
 import {Preloader} from "../Preloader/Preloader";
+import {choosePageNumber, getUsers} from "../../api/api";
 
 export type UsersPropsType = MapDispatchToPropsType & UsersPageType;
 
@@ -46,26 +46,20 @@ const mapStateToProps = (state: RootStateType): UsersPageType => {
 export class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.setLoadingIcon(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-                withCredentials: true,
-            })
-            .then(response => {
+        getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.setLoadingIcon(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
+                this.props.setUsers(data.items);
+                this.props.setTotalUsersCount(data.totalCount);
             })
     }
 
-    choosePage = (m: number) => {
+    choosePage = (pageNumber: number) => {
         this.props.setLoadingIcon(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${m}&count=${this.props.pageSize}`, {
-                withCredentials: true,
-            })
-            .then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.setCurrentPage(m);
+        choosePageNumber(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items);
+                this.props.setCurrentPage(pageNumber);
                 this.props.setLoadingIcon(false);
             })
     }

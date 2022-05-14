@@ -3,6 +3,7 @@ import s from "./Users.module.css";
 import {UserType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
 import axios from "axios";
+import {reqForFollow, reqForUnFollow} from "../../api/api";
 
 type UsersPresentPropsType = {
     currentPage: number
@@ -48,30 +49,18 @@ export const UsersPresent: React.FC<UsersPresentPropsType> = (props) => {
                             {m.followed
                                 ? <button onClick={
                                     () => {
-                                        axios
-                                            .delete(`https://social-network.samuraijs.com/api/1.0/follow/${m.id}`, {
-                                                withCredentials: true,
-                                                headers: {
-                                                    "api-key": "b586ccec-80f3-4fec-93a0-9cb544188701",
-                                                }
-                                            })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
-                                                    follow(m.id)
+                                        reqForFollow(m.id)
+                                            .then(data => {
+                                                if (data.resultCode === 0) {
+                                                    follow(m.id);
                                                 }
                                             })
                                     }}>Unfollow</button>
                                 : <button onClick={
                                     () => {
-                                        axios
-                                            .post(`https://social-network.samuraijs.com/api/1.0/follow/${m.id}`, {}, {
-                                                withCredentials: true,
-                                                headers: {
-                                                    "api-key": "b586ccec-80f3-4fec-93a0-9cb544188701",
-                                                }
-                                            })
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
+                                        reqForUnFollow(m.id)
+                                            .then(data => {
+                                                if (data.resultCode === 0) {
                                                     follow(m.id)
                                                 }
                                             })
