@@ -1,9 +1,8 @@
 import {connect} from "react-redux";
 import {
     choosePageThunkCreator,
-    follow, followThunkCreator,
+    followThunkCreator,
     getUsersThunkCreator,
-    setFollowLoading,
     unfollowThunkCreator
 } from "../../store/UsersActions";
 import {RootStateType} from "../../store/store";

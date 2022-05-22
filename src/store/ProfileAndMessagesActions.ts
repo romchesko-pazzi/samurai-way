@@ -67,7 +67,7 @@ const setUserProfile = (profile: UserProfileType) => {
 export const getUserProfileTC = (userId: number) => (dispatch: Dispatch<ActionType>) => {
     userId = userId || 22904;
     reqForSettingUser(userId)
-    .then(response => {
-        dispatch(setUserProfile(response));
-    })
+        .then(response => {
+            dispatch(setUserProfile(response));
+        })
 }
