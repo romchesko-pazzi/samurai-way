@@ -34,7 +34,7 @@ export const authMe = () => {
 
 export const reqForFollow = (userId: string) => {
     return instance
-        .delete(`follow/${userId}`)
+        .post(`follow/${userId}`)
         .then(response => {
             return response.data;
         })
@@ -42,9 +42,10 @@ export const reqForFollow = (userId: string) => {
 
 export const reqForUnFollow = (userId: string) => {
     return instance
-        .post(`follow/${userId}`)
+        .delete(`follow/${userId}`)
         .then(response => {
             return response.data;
         })
 }
+
 

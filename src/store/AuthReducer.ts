@@ -1,4 +1,6 @@
 import {AuthDataType} from "../components/Header/HeaderContainer";
+import {authMe} from "../api/api";
+import {Dispatch} from "redux";
 
 enum ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
@@ -30,4 +32,14 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
         type: ACTIONS_TYPE.SET_USER_DATA,
         payload: {id, email, login},
     } as const
+}
+
+export const setAuthUserDataTC = () => (dispatch:Dispatch<ActionType>) => {
+    authMe()
+        .then(data => {
+            if (data.resultCode === 0) {
+                const {id, email, login} = data.data;
+                dispatch(setAuthUserData(id, email, login));
+            }
+        })
 }

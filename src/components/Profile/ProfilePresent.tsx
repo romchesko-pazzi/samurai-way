@@ -1,10 +1,10 @@
 import React from 'react';
 import {ProfileInfo} from "./ProfileInfo";
-import {ProfilePropsType} from "./ProfileContainer";
+import {ProfilePageType, ProfilePropsType} from "./ProfileContainer";
 import {MyPostsContainer} from "./My Posts/MyPostsContainer";
 
 
-export const ProfilePresent: React.FC<ProfilePropsType> = (props) => {
+export const ProfilePresent: React.FC<ProfilePageType> = (props) => {
 
     const {userProfile} = props;
     return (

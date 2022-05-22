@@ -1,4 +1,6 @@
 import {UserType} from "../components/Users/UsersContainer";
+import {Dispatch} from "redux";
+import {choosePageNumber, getUsers, reqForFollow, reqForUnFollow} from "../api/api";
 
 export enum ACTIONS_TYPE {
     FOLLOW = "FOLLOW",
@@ -6,6 +8,7 @@ export enum ACTIONS_TYPE {
     SET_CURRENT_PAGE = "SET_CURRENT_PAGE",
     SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT",
     SET_LOADING_ICON = "SET_LOADING_ICON",
+    SET_FOLLOW_LOADING = "SET_FOLLOW_LOADING",
 }
 
 export type ActionType =
@@ -13,13 +16,15 @@ export type ActionType =
     SetUsersType |
     SetCurrentPageType |
     SetTotalUsersCountType |
-    SetLoadingIconType;
+    SetLoadingIconType |
+    SetFollowLoadingType;
 
 type FollowType = ReturnType<typeof follow>;
 type SetUsersType = ReturnType<typeof setUsers>;
 type SetCurrentPageType = ReturnType<typeof setCurrentPage>;
 type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCount>;
 type SetLoadingIconType = ReturnType<typeof setLoadingIcon>;
+type SetFollowLoadingType = ReturnType<typeof setFollowLoading>;
 
 export const follow = (userId: string) => {
     return {
@@ -49,9 +54,59 @@ export const setTotalUsersCount = (usersCount: number) => {
     } as const
 }
 
-export const setLoadingIcon = (isLoading:boolean) => {
+export const setLoadingIcon = (isLoading: boolean) => {
     return {
         type: ACTIONS_TYPE.SET_LOADING_ICON,
         payload: {isLoading}
     } as const
 }
+
+export const setFollowLoading = (isFetching: any, userId: string) => {
+    return {
+        type: ACTIONS_TYPE.SET_FOLLOW_LOADING,
+        payload: {isFetching, userId}
+    } as const
+}
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setLoadingIcon(true));
+    getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setLoadingIcon(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalUsersCount(data.totalCount));
+        });
+}
+
+export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setLoadingIcon(true));
+    choosePageNumber(pageNumber, pageSize)
+        .then(data => {
+            dispatch(setUsers(data.items));
+            dispatch(setCurrentPage(pageNumber));
+            dispatch(setLoadingIcon(false));
+        });
+}
+
+export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setFollowLoading(true, userID));
+    reqForUnFollow(userID)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(follow(userID));
+            }
+            dispatch(setFollowLoading(false, userID));
+        })
+}
+
+export const followThunkCreator = (userID: string) => (dispatch: Dispatch<ActionType>) => {
+    dispatch(setFollowLoading(true, userID));
+    reqForFollow(userID)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(follow(userID));
+            }
+            dispatch(setFollowLoading(false, userID));
+        })
+}
+

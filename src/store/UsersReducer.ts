@@ -6,7 +6,8 @@ const initialState: UsersPageType = {
     totalCount: 0,
     pageSize: 4,
     currentPage: 1,
-    isLoading: false
+    isLoading: false,
+    isFollowed: [],
 }
 
 export const UsersReducer = (state = initialState, action: ActionType): UsersPageType => {
@@ -27,6 +28,14 @@ export const UsersReducer = (state = initialState, action: ActionType): UsersPag
         case ACTIONS_TYPE.SET_TOTAL_USERS_COUNT: {
             return {...state, totalCount: action.payload.usersCount}
         }
+        case ACTIONS_TYPE.SET_FOLLOW_LOADING: {
+            return {
+                ...state, isFollowed: action.payload.isFetching
+                    ? [...state.isFollowed, action.payload.userId]
+                    : state.isFollowed.filter(f => f !== action.payload.userId)
+            }
+        }
+
         default:
             return state
     }

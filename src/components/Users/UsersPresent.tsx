@@ -2,21 +2,30 @@ import React from 'react';
 import s from "./Users.module.css";
 import {UserType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {reqForFollow, reqForUnFollow} from "../../api/api";
 
 type UsersPresentPropsType = {
     currentPage: number
     choosePage: (chosenPage: number) => void
     users: Array<UserType>
-    follow: (userId: string) => void
     totalCount: number
     pageSize: number
+    isFollowed: Array<any>
+    unfollowTC: any
+    followTC: any
 }
 
 export const UsersPresent: React.FC<UsersPresentPropsType> = (props) => {
 
-    const {currentPage, pageSize, choosePage, totalCount, users, follow} = props
+    const {
+        currentPage,
+        pageSize,
+        totalCount,
+        users,
+        isFollowed,
+        choosePage,
+        unfollowTC,
+        followTC,
+    } = props
 
     const pagesCount = Math.ceil(totalCount / pageSize);
     const pagesCountArray = [];
@@ -47,24 +56,12 @@ export const UsersPresent: React.FC<UsersPresentPropsType> = (props) => {
                         </div>
                         <div className={s.btn}>
                             {m.followed
-                                ? <button onClick={
-                                    () => {
-                                        reqForFollow(m.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    follow(m.id);
-                                                }
-                                            })
-                                    }}>Unfollow</button>
-                                : <button onClick={
-                                    () => {
-                                        reqForUnFollow(m.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    follow(m.id)
-                                                }
-                                            })
-                                    }}>Follow</button>
+                                ? <button
+                                    onClick={() => unfollowTC(m.id)}
+                                    disabled={isFollowed.some(id => id === m.id)}>Unfollow</button>
+                                : <button
+                                    onClick={() => followTC(m.id)}
+                                    disabled={isFollowed.some(id => id === m.id)}>Follow</button>
                             }
                         </div>
                     </div>
