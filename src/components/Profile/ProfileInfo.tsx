@@ -12,10 +12,12 @@ type SocialNetworksType = {
     mainLink: string
     vk: string
 }
+
 type PhotosType = {
     small: string
     large: string
 }
+
 export type UserProfileType = {
     aboutMe: string
     lookingForAJob: boolean

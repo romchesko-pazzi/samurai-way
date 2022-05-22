@@ -17,7 +17,7 @@ const initialState: MessagePageType = {
         {id: v1(), message: "lolkek"},
         {id: v1(), message: "hehehe"},
     ],
-
+    isAuth: false,
 }
 
 

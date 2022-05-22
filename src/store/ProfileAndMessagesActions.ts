@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
-import axios from "axios";
 import {UserProfileType} from "../components/Profile/ProfileInfo";
+import {reqForSettingUser} from "../api/api";
 
 export enum ACTIONS_TYPE {
     ADD_POST = "ADD-POST",
@@ -57,16 +57,17 @@ export const addNewMessageText = (newMessageText: string): AddNewMessageType => 
     }
 }
 
-export const setUserProfile = (profile: UserProfileType) => {
+const setUserProfile = (profile: UserProfileType) => {
     return {
         type: ACTIONS_TYPE.SET_USER_PROFILE,
         payload: {profile}
     } as const
 }
 
-export const setUserProfileTC = (userId: number) => (dispatch: Dispatch<ActionType>) => {
+export const getUserProfileTC = (userId: number) => (dispatch: Dispatch<ActionType>) => {
     userId = userId || 22904;
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
-        dispatch(setUserProfile(response.data));
+    reqForSettingUser(userId)
+    .then(response => {
+        dispatch(setUserProfile(response));
     })
 }

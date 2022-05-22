@@ -3,7 +3,7 @@ import {addPostAC, updatePostTextAC} from "../../../store/ProfileAndMessagesActi
 import {connect} from "react-redux";
 import {RootStateType} from "../../../store/store";
 import {MyPosts} from "./MyPosts";
-import {ProfilePageType} from "../ProfileContainer";
+import {PostsType} from "../ProfileContainer";
 import {Dispatch} from "redux";
 
 export type MapDispatchToPropsType = {
@@ -11,13 +11,17 @@ export type MapDispatchToPropsType = {
     onClickHandler: () => void
 }
 
-export type MyPostsPropsType = MapDispatchToPropsType & ProfilePageType;
+type PostsPageType = {
+    posts: Array<PostsType>
+    newPostText: string
+}
 
-const mapStateToProps = (state: RootStateType): ProfilePageType => {
+export type MyPostsPropsType = MapDispatchToPropsType & PostsPageType;
+
+const mapStateToProps = (state: RootStateType): PostsPageType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
-        userProfile: state.profilePage.userProfile,
     }
 }
 

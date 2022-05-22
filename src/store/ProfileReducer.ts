@@ -31,7 +31,8 @@ const initialState: ProfilePageType = {
             mainLink: " ",
             vk: " ",
         }
-    }
+    },
+    isAuth: false,
 }
 
 

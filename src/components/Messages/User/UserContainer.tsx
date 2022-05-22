@@ -12,7 +12,8 @@ export type MapDispatchToPropsType = {
 export type MessagePageType = {
     messages: Array<MessageType>
     users: Array<UserType>
-    messageText: string,
+    messageText: string
+    isAuth:boolean
 }
 
 export type MessageType = {
@@ -30,6 +31,7 @@ const mapStateToProps = (state: RootStateType): MessagePageType => {
         messages: state.messagePage.messages,
         users: state.messagePage.users,
         messageText: state.messagePage.messageText,
+        isAuth:state.auth.isAuth,
     }
 }
 

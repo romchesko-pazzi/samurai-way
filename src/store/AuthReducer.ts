@@ -34,7 +34,7 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
     } as const
 }
 
-export const setAuthUserDataTC = () => (dispatch:Dispatch<ActionType>) => {
+export const getAuthUserDataTC = () => (dispatch: Dispatch<ActionType>) => {
     authMe()
         .then(data => {
             if (data.resultCode === 0) {

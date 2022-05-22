@@ -48,4 +48,12 @@ export const reqForUnFollow = (userId: string) => {
         })
 }
 
+export const reqForSettingUser = (userId: number) => {
+    return instance
+        .get(`profile/${userId}`)
+        .then(response => {
+            return response.data;
+        })
+}
+
 

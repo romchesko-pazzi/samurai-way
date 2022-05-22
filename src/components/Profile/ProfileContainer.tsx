@@ -2,8 +2,7 @@ import React from "react";
 import {ProfilePresent} from "./ProfilePresent";
 import {connect} from "react-redux";
 import {RootStateType} from "../../store/store";
-import axios from "axios";
-import {setUserProfile, setUserProfileTC} from "../../store/ProfileAndMessagesActions";
+import {getUserProfileTC} from "../../store/ProfileAndMessagesActions";
 import {UserProfileType} from "./ProfileInfo";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
@@ -25,16 +24,17 @@ export type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
     userProfile: UserProfileType
+    isAuth:boolean
 }
 
 type MapDispatchToPropsType = {
-    setUserProfileTC: any
+    getUserProfileTC: any
 }
 
 
 export class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
-        this.props.setUserProfileTC(this.props.match.params.userId);
+        this.props.getUserProfileTC(this.props.match.params.userId);
     }
 
     render() {
@@ -43,6 +43,7 @@ export class ProfileContainer extends React.Component<PropsType> {
                 <ProfilePresent posts={this.props.posts}
                                 userProfile={this.props.userProfile}
                                 newPostText={this.props.newPostText}
+                                isAuth={this.props.isAuth}
                 />
             </div>
         )
@@ -54,11 +55,12 @@ export const mapStateToProps = (state: RootStateType): ProfilePageType => {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
         userProfile: state.profilePage.userProfile,
+        isAuth:state.auth.isAuth
     }
 }
 
 const ProfileContainerWithRouter = withRouter(ProfileContainer);
 
 export default connect(mapStateToProps, {
-    setUserProfileTC,
+    getUserProfileTC,
 })(ProfileContainerWithRouter);
