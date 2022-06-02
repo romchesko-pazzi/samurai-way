@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: "https://social-network.samuraijs.com/api/1.0/",
+    baseURL: "https://social-network.samuraijs.com/api/1.0",
     headers: {
         "api-key": "b586ccec-80f3-4fec-93a0-9cb544188701",
     }
@@ -10,7 +10,7 @@ const instance = axios.create({
 
 export const getUsers = (currentPage: number, pageSize: number) => {
     return instance
-        .get(`users?page=${currentPage}&count=${pageSize}`)
+        .get(`/users?page=${currentPage}&count=${pageSize}`)
         .then(response => {
             return response.data
         });
@@ -18,7 +18,7 @@ export const getUsers = (currentPage: number, pageSize: number) => {
 
 export const choosePageNumber = (pageNumber: number, pageSize: number) => {
     return instance
-        .get(`users?page=${pageNumber}&count=${pageSize}`)
+        .get(`/users?page=${pageNumber}&count=${pageSize}`)
         .then(response => {
             return response.data;
         });
@@ -34,7 +34,7 @@ export const authMe = () => {
 
 export const reqForFollow = (userId: string) => {
     return instance
-        .post(`follow/${userId}`)
+        .post(`/follow/${userId}`)
         .then(response => {
             return response.data;
         })
@@ -42,7 +42,7 @@ export const reqForFollow = (userId: string) => {
 
 export const reqForUnFollow = (userId: string) => {
     return instance
-        .delete(`follow/${userId}`)
+        .delete(`/follow/${userId}`)
         .then(response => {
             return response.data;
         })
@@ -50,7 +50,7 @@ export const reqForUnFollow = (userId: string) => {
 
 export const reqForSettingUser = (userId: number) => {
     return instance
-        .get(`profile/${userId}`)
+        .get(`/profile/${userId}`)
         .then(response => {
             return response.data;
         })
