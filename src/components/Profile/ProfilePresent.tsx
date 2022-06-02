@@ -1,17 +1,18 @@
 import React from 'react';
-import {ProfileInfo} from "./ProfileInfo";
-import {ProfilePageType} from "./ProfileContainer";
+import {ProfileInfo, UserProfileType} from "./ProfileInfo";
+import {PostsType} from "./ProfileContainer";
 import {MyPostsContainer} from "./My Posts/MyPostsContainer";
-import {Redirect} from "react-router-dom";
+
+type ProfilePresentType = {
+    posts: Array<PostsType>
+    newPostText: string
+    userProfile: UserProfileType
+}
 
 
-export const ProfilePresent: React.FC<ProfilePageType> = (props) => {
+export const ProfilePresent: React.FC<ProfilePresentType> = (props) => {
 
-    const {userProfile, isAuth} = props;
-
-    if (!isAuth) {
-        return <Redirect to={'/login'}/>
-    }
+    const {userProfile} = props;
 
     return (
         <div>

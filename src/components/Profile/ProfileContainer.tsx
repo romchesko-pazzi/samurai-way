@@ -6,31 +6,27 @@ import {getUserProfileTC} from "../../store/ProfileAndMessagesActions";
 import {UserProfileType} from "./ProfileInfo";
 import {withRouter} from "react-router-dom";
 import {RouteComponentProps} from "react-router";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type PathParamsType = {
     userId: string
 }
-
 type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType;
 export type ProfilePropsType = MapDispatchToPropsType & ProfilePageType
-
 export type PostsType = {
     id: string
     message: string
     likesCount: number
 }
-
 export type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
     userProfile: UserProfileType
-    isAuth:boolean
 }
 
 type MapDispatchToPropsType = {
     getUserProfileTC: any
 }
-
 
 export class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
@@ -43,7 +39,6 @@ export class ProfileContainer extends React.Component<PropsType> {
                 <ProfilePresent posts={this.props.posts}
                                 userProfile={this.props.userProfile}
                                 newPostText={this.props.newPostText}
-                                isAuth={this.props.isAuth}
                 />
             </div>
         )
@@ -55,11 +50,20 @@ export const mapStateToProps = (state: RootStateType): ProfilePageType => {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText,
         userProfile: state.profilePage.userProfile,
-        isAuth:state.auth.isAuth
     }
 }
 
-const ProfileContainerWithRouter = withRouter(ProfileContainer);
+// connect ->
+// ProfileContainerWithRouter ->
+// connect ->
+// AuthRedirectComponent ->
+// WithAuthRedirect->
+// ProfileContainer ->
+// ProfilePresent.
+
+const AuthRedirectComponent: any = withAuthRedirect(ProfileContainer);
+
+const ProfileContainerWithRouter = withRouter(AuthRedirectComponent);
 
 export default connect(mapStateToProps, {
     getUserProfileTC,
