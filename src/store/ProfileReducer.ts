@@ -1,9 +1,17 @@
 import {ACTIONS_TYPE, ActionType} from "./ProfileAndMessagesActions";
 import {v1} from "uuid";
-import {ProfilePageType} from "../components/Profile/ProfileContainer";
+import {UserProfileType} from "../components/Profile/ProfileInfo";
+import {PostsType} from "../components/Profile/ProfileContainer";
 
+type InitType = {
+    posts: Array<PostsType>
+    newPostText: string
+    userProfile: UserProfileType
+    isAuth: boolean
 
-const initialState: ProfilePageType = {
+}
+
+const initialState: InitType = {
     newPostText: "",
     posts: [
         {id: v1(), message: "MyPost1", likesCount: 10},
@@ -36,7 +44,7 @@ const initialState: ProfilePageType = {
 }
 
 
-export const ProfileReducer = (state = initialState, action: ActionType): ProfilePageType => {
+export const ProfileReducer = (state = initialState, action: ActionType): InitType => {
     switch (action.type) {
         case ACTIONS_TYPE.UPDATE_POST_TEXT: {
             return {...state, newPostText: action.payload.newText};

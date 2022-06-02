@@ -1,9 +1,15 @@
 import {ACTIONS_TYPE, ActionType} from "./ProfileAndMessagesActions";
 import {v1} from "uuid";
-import {MessagePageType} from "../components/Messages/User/UserContainer";
+import {MessageType, UserType} from "../components/Messages/User/UserContainer";
 
+type InitType = {
+    messages: Array<MessageType>
+    users: Array<UserType>
+    messageText: string
+    isAuth: boolean
+}
 
-const initialState: MessagePageType = {
+const initialState: InitType = {
     messageText: "",
     users: [
         {id: v1(), name: "User1"},
@@ -21,7 +27,7 @@ const initialState: MessagePageType = {
 }
 
 
-export const MessagesReducer = (state = initialState, action: ActionType): MessagePageType => {
+export const MessagesReducer = (state = initialState, action: ActionType): InitType => {
     switch (action.type) {
         case ACTIONS_TYPE.ADD_NEW_MESSAGE_TEXT: {
             return {...state, messageText: action.payload.newMessageText};
