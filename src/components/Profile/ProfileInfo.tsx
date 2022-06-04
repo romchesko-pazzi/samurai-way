@@ -1,6 +1,7 @@
 import React from 'react';
 import s from "./Profile.module.css";
 import {Preloader} from "../Preloader/Preloader";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 type SocialNetworksType = {
     facebook: string
@@ -35,10 +36,13 @@ type ProfileInfoPropsType = {
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
 
+
     const {userProfile} = props;
     if (!userProfile) {
         return <Preloader/>
     }
+
+
     return (
         <div className={s.profile}>
             <div className={s.aboutInfo}>
@@ -76,6 +80,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
                 <div className={s.aboutMe}>
                     <span>{userProfile.aboutMe}</span>
                 </div>
+                <EditableSpan/>
             </div>
         </div>
     )
