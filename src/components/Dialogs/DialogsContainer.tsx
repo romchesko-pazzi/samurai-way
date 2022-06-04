@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {ActionType, addNewMessageText, sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {RootStateType} from "../../store/store";
 import {Dialogs} from "./Dialogs";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -45,12 +45,9 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionType>): MapDispatchToPropsT
 }
 
 
-// export const DialogsContainer = compose(
-//     connect(mapStateToProps, mapDispatchToProps),
-//     withAuthRedirect
-// )
-// (Dialogs);
+export const DialogsContainer = compose<React.ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect)
+(Dialogs);
 
-const Container = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-export const DialogsContainer = withAuthRedirect(Container);
 
