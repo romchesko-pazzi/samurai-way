@@ -1,6 +1,6 @@
 import {ACTIONS_TYPE, ActionType} from "./ProfileAndMessagesActions";
 import {v1} from "uuid";
-import {MessageType, UserType} from "../components/Messages/User/UserContainer";
+import {MessageType, UserType} from "../components/Dialogs/DialogsContainer";
 
 type InitType = {
     messages: Array<MessageType>

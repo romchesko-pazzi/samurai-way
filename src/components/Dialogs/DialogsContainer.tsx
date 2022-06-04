@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from 'react';
-import {ActionType, addNewMessageText, sendNewMessageAC} from "../../../store/ProfileAndMessagesActions";
+import {ActionType, addNewMessageText, sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {RootStateType} from "../../../store/store";
-import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
-import {Users} from "./Users";
+import {RootStateType} from "../../store/store";
+import {Dialogs} from "./Dialogs";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type MapDispatchToPropsType = {
     onClickHandler: () => void
@@ -40,10 +40,17 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionType>): MapDispatchToPropsT
         },
         onChangeHandler: (event: ChangeEvent<HTMLTextAreaElement>) => {
             dispatch(addNewMessageText(event.currentTarget.value));
-        }
+        },
     }
 }
 
 
-const AuthRedirectComponent: any = withAuthRedirect(Users);
-export const UserContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
+// export const DialogsContainer = compose(
+//     connect(mapStateToProps, mapDispatchToProps),
+//     withAuthRedirect
+// )
+// (Dialogs);
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export const DialogsContainer = withAuthRedirect(Container);
+

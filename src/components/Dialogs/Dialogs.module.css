@@ -1,7 +1,13 @@
-.user {
+.messages {
     display: flex;
-    padding: 10px 15px;
-    border: 2px black solid;
+    flex-wrap: wrap;
+    border: 2px green solid;
+    height: 100vh;
+}
+
+.mainBox {
+    border: 2px red solid;
+    flex: 0 1 30%;
 }
 
 .user img {
@@ -13,6 +19,11 @@
 .boxForName {
     margin-left: 14px;
     border: 1px red solid;
+}
+
+.user {
+    display: flex;
+    padding: 10px 15px;
 }
 
 .userMain {

@@ -1,13 +1,13 @@
 import React from 'react';
 import "./App.css";
 import {Sidebar} from "./components/Sidebar/Sidebar";
-import {Messages} from "./components/Messages/Messages";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Settings} from "./components/Settings/Settings";
 import {LogIn} from "./components/LogIn/LogIn";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
                     <Route path={"/profile/:userId?"}
                            render={() => <ProfileContainer/>}/>
                     <Route path={"/messages/"}
-                           render={() => <Messages/>}/>
+                           render={() => <DialogsContainer/>}/>
                     <Route path={"/users/"}
                            render={() => <UsersContainer/>}/>
                     <Route path={"/logIn/"}
