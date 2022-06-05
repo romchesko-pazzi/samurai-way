@@ -33,10 +33,10 @@ export type UsersPageType = {
 }
 
 type MapDispatchToPropsType = {
-    getUsersThunkCreator: any
-    choosePageThunkCreator: any
-    unfollowThunkCreator: any
-    followThunkCreator: any
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    choosePageThunkCreator: (pageNumber: number, pageSize: number) => void
+    unfollowThunkCreator: (userID: string) => void
+    followThunkCreator: (userID: string) => void
 }
 
 const mapStateToProps = (state: RootStateType): UsersPageType => {
