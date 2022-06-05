@@ -1,6 +1,6 @@
 import {UserType} from "../components/Users/UsersContainer";
 import {Dispatch} from "redux";
-import {choosePageNumber, getUsers, reqForFollow, reqForUnFollow} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 export enum ACTIONS_TYPE {
     FOLLOW = "FOLLOW",
@@ -70,7 +70,7 @@ export const setFollowLoading = (isFetching: any, userId: string) => {
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch<ActionType>) => {
     dispatch(setLoadingIcon(true));
-    getUsers(currentPage, pageSize)
+    usersAPI.getUsers(currentPage, pageSize)
         .then(data => {
             dispatch(setLoadingIcon(false));
             dispatch(setUsers(data.items));
@@ -80,7 +80,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (
 
 export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => (dispatch: Dispatch<ActionType>) => {
     dispatch(setLoadingIcon(true));
-    choosePageNumber(pageNumber, pageSize)
+    usersAPI.choosePageNumber(pageNumber, pageSize)
         .then(data => {
             dispatch(setUsers(data.items));
             dispatch(setCurrentPage(pageNumber));
@@ -90,7 +90,7 @@ export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => 
 
 export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<ActionType>) => {
     dispatch(setFollowLoading(true, userID));
-    reqForUnFollow(userID)
+    profileAPI.unFollow(userID)
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(follow(userID));
@@ -101,7 +101,7 @@ export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<Acti
 
 export const followThunkCreator = (userID: string) => (dispatch: Dispatch<ActionType>) => {
     dispatch(setFollowLoading(true, userID));
-    reqForFollow(userID)
+    profileAPI.follow(userID)
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(follow(userID));

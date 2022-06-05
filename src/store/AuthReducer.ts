@@ -1,5 +1,5 @@
 import {AuthDataType} from "../components/Header/HeaderContainer";
-import {authMe} from "../api/api";
+import {authAPI} from "../api/api";
 import {Dispatch} from "redux";
 
 enum ACTIONS_TYPE {
@@ -35,7 +35,7 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
 }
 
 export const getAuthUserDataTC = () => (dispatch: Dispatch<ActionType>) => {
-    authMe()
+    authAPI.authMe()
         .then(data => {
             if (data.resultCode === 0) {
                 const {id, email, login} = data.data;
