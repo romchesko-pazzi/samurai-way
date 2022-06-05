@@ -8,7 +8,7 @@ type InitType = {
     newPostText: string
     userProfile: UserProfileType
     isAuth: boolean
-
+    status: string
 }
 
 const initialState: InitType = {
@@ -41,13 +41,15 @@ const initialState: InitType = {
         }
     },
     isAuth: false,
+    status: "",
 }
 
 
 export const ProfileReducer = (state = initialState, action: ActionType): InitType => {
     switch (action.type) {
+        case ACTIONS_TYPE.SET_USER_STATUS:
         case ACTIONS_TYPE.UPDATE_POST_TEXT: {
-            return {...state, newPostText: action.payload.newText};
+            return {...state, ...action.payload};
         }
         case ACTIONS_TYPE.ADD_POST: {
             let x = {id: v1(), message: state.newPostText, likesCount: 0};

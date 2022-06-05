@@ -2,6 +2,7 @@ import React from 'react';
 import s from "./Profile.module.css";
 import {Preloader} from "../Preloader/Preloader";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {updateUserStatusTC} from "../../store/ProfileAndMessagesActions";
 
 type SocialNetworksType = {
     facebook: string
@@ -31,13 +32,14 @@ export type UserProfileType = {
 
 type ProfileInfoPropsType = {
     userProfile: UserProfileType
+    status: string
+    updateUserStatusTC: (status: string) => void
 }
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
 
-
-    const {userProfile} = props;
+    const {userProfile, status, updateUserStatusTC} = props;
     if (!userProfile) {
         return <Preloader/>
     }
@@ -80,7 +82,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
                 <div className={s.aboutMe}>
                     <span>{userProfile.aboutMe}</span>
                 </div>
-                <EditableSpan/>
+                <EditableSpan updateUserStatusTC={updateUserStatusTC} status={status}/>
             </div>
         </div>
     )
