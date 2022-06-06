@@ -1,10 +1,11 @@
 import {Action, applyMiddleware, combineReducers, compose} from "redux";
 import {legacy_createStore as createStore} from 'redux'
-import {ProfileReducer} from "./ProfileReducer";
-import {MessagesReducer} from "./MessagesReducer";
-import {UsersReducer} from "./UsersReducer";
-import {AuthReducer} from "./AuthReducer";
+import {ProfileReducer} from "./reducers/ProfileReducer";
+import {MessagesReducer} from "./reducers/MessagesReducer";
+import {UsersReducer} from "./reducers/UsersReducer";
+import {AuthReducer} from "./reducers/AuthReducer";
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
+import { reducer as FormReducer } from 'redux-form';
 
 export type RootStateType = ReturnType<typeof rootReducer>
 export type AppThunk = ThunkDispatch<RootStateType, unknown, Action>
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     messagePage: MessagesReducer,
     usersPage: UsersReducer,
     auth: AuthReducer,
+    form: FormReducer,
 });
 
 
