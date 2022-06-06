@@ -1,4 +1,5 @@
 import axios from "axios";
+import {FormDataType} from "../components/Login/Login";
 
 const instance = axios.create({
     withCredentials: true,
@@ -51,7 +52,7 @@ export const usersAPI = {
         return instance
             .get(`/users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
-                return response.data
+                return response.data;
             });
     },
     choosePageNumber(pageNumber: number, pageSize: number) {
@@ -66,9 +67,12 @@ export const usersAPI = {
 export const authAPI = {
     authMe() {
         return instance
-            .get(`auth/me`)
+            .get(`/auth/me`)
             .then(response => {
                 return response.data;
             });
+    },
+    logIn(email: string, password: string, rememberMe: boolean) {
+        return instance.post('/auth/login', {email, password, rememberMe});
     }
 }
