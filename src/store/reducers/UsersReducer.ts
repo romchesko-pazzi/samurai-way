@@ -1,5 +1,5 @@
-import {ACTIONS_TYPE, ActionType} from "./UsersActions";
-import {UsersPageType} from "../components/Users/UsersContainer";
+import {ACTIONS_TYPE, ActionType} from "../UsersActions";
+import {UsersPageType} from "../../components/Users/UsersContainer";
 
 const initialState: UsersPageType = {
     users: [],
