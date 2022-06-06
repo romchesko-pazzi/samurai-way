@@ -2,7 +2,7 @@ import React from "react";
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {RootStateType} from "../../store/store";
-import {getAuthUserDataTC} from "../../store/AuthReducer";
+import {getAuthUserDataTC} from "../../store/reducers/AuthReducer";
 
 export type PropsType = AuthDataType & MapDispatchToPropsType;
 
@@ -14,7 +14,7 @@ export type AuthDataType = {
 }
 
 type MapDispatchToPropsType = {
-    getAuthUserDataTC: any
+    getAuthUserDataTC: () => void
 }
 
 const mapStateToProps = (state: RootStateType): AuthDataType => {

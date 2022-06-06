@@ -2,7 +2,6 @@ import React from 'react';
 import {ProfileInfo, UserProfileType} from "./ProfileInfo";
 import {PostsType} from "./ProfileContainer";
 import {MyPostsContainer} from "./My Posts/MyPostsContainer";
-import {updateUserStatusTC} from "../../store/ProfileAndMessagesActions";
 
 type ProfilePresentType = {
     posts: Array<PostsType>
