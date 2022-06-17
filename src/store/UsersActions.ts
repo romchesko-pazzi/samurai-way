@@ -1,7 +1,6 @@
 import {UserType} from "../components/Users/UsersContainer";
-import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
-import {ActionTypeForApp} from "./types";
+import {AppThunkType} from "./reducers/hooks";
 
 export enum ACTIONS_TYPE {
     FOLLOW = "FOLLOW",
@@ -70,45 +69,37 @@ export const setFollowLoading = (isFetching: any, userId: string) => {
     } as const
 }
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch<ActionTypeForApp>) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): AppThunkType => async (dispatch) => {
     dispatch(setLoadingIcon(true));
-    usersAPI.getUsers(currentPage, pageSize)
-        .then(data => {
-            dispatch(setLoadingIcon(false));
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(data.totalCount));
-        });
+    const response = await usersAPI.getUsers(currentPage, pageSize);
+    dispatch(setLoadingIcon(false));
+    dispatch(setUsers(response.items));
+    dispatch(setTotalUsersCount(response.totalCount));
 }
 
-export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => (dispatch: Dispatch<ActionTypeForApp>) => {
+export const choosePageThunkCreator = (pageNumber: number, pageSize: number): AppThunkType => async (dispatch) => {
     dispatch(setLoadingIcon(true));
-    usersAPI.choosePageNumber(pageNumber, pageSize)
-        .then(data => {
-            dispatch(setUsers(data.items));
-            dispatch(setCurrentPage(pageNumber));
-            dispatch(setLoadingIcon(false));
-        });
+    const response = await usersAPI.choosePageNumber(pageNumber, pageSize);
+    dispatch(setUsers(response.items));
+    dispatch(setCurrentPage(pageNumber));
+    dispatch(setLoadingIcon(false));
 }
 
-export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<ActionTypeForApp>) => {
+export const unfollowThunkCreator = (userID: string): AppThunkType => async (dispatch) => {
     dispatch(setFollowLoading(true, userID));
-    profileAPI.unFollow(userID)
-        .then(data => {
-            if (data.resultCode === 0) {
-                dispatch(follow(userID));
-            }
-            dispatch(setFollowLoading(false, userID));
-        })
+    const response = await profileAPI.unFollow(userID)
+    if (response.resultCode === 0) {
+        dispatch(follow(userID));
+    }
+    dispatch(setFollowLoading(false, userID));
 }
 
-export const followThunkCreator = (userID: string) => (dispatch: Dispatch<ActionTypeForApp>) => {
+export const followThunkCreator = (userID: string): AppThunkType => async (dispatch) => {
     dispatch(setFollowLoading(true, userID));
-    profileAPI.follow(userID)
-        .then(data => {
-            if (data.resultCode === 0) {
-                dispatch(follow(userID));
-            }
-            dispatch(setFollowLoading(false, userID));
-        })
+    const response = await profileAPI.follow(userID);
+    if (response.resultCode === 0) {
+        dispatch(follow(userID));
+    }
+    dispatch(setFollowLoading(false, userID));
 }
 

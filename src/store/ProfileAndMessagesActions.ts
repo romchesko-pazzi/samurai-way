@@ -48,28 +48,21 @@ const setUserStatus = (status: string) => {
     } as const
 }
 
-export const getUserProfileTC = (userId: number): AppThunkType => (dispatch) => {
+export const getUserProfileTC = (userId: number): AppThunkType => async (dispatch) => {
     userId = userId || 22904;
-    profileAPI.setUserProfile(userId)
-        .then(response => {
-            dispatch(setUserProfile(response));
-        })
+    const response = await profileAPI.setUserProfile(userId)
+    dispatch(setUserProfile(response));
 }
 
-export const getUserStatusTC = (userId: number): AppThunkType => (dispatch) => {
+export const getUserStatusTC = (userId: number): AppThunkType => async (dispatch) => {
     userId = userId || 22904;
-    profileAPI.getStatus(userId)
-        .then(res => {
-            dispatch(setUserStatus(res));
-        })
-        .catch(console.log);
+    const response = await profileAPI.getStatus(userId)
+    dispatch(setUserStatus(response));
 }
 
-export const updateUserStatusTC = (status: string): AppThunkType => (dispatch) => {
-    profileAPI.updateStatus(status)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setUserStatus(status));
-            }
-        })
+export const updateUserStatusTC = (status: string): AppThunkType => async (dispatch) => {
+    const response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setUserStatus(status));
+    }
 }

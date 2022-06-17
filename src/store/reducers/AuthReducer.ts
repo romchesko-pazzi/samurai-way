@@ -1,6 +1,6 @@
 import {AuthDataType} from "../../components/Header/HeaderContainer";
 import {authAPI} from "../../api/api";
-import {AuthThunkType} from "./hooks";
+import {AppThunkType} from "./hooks";
 
 enum ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
@@ -27,7 +27,6 @@ export const AuthReducer = (state = initialState, action: AuthActionType): AuthD
     }
 }
 
-
 export const setAuthUserData = (id: number, email: string, login: string) => {
     return {
         type: ACTIONS_TYPE.SET_USER_DATA,
@@ -35,24 +34,17 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
     } as const
 }
 
-export const getAuthUserDataTC = (): AuthThunkType => (dispatch) => {
-    authAPI.authMe()
-        .then(data => {
-            if (data.resultCode === 0) {
-                const {id, email, login} = data.data;
-                dispatch(setAuthUserData(id, email, login));
-            }
-        })
+export const getAuthUserDataTC = (): AppThunkType => async (dispatch) => {
+    const response = await authAPI.authMe();
+    if (response.resultCode === 0) {
+        const {id, email, login} = response.data;
+        dispatch(setAuthUserData(id, email, login));
+    }
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AuthThunkType => (dispatch) => {
-    authAPI.logIn(email, password, rememberMe)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(getAuthUserDataTC());
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
+export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunkType => async (dispatch) => {
+    const response = await authAPI.logIn(email, password, rememberMe);
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserDataTC());
+    }
 }
