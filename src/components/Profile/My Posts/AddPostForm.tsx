@@ -1,8 +1,8 @@
 import React from 'react';
 import s from "./MyPosts.module.css";
-import {useForm, SubmitHandler} from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 import {addPostAC} from "../../../store/ProfileAndMessagesActions";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../../store/reducers/hooks";
 
 type FormInputs = {
     newPostText: string
@@ -10,7 +10,7 @@ type FormInputs = {
 
 
 const AddPostForm = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const {handleSubmit, register, reset} = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = (data) => {

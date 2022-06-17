@@ -1,14 +1,14 @@
 import React from 'react';
-import {useForm, SubmitHandler} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {SubmitHandler, useForm} from "react-hook-form";
 import {sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
+import {useAppDispatch} from "../../store/reducers/hooks";
 
 type FormInputs = {
     newMessageText: string
 }
 
-const AddPostForm = () => {
-    const dispatch = useDispatch();
+const AddPostForm: React.FC = () => {
+    const dispatch = useAppDispatch();
     const {handleSubmit, register, reset} = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = (data) => {
