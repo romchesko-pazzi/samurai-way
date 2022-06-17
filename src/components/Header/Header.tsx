@@ -32,12 +32,13 @@ export const Header: React.FC<HeaderPropsType> = (props) => {
             <div className={s.section}>
                 {
                     authData.isAuth
-                        ? <div>
+                        ? <div className={s.login}>
                             <div>{authData.login}</div>
                             <div>{authData.email}</div>
+                            <button>Log out</button>
                         </div>
                         : <div className={s.item}>
-                            <NavLink to="/logIn"
+                            <NavLink to="/login"
                                      className={pressed => pressed ? s.active : s.link}>Log in</NavLink>
                         </div>
                 }

@@ -38,6 +38,7 @@ export class ProfileContainer extends React.Component<PropsType> {
         this.props.getUserProfileTC(userId);
         this.props.getUserStatusTC(userId);
     }
+
     render() {
         return (
             <div>

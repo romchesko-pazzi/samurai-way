@@ -29,10 +29,9 @@ const Login = (props: { isAuth: boolean } & MapDispatchToPropsType) => {
     }
 
     const onSubmit = (formData: FormDataType) => {
-        const {email, password, rememberMe} = formData
+        const {email, password, rememberMe} = formData;
         loginTC(email, password, rememberMe);
     }
-
 
     return <LoginWithReduxForm onSubmit={onSubmit}/>
 };
