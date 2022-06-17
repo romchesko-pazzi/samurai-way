@@ -1,4 +1,4 @@
-import {ACTIONS_TYPE, ActionType} from "../UsersActions";
+import {ACTIONS_TYPE, UsersActionType} from "../UsersActions";
 import {UsersPageType} from "../../components/Users/UsersContainer";
 
 const initialState: UsersPageType = {
@@ -10,7 +10,7 @@ const initialState: UsersPageType = {
     isFollowed: [],
 }
 
-export const UsersReducer = (state = initialState, action: ActionType): UsersPageType => {
+export const UsersReducer = (state = initialState, action: UsersActionType): UsersPageType => {
     switch (action.type) {
         case ACTIONS_TYPE.FOLLOW: {
             return {

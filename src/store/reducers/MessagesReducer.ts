@@ -1,4 +1,4 @@
-import {ACTIONS_TYPE, ActionType} from "../ProfileAndMessagesActions";
+import {ACTIONS_TYPE, ProfileAndMessageActionType} from "../ProfileAndMessagesActions";
 import {v1} from "uuid";
 import {MessageType, UserType} from "../../components/Dialogs/DialogsContainer";
 
@@ -27,7 +27,7 @@ const initialState: InitType = {
 }
 
 
-export const MessagesReducer = (state = initialState, action: ActionType): InitType => {
+export const MessagesReducer = (state = initialState, action: ProfileAndMessageActionType): InitType => {
     switch (action.type) {
         case ACTIONS_TYPE.SEND_NEW_MESSAGE: {
             let x = {id: v1(), message: action.payload.newMessageText};

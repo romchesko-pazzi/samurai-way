@@ -1,4 +1,4 @@
-import {ACTIONS_TYPE, ActionType} from "../ProfileAndMessagesActions";
+import {ACTIONS_TYPE, ProfileAndMessageActionType} from "../ProfileAndMessagesActions";
 import {v1} from "uuid";
 import {UserProfileType} from "../../components/Profile/ProfileInfo";
 import {PostsType} from "../../components/Profile/ProfileContainer";
@@ -45,7 +45,7 @@ const initialState: InitType = {
 }
 
 
-export const ProfileReducer = (state = initialState, action: ActionType): InitType => {
+export const ProfileReducer = (state = initialState, action: ProfileAndMessageActionType): InitType => {
     switch (action.type) {
         case ACTIONS_TYPE.SET_USER_STATUS: {
             return {...state, ...action.payload};

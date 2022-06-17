@@ -1,5 +1,4 @@
 import axios from "axios";
-import {FormDataType} from "../components/Login/Login";
 
 const instance = axios.create({
     withCredentials: true,
