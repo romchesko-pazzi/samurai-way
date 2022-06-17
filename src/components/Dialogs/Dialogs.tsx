@@ -1,6 +1,7 @@
 import React from 'react';
-import {MapDispatchToPropsType, MessageType, UserType} from "./DialogsContainer";
+import {MessageType, UserType} from "./DialogsContainer";
 import s from "./Dialogs.module.css";
+import SendMessageForm from "./SendMessageForm";
 
 type UsersType = {
     messages: Array<MessageType>
@@ -8,11 +9,11 @@ type UsersType = {
     messageText: string
 }
 
-export type UsersPropsType = MapDispatchToPropsType & UsersType
+export type UsersPropsType = UsersType
 
 export const Dialogs: React.FC<UsersPropsType> = (props) => {
 
-    const {messageText, users, messages, onChangeHandler, onClickHandler} = props;
+    const {users, messages} = props;
 
     return (
         <div className={s.userMain}>
@@ -24,11 +25,7 @@ export const Dialogs: React.FC<UsersPropsType> = (props) => {
                     </div>
                 </div>
             </div>)}
-            <div>
-                <textarea onChange={(event) => onChangeHandler(event)}
-                          value={messageText}/>
-                <button onClick={onClickHandler}>send</button>
-            </div>
+            <SendMessageForm/>
             {messages.map(m => <div key={m.id}>{m.message}</div>)}
         </div>
     );

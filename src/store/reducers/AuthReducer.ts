@@ -1,6 +1,5 @@
 import {AuthDataType} from "../../components/Header/HeaderContainer";
 import {authAPI} from "../../api/api";
-import {FormDataType} from "../../components/Login/Login";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {RootStateType} from "../store";
 

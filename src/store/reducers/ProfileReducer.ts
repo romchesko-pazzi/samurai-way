@@ -47,12 +47,11 @@ const initialState: InitType = {
 
 export const ProfileReducer = (state = initialState, action: ActionType): InitType => {
     switch (action.type) {
-        case ACTIONS_TYPE.SET_USER_STATUS:
-        case ACTIONS_TYPE.UPDATE_POST_TEXT: {
+        case ACTIONS_TYPE.SET_USER_STATUS: {
             return {...state, ...action.payload};
         }
         case ACTIONS_TYPE.ADD_POST: {
-            let x = {id: v1(), message: state.newPostText, likesCount: 0};
+            let x = {id: v1(), message: action.payload.newPostText, likesCount: 0};
             return {...state, posts: [x, ...state.posts], newPostText: ""};
         }
         case ACTIONS_TYPE.SET_USER_PROFILE: {

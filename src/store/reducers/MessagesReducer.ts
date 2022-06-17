@@ -29,12 +29,9 @@ const initialState: InitType = {
 
 export const MessagesReducer = (state = initialState, action: ActionType): InitType => {
     switch (action.type) {
-        case ACTIONS_TYPE.ADD_NEW_MESSAGE_TEXT: {
-            return {...state, messageText: action.payload.newMessageText};
-        }
         case ACTIONS_TYPE.SEND_NEW_MESSAGE: {
-            let x = {id: v1(), message: state.messageText};
-            return {...state, messages: [x, ...state.messages], messageText: ""};
+            let x = {id: v1(), message: action.payload.newMessageText};
+            return {...state, messages: [x, ...state.messages]};
         }
         default:
             return state;

@@ -1,15 +1,10 @@
-import React, {ChangeEvent} from 'react';
-import {ActionType, addNewMessageText, sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
+import React from 'react';
 import {connect} from "react-redux";
-import {compose, Dispatch} from "redux";
+import {compose} from "redux";
 import {RootStateType} from "../../store/store";
 import {Dialogs} from "./Dialogs";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
-export type MapDispatchToPropsType = {
-    onClickHandler: () => void
-    onChangeHandler: (event: ChangeEvent<HTMLTextAreaElement>) => void
-}
 export type MessagePageType = {
     messages: Array<MessageType>
     users: Array<UserType>
@@ -24,7 +19,6 @@ export type UserType = {
     id: string
 }
 
-
 const mapStateToProps = (state: RootStateType): MessagePageType => {
     return {
         messages: state.messagePage.messages,
@@ -33,20 +27,8 @@ const mapStateToProps = (state: RootStateType): MessagePageType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<ActionType>): MapDispatchToPropsType => {
-    return {
-        onClickHandler: () => {
-            dispatch(sendNewMessageAC());
-        },
-        onChangeHandler: (event: ChangeEvent<HTMLTextAreaElement>) => {
-            dispatch(addNewMessageText(event.currentTarget.value));
-        },
-    }
-}
-
-
 export const DialogsContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps),
     withAuthRedirect)
 (Dialogs);
 
