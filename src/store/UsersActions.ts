@@ -1,6 +1,7 @@
 import {UserType} from "../components/Users/UsersContainer";
 import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
+import {ActionTypeForApp} from "./types";
 
 export enum ACTIONS_TYPE {
     FOLLOW = "FOLLOW",
@@ -11,7 +12,7 @@ export enum ACTIONS_TYPE {
     SET_FOLLOW_LOADING = "SET_FOLLOW_LOADING",
 }
 
-export type ActionType =
+export type UsersActionType =
     FollowType |
     SetUsersType |
     SetCurrentPageType |
@@ -25,6 +26,7 @@ type SetCurrentPageType = ReturnType<typeof setCurrentPage>;
 type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCount>;
 type SetLoadingIconType = ReturnType<typeof setLoadingIcon>;
 type SetFollowLoadingType = ReturnType<typeof setFollowLoading>;
+
 
 export const follow = (userId: string) => {
     return {
@@ -68,7 +70,7 @@ export const setFollowLoading = (isFetching: any, userId: string) => {
     } as const
 }
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch<ActionType>) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch<ActionTypeForApp>) => {
     dispatch(setLoadingIcon(true));
     usersAPI.getUsers(currentPage, pageSize)
         .then(data => {
@@ -78,7 +80,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (
         });
 }
 
-export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => (dispatch: Dispatch<ActionType>) => {
+export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => (dispatch: Dispatch<ActionTypeForApp>) => {
     dispatch(setLoadingIcon(true));
     usersAPI.choosePageNumber(pageNumber, pageSize)
         .then(data => {
@@ -88,7 +90,7 @@ export const choosePageThunkCreator = (pageNumber: number, pageSize: number) => 
         });
 }
 
-export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<ActionType>) => {
+export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<ActionTypeForApp>) => {
     dispatch(setFollowLoading(true, userID));
     profileAPI.unFollow(userID)
         .then(data => {
@@ -99,7 +101,7 @@ export const unfollowThunkCreator = (userID: string) => (dispatch: Dispatch<Acti
         })
 }
 
-export const followThunkCreator = (userID: string) => (dispatch: Dispatch<ActionType>) => {
+export const followThunkCreator = (userID: string) => (dispatch: Dispatch<ActionTypeForApp>) => {
     dispatch(setFollowLoading(true, userID));
     profileAPI.follow(userID)
         .then(data => {

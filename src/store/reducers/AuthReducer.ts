@@ -1,16 +1,14 @@
 import {AuthDataType} from "../../components/Header/HeaderContainer";
 import {authAPI} from "../../api/api";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {RootStateType} from "../store";
+import {AuthThunkType} from "./hooks";
 
 enum ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
 }
 
-type ActionType = SetUserDataType;
+export type AuthActionType = SetUserDataType;
 type SetUserDataType = ReturnType<typeof setAuthUserData>;
-export type AuthThunkType = ThunkAction<any, RootStateType, unknown, ActionType>;
-export type ThunkDispatchType = ThunkDispatch<RootStateType, unknown, ActionType>;
+
 
 const initialState: AuthDataType = {
     id: null,
@@ -19,7 +17,7 @@ const initialState: AuthDataType = {
     isAuth: false,
 }
 
-export const AuthReducer = (state = initialState, action: ActionType): AuthDataType => {
+export const AuthReducer = (state = initialState, action: AuthActionType): AuthDataType => {
     switch (action.type) {
         case ACTIONS_TYPE.SET_USER_DATA: {
             return {...state, ...action.payload, isAuth: true}
@@ -37,7 +35,7 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
     } as const
 }
 
-export const getAuthUserDataTC = (): AuthThunkType => (dispatch: ThunkDispatchType) => {
+export const getAuthUserDataTC = (): AuthThunkType => (dispatch) => {
     authAPI.authMe()
         .then(data => {
             if (data.resultCode === 0) {
@@ -47,7 +45,7 @@ export const getAuthUserDataTC = (): AuthThunkType => (dispatch: ThunkDispatchTy
         })
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AuthThunkType => (dispatch: ThunkDispatchType) => {
+export const loginTC = (email: string, password: string, rememberMe: boolean): AuthThunkType => (dispatch) => {
     authAPI.logIn(email, password, rememberMe)
         .then(res => {
             if (res.data.resultCode === 0) {
