@@ -37,6 +37,6 @@ export class HeaderContainer extends React.Component<PropsType> {
 }
 
 export default connect(mapStateToProps, {
-    getAuthUserDataTC
+    getAuthUserDataTC,
 })(HeaderContainer);
 
