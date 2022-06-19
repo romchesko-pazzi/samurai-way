@@ -3,6 +3,8 @@ import s from "./Header.module.css";
 import {NavLink} from "react-router-dom";
 import {Reddit} from "@mui/icons-material";
 import {PropsType} from "./HeaderContainer";
+import {logOut} from "../../store/reducers/AuthReducer";
+import {useAppDispatch} from "../../store/hooks";
 
 type HeaderPropsType = {
     authData: PropsType
@@ -11,6 +13,10 @@ type HeaderPropsType = {
 export const Header: React.FC<HeaderPropsType> = (props) => {
 
     const {authData} = props;
+    const dispatch = useAppDispatch();
+    const logOutHandler = () => {
+        dispatch(logOut());
+    }
 
     return (
         <div className={s.header}>
@@ -35,7 +41,7 @@ export const Header: React.FC<HeaderPropsType> = (props) => {
                         ? <div className={s.login}>
                             <div>{authData.login}</div>
                             <div>{authData.email}</div>
-                            <button>Log out</button>
+                            <button onClick={logOutHandler}>Log out</button>
                         </div>
                         : <div className={s.item}>
                             <NavLink to="/login"
