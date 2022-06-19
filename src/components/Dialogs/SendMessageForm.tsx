@@ -10,7 +10,7 @@ type AddPostFormPropsType = {
     sendMessage: (newMessageText: string) => void
 }
 
-const AddPostForm: React.FC<AddPostFormPropsType> = (props) => {
+export const SendMessageForm: React.FC<AddPostFormPropsType> = (props) => {
     const {sendMessage} = props
     const {
         handleSubmit,
@@ -48,5 +48,3 @@ const AddPostForm: React.FC<AddPostFormPropsType> = (props) => {
         </form>
     )
 };
-
-export default AddPostForm;

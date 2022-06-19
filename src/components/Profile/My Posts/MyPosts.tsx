@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "./MyPosts.module.css";
-import AddPostForm from "./AddPostForm";
+import {AddPostForm} from "./AddPostForm";
 
 export type PostsType = {
     id: string

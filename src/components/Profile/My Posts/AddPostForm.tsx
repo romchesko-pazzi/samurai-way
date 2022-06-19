@@ -10,7 +10,7 @@ type AddPostPropsType = {
     addPost: (newPostText: string) => void
 }
 
-const AddPostForm: React.FC<AddPostPropsType> = (props) => {
+export const AddPostForm: React.FC<AddPostPropsType> = (props) => {
     const {addPost} = props
     const {
         handleSubmit,
@@ -49,7 +49,3 @@ const AddPostForm: React.FC<AddPostPropsType> = (props) => {
         </form>
     )
 };
-
-export default AddPostForm;
-
-// formState - хранятся ошибки
