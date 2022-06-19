@@ -1,27 +1,49 @@
 import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
-import {useAppDispatch} from "../../store/hooks";
+import s from "./SendMessageForm.module.css";
 
 type FormInputs = {
     newMessageText: string
 }
 
-const AddPostForm: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const {handleSubmit, register, reset} = useForm<FormInputs>();
+type AddPostFormPropsType = {
+    sendMessage: (newMessageText: string) => void
+}
+
+const AddPostForm: React.FC<AddPostFormPropsType> = (props) => {
+    const {sendMessage} = props
+    const {
+        handleSubmit,
+        register,
+        reset,
+        formState: {errors, isValid},
+    } = useForm<FormInputs>({mode: "onBlur"});
 
     const onSubmit: SubmitHandler<FormInputs> = (data) => {
         const {newMessageText} = data;
-        dispatch(sendNewMessageAC(newMessageText));
+        sendMessage(newMessageText)
         reset();
     }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <textarea {...register("newMessageText")}/>
-                <button>send message</button>
+            <div className={s.field}>
+                <textarea
+                    {...register("newMessageText",
+                        {
+                            required: "message is required",
+                            maxLength: {
+                                value: 20,
+                                message: "Too many symbols"
+                            },
+                        })}
+                    maxLength={21}
+                    placeholder={"Your message"}
+                />
+                <button disabled={!isValid} className={s.btn}>send message</button>
+            </div>
+            <div className={s.error}>
+                {errors.newMessageText && errors.newMessageText.message}
             </div>
         </form>
     )

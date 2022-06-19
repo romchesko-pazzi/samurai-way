@@ -12,7 +12,12 @@ type AddPostPropsType = {
 
 const AddPostForm: React.FC<AddPostPropsType> = (props) => {
     const {addPost} = props
-    const {handleSubmit, register, reset} = useForm<FormInputs>();
+    const {
+        handleSubmit,
+        register,
+        reset,
+        formState: {errors, isValid}
+    } = useForm<FormInputs>({mode: "onBlur"});
 
     const onSubmit: SubmitHandler<FormInputs> = (data) => {
         const {newPostText} = data;
@@ -22,12 +27,29 @@ const AddPostForm: React.FC<AddPostPropsType> = (props) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className={s.input}>
-                <textarea {...register("newPostText")}/>
-                <button>add post</button>
+            <div className={s.field}>
+                <textarea {...register("newPostText",
+                    {
+                        required: "post is required",
+                        maxLength: {
+                            value: 20,
+                            message: "Too many symbols",
+                        }
+                    })}
+                          placeholder={"Your new post"}
+                          maxLength={21}
+                />
+                <div className={s.btn}>
+                    <button disabled={!isValid}>add post</button>
+                </div>
+            </div>
+            <div className={s.error}>
+                {errors.newPostText && errors.newPostText.message}
             </div>
         </form>
     )
 };
 
 export default AddPostForm;
+
+// formState - хранятся ошибки
