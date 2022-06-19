@@ -1,21 +1,14 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {RootStateType} from "../../../store/store";
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {MyPosts} from "./MyPosts";
-import {PostsType} from "../ProfileContainer";
+import {addPostAC} from "../../../store/ProfileAndMessagesActions";
 
-type PostsPageType = {
-    posts: Array<PostsType>
-    newPostText: string
+export const MyPostsContainer = () => {
+    const {posts} = useAppSelector(state => state.profilePage);
+    const dispatch = useAppDispatch();
+    const addPostText = (newPostText: string) => {
+        dispatch(addPostAC(newPostText));
+    };
+
+    return <MyPosts posts={posts} addPost={addPostText}/>
 }
-
-export type MyPostsPropsType =PostsPageType;
-
-const mapStateToProps = (state: RootStateType): PostsPageType => {
-    return {
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText,
-    }
-}
-
-export const MyPostsContainer = connect(mapStateToProps)(MyPosts);

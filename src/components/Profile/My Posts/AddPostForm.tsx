@@ -1,21 +1,22 @@
 import React from 'react';
 import s from "./MyPosts.module.css";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {addPostAC} from "../../../store/ProfileAndMessagesActions";
-import {useAppDispatch} from "../../../store/reducers/hooks";
 
 type FormInputs = {
     newPostText: string
 }
 
+type AddPostPropsType = {
+    addPost: (newPostText: string) => void
+}
 
-const AddPostForm = () => {
-    const dispatch = useAppDispatch();
+const AddPostForm: React.FC<AddPostPropsType> = (props) => {
+    const {addPost} = props
     const {handleSubmit, register, reset} = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = (data) => {
         const {newPostText} = data;
-        dispatch(addPostAC(newPostText));
+        addPost(newPostText);
         reset();
     }
 
