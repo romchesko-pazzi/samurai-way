@@ -3,11 +3,11 @@ import "./App.css";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 import {Settings} from "./components/Settings/Settings";
-import {SignIn} from "./components/Login/SignIn";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {SignInContainer} from "./components/Login/SignInContainer";
 
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
                     <Route path={"/users/"}
                            render={() => <UsersContainer/>}/>
                     <Route path={"/logIn/"}
-                           render={() => <SignIn/>}/>
+                           render={() => <SignInContainer/>}/>
                     <Route path={"/settings/"}
                            render={() => <Settings/>}/>
                 </div>

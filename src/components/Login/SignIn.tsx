@@ -13,8 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {SubmitHandler, useForm} from "react-hook-form";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {loginTC} from "../../store/reducers/AuthReducer";
 import {Redirect} from "react-router-dom";
 
 export type FormDataType = {
@@ -23,18 +21,21 @@ export type FormDataType = {
     rememberMe: boolean
 }
 
+type SignInPropsType = {
+    isAuth: boolean
+    signIn: (email: string, password: string, rememberMe: boolean) => void
+}
+
 const theme = createTheme();
 
-export const SignIn = () => {
-    const isAuth = useAppSelector(state => state.auth.isAuth);
-    const dispatch = useAppDispatch();
-
-    const {register, handleSubmit, reset,} = useForm<FormDataType>({
+export const SignIn: React.FC<SignInPropsType> = (props) => {
+    const {isAuth, signIn} = props
+    const {register, handleSubmit, reset} = useForm<FormDataType>({
         mode: "onBlur"
     });
     const onSubmit: SubmitHandler<FormDataType> = (data) => {
         const {email, password, rememberMe} = data;
-        dispatch(loginTC(email, password, rememberMe));
+        signIn(email, password, rememberMe);
         reset();
     };
     if (isAuth) {
