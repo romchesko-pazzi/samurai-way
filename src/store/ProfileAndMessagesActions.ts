@@ -1,6 +1,6 @@
 import {UserProfileType} from "../components/Profile/ProfileInfo";
 import {profileAPI} from "../api/api";
-import {AppThunkType} from "./reducers/hooks";
+import {AppThunkType} from "./hooks";
 
 export enum ACTIONS_TYPE {
     ADD_POST = "ADD-POST",

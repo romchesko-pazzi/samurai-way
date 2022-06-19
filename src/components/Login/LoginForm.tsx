@@ -2,7 +2,7 @@ import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {loginTC} from "../../store/reducers/AuthReducer";
 import {Redirect} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../store/reducers/hooks";
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
 
 export type FormDataType = {
     email: string
@@ -11,10 +11,8 @@ export type FormDataType = {
 }
 
 export const LoginForm = () => {
-
     const isAuth = useAppSelector(state => state.auth.isAuth);
     const dispatch = useAppDispatch();
-    console.log(isAuth)
     const {handleSubmit, register, reset} = useForm<FormDataType>();
 
     const onSubmit: SubmitHandler<FormDataType> = (data) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
-import {useAppDispatch} from "../../store/reducers/hooks";
+import {useAppDispatch} from "../../store/hooks";
 
 type FormInputs = {
     newMessageText: string

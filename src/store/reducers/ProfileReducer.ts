@@ -1,7 +1,7 @@
 import {ACTIONS_TYPE, ProfileAndMessageActionType} from "../ProfileAndMessagesActions";
 import {v1} from "uuid";
 import {UserProfileType} from "../../components/Profile/ProfileInfo";
-import {PostsType} from "../../components/Profile/ProfileContainer";
+import {PostsType} from '../../components/Profile/My Posts/MyPosts'
 
 type InitType = {
     posts: Array<PostsType>

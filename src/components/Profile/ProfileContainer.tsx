@@ -14,16 +14,10 @@ type PathParamsType = {
 }
 type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType;
 export type ProfilePropsType = MapDispatchToPropsType & ProfilePageType
-export type PostsType = {
-    id: string
-    message: string
-    likesCount: number
-}
+
 export type ProfilePageType = {
-    posts: Array<PostsType>
-    newPostText: string
-    userProfile: UserProfileType
     status: string
+    userProfile: UserProfileType
 }
 
 type MapDispatchToPropsType = {
@@ -42,11 +36,10 @@ export class ProfileContainer extends React.Component<PropsType> {
     render() {
         return (
             <div>
-                <ProfilePresent posts={this.props.posts}
-                                userProfile={this.props.userProfile}
-                                newPostText={this.props.newPostText}
-                                status={this.props.status}
-                                updateUserStatusTC={this.props.updateUserStatusTC}
+                <ProfilePresent
+                    status={this.props.status}
+                    userProfile={this.props.userProfile}
+                    updateUserStatusTC={this.props.updateUserStatusTC}
                 />
             </div>
         )
@@ -55,8 +48,6 @@ export class ProfileContainer extends React.Component<PropsType> {
 
 export const mapStateToProps = (state: RootStateType): ProfilePageType => {
     return {
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText,
         userProfile: state.profilePage.userProfile,
         status: state.profilePage.status,
     }

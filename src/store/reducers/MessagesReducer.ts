@@ -5,12 +5,10 @@ import {MessageType, UserType} from "../../components/Dialogs/DialogsContainer";
 type InitType = {
     messages: Array<MessageType>
     users: Array<UserType>
-    messageText: string
     isAuth: boolean
 }
 
 const initialState: InitType = {
-    messageText: "",
     users: [
         {id: v1(), name: "User1"},
         {id: v1(), name: "User2"},

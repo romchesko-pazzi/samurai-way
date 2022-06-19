@@ -1,6 +1,6 @@
 import {UserType} from "../components/Users/UsersContainer";
 import {profileAPI, usersAPI} from "../api/api";
-import {AppThunkType} from "./reducers/hooks";
+import {AppThunkType} from "./hooks";
 
 export enum ACTIONS_TYPE {
     FOLLOW = "FOLLOW",

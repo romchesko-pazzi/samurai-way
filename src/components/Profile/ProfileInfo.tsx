@@ -2,7 +2,6 @@ import React from 'react';
 import s from "./Profile.module.css";
 import {Preloader} from "../Preloader/Preloader";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
-import {updateUserStatusTC} from "../../store/ProfileAndMessagesActions";
 
 type SocialNetworksType = {
     facebook: string

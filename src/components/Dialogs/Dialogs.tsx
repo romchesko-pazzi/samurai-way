@@ -17,7 +17,7 @@ export const Dialogs: React.FC<UsersPropsType> = (props) => {
 
     return (
         <div className={s.userMain}>
-            {users.map((m: any) => <div key={m.id} className={s.user}>
+            {users.map(m => <div key={m.id} className={s.user}>
                 <img src="https://i1.sndcdn.com/artworks-VTCwyUVS9pbVSztP-IyNZmA-t500x500.jpg" alt=""/>
                 <div className={s.boxForName}>
                     <div>

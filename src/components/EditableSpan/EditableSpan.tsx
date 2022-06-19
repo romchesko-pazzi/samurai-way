@@ -11,7 +11,6 @@ type PrevStateType = {
 }
 
 export class EditableSpan extends React.Component<EditableSpanPropsType> {
-
     state = {
         area: true,
         value: this.props.status,

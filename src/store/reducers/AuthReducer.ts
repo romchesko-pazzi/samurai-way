@@ -1,6 +1,6 @@
 import {AuthDataType} from "../../components/Header/HeaderContainer";
 import {authAPI} from "../../api/api";
-import {AppThunkType} from "./hooks";
+import {AppThunkType} from "../hooks";
 
 enum ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
