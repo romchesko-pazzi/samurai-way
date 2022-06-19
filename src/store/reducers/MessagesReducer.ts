@@ -1,7 +1,14 @@
 import {ACTIONS_TYPE, ProfileAndMessageActionType} from "../ProfileAndMessagesActions";
 import {v1} from "uuid";
-import {MessageType, UserType} from "../../components/Dialogs/DialogsContainer";
 
+export type MessageType = {
+    id: string
+    message: string
+}
+export type UserType = {
+    name: string
+    id: string
+}
 type InitType = {
     messages: Array<MessageType>
     users: Array<UserType>
