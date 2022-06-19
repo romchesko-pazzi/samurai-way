@@ -1,19 +1,31 @@
 import React from 'react';
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {RootStateType} from "../../store/store";
 import {Dialogs} from "./Dialogs";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {sendNewMessageAC} from "../../store/ProfileAndMessagesActions";
 
-
-const DialogsContainer = () => {
-
-    const dispatch = useAppDispatch();
-    const {messages, users} = useAppSelector(state => state.messagePage)
-    const addMessage = (newMessageText: string) => {
-        dispatch(sendNewMessageAC(newMessageText));
-    }
-
-    return <Dialogs messages={messages} users={users} sendMessage={addMessage}/>
+export type MessagePageType = {
+    messages: Array<MessageType>
+    users: Array<UserType>
+}
+export type MessageType = {
+    id: string
+    message: string
+}
+export type UserType = {
+    name: string
+    id: string
 }
 
-export default withAuthRedirect(DialogsContainer);
+const mapStateToProps = (state: RootStateType): MessagePageType => {
+    return {
+        messages: state.messagePage.messages,
+        users: state.messagePage.users,
+    }
+}
+
+export const DialogsContainer = compose<React.ComponentType>(
+    connect(mapStateToProps),
+    withAuthRedirect)
+(Dialogs);

@@ -1,17 +1,19 @@
 import React from 'react';
+import {MessageType, UserType} from "./DialogsContainer";
 import s from "./Dialogs.module.css";
 import SendMessageForm from "./SendMessageForm";
-import {MessageType, UserType} from "../../store/reducers/MessagesReducer";
 
-type UsersPropsType = {
+type UsersType = {
     messages: Array<MessageType>
     users: Array<UserType>
-    sendMessage: (newMessageText: string) => void
+    messageText: string
 }
+
+export type UsersPropsType = UsersType
 
 export const Dialogs: React.FC<UsersPropsType> = (props) => {
 
-    const {users, messages, sendMessage} = props;
+    const {users, messages} = props;
 
     return (
         <div className={s.userMain}>
@@ -23,7 +25,7 @@ export const Dialogs: React.FC<UsersPropsType> = (props) => {
                     </div>
                 </div>
             </div>)}
-            <SendMessageForm sendMessage={sendMessage}/>
+            <SendMessageForm/>
             {messages.map(m => <div key={m.id}>{m.message}</div>)}
         </div>
     );

@@ -14,6 +14,7 @@ type PathParamsType = {
 }
 type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType;
 export type ProfilePropsType = MapDispatchToPropsType & ProfilePageType
+
 export type ProfilePageType = {
     status: string
     userProfile: UserProfileType
