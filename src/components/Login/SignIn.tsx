@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Redirect} from "react-router-dom";
+import s from "./SignIn.module.css";
 
 export type FormDataType = {
     email: string
@@ -23,13 +24,14 @@ export type FormDataType = {
 
 type SignInPropsType = {
     isAuth: boolean
+    error: string
     signIn: (email: string, password: string, rememberMe: boolean) => void
 }
 
 const theme = createTheme();
 
 export const SignIn: React.FC<SignInPropsType> = (props) => {
-    const {isAuth, signIn} = props
+    const {isAuth, signIn, error} = props
     const {register, handleSubmit, reset} = useForm<FormDataType>({
         mode: "onBlur"
     });
@@ -69,7 +71,8 @@ export const SignIn: React.FC<SignInPropsType> = (props) => {
                             label="Email Address"
                             autoComplete="email"
                             autoFocus
-                            {...register("email")}
+                            error={!!error}
+                            {...register("email", {})}
                         />
                         <TextField
                             margin="normal"
@@ -79,6 +82,7 @@ export const SignIn: React.FC<SignInPropsType> = (props) => {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            error={!!error}
                             {...register("password")}
                         />
                         <FormControlLabel
@@ -94,6 +98,9 @@ export const SignIn: React.FC<SignInPropsType> = (props) => {
                         >
                             Sign In
                         </Button>
+                        <div className={s.errorBlock}>
+                            <span>{error}</span>
+                        </div>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">

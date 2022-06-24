@@ -11,6 +11,7 @@ export type AuthDataType = {
     email: string,
     login: string,
     isAuth: boolean,
+    error: string,
 }
 
 type MapDispatchToPropsType = {
@@ -23,6 +24,7 @@ const mapStateToProps = (state: RootStateType): AuthDataType => {
         email: state.auth.email,
         login: state.auth.login,
         isAuth: state.auth.isAuth,
+        error: state.auth.error,
     }
 }
 

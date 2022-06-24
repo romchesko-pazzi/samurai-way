@@ -5,9 +5,9 @@ import {loginTC} from "../../store/reducers/AuthReducer";
 
 export const SignInContainer = () => {
     const dispatch = useAppDispatch();
-    const isAuth = useAppSelector(state => state.auth.isAuth);
+    const {isAuth, error} = useAppSelector(state => state.auth);
     const signIn = (email: string, password: string, rememberMe: boolean) => {
         dispatch(loginTC(email, password, rememberMe));
     }
-    return <SignIn isAuth={isAuth} signIn={signIn}/>
+    return <SignIn isAuth={isAuth} signIn={signIn} error={error}/>
 };
