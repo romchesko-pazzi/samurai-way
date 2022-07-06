@@ -11,6 +11,14 @@ import {UsersPresent} from "./UsersPresent";
 import {Preloader} from "../Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getIsFollowed,
+    getIsLoading,
+    getPageSize,
+    getTotalCount,
+    getUsers
+} from "../../store/users-selectors";
 
 export type UsersPropsType = MapDispatchToPropsType & UsersPageType;
 
@@ -39,16 +47,28 @@ type MapDispatchToPropsType = {
     followThunkCreator: (userID: string) => void
 }
 
+// const mapStateToProps = (state: RootStateType): UsersPageType => {
+//     return {
+//         users: state.usersPage.users,
+//         totalCount: state.usersPage.totalCount,
+//         currentPage: state.usersPage.currentPage,
+//         pageSize: state.usersPage.pageSize,
+//         isLoading: state.usersPage.isLoading,
+//         isFollowed: state.usersPage.isFollowed,
+//     }
+// }
+
 const mapStateToProps = (state: RootStateType): UsersPageType => {
     return {
-        users: state.usersPage.users,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        pageSize: state.usersPage.pageSize,
-        isLoading: state.usersPage.isLoading,
-        isFollowed: state.usersPage.isFollowed,
+        users: getUsers(state),
+        totalCount: getTotalCount(state),
+        currentPage: getCurrentPage(state),
+        pageSize: getPageSize(state),
+        isLoading: getIsLoading(state),
+        isFollowed: getIsFollowed(state),
     }
 }
+
 
 export class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
