@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./Profile.module.css";
 import {Preloader} from "../Preloader/Preloader";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {EditableSpanHooks} from "../EditableSpan/EditableSpanHooks";
 
 type SocialNetworksType = {
     facebook: string
@@ -43,7 +43,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
         return <Preloader/>
     }
 
-
     return (
         <div className={s.profile}>
             <div className={s.aboutInfo}>
@@ -63,8 +62,9 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
                 <div className={s.avatar}>
                     {
                         userProfile.photos.large === null
-                            ? <img src="https://icon-library.com/images/avatar-png-icon/avatar-png-icon-13.jpg"
-                                   alt="avatar"/>
+                            ? <img
+                                src="https://icon-library.com/images/avatar-png-icon/avatar-png-icon-13.jpg"
+                                alt="avatar"/>
                             : <img src={userProfile.photos.large}
                                    alt="avatar"/>
                     }
@@ -81,7 +81,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
                 <div className={s.aboutMe}>
                     <span>{userProfile.aboutMe}</span>
                 </div>
-                <EditableSpan updateUserStatusTC={updateUserStatusTC} status={status}/>
+                <EditableSpanHooks status={status} updateUserStatusTC={updateUserStatusTC}/>
             </div>
         </div>
     )
