@@ -35,7 +35,6 @@ export const UsersReducer = (state = initialState, action: UsersActionType): Use
                     : state.isFollowed.filter(f => f !== action.payload.userId)
             }
         }
-
         default:
             return state
     }

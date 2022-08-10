@@ -47,17 +47,6 @@ type MapDispatchToPropsType = {
     followThunkCreator: (userID: string) => void
 }
 
-// const mapStateToProps = (state: RootStateType): UsersPageType => {
-//     return {
-//         users: state.usersPage.users,
-//         totalCount: state.usersPage.totalCount,
-//         currentPage: state.usersPage.currentPage,
-//         pageSize: state.usersPage.pageSize,
-//         isLoading: state.usersPage.isLoading,
-//         isFollowed: state.usersPage.isFollowed,
-//     }
-// }
-
 const mapStateToProps = (state: RootStateType): UsersPageType => {
     return {
         users: getUsers(state),
