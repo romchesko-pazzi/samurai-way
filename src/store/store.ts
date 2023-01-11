@@ -1,27 +1,28 @@
-import {applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux";
-import {ProfileReducer} from "./reducers/ProfileReducer";
-import {MessagesReducer} from "./reducers/MessagesReducer";
-import {UsersReducer} from "./reducers/UsersReducer";
-import {AuthReducer} from "./reducers/AuthReducer";
-import {AppReducer} from "./reducers/AppReducer";
-import thunkMiddleware from "redux-thunk";
-import {reducer as FormReducer} from 'redux-form';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 
-export type RootStateType = ReturnType<typeof rootReducer>
-export type AppDispatch = typeof store.dispatch;
+import { profileReducer } from '../components/profile';
+import { appReducer } from '../pages/app';
+import { authReducer } from '../pages/auth';
+
+import { MessagesReducer } from './reducers/MessagesReducer';
+import { UsersReducer } from './reducers/UsersReducer';
+
+export type RootStateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
-    profilePage: ProfileReducer,
-    messagePage: MessagesReducer,
-    usersPage: UsersReducer,
-    auth: AuthReducer,
-    app: AppReducer,
-    form: FormReducer,
+  profile: profileReducer,
+  messagePage: MessagesReducer,
+  usersPage: UsersReducer,
+  auth: authReducer,
+  app: appReducer,
 });
 
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware),
+});
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
-
-//@ts-ignore
+// @ts-ignore
 window.store = store;
