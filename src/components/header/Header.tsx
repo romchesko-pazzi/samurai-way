@@ -1,66 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
 import { authActions } from '../../pages/auth';
 import { selectEmail, selectIsAuth, selectLogin } from '../../pages/auth/authSelectors';
 import { useAppSelector } from '../../store/hooks';
+import { ButtonComponent } from '../buttonComponent';
 
 import s from './header.module.scss';
+import { headerItems, isStyleActive } from './utils';
 
 export const Header = () => {
   const isAuth = useAppSelector(selectIsAuth);
   const login = useAppSelector(selectLogin);
   const email = useAppSelector(selectEmail);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isAuth) {
+      navigate('/');
+    }
+  }, [isAuth, navigate]);
   const { logout } = useActions(authActions);
-
   const logoutHandler = () => logout();
 
   return (
     <>
       <div className={s.header}>
         <div className={s.section}>
-          <div className={s.item}>
-            <NavLink to="/profile" className={pressed => (pressed ? s.active : s.link)}>
-              Profile
-            </NavLink>
-          </div>
-          <div className={s.item}>
-            <NavLink to="/messages" className={pressed => (pressed ? s.active : s.link)}>
-              Messages
-            </NavLink>
-          </div>
-          <div className={s.item}>
-            <NavLink to="/users" className={pressed => (pressed ? s.active : s.link)}>
-              Users
-            </NavLink>
-          </div>
-        </div>
-        <div className={s.section}>
           {isAuth ? (
-            <div className={s.login}>
+            <>
+              {headerItems.map(item => (
+                <div key={item.destination} className={s.item}>
+                  <NavLink to={item.path} style={isStyleActive}>
+                    {item.destination}
+                  </NavLink>
+                </div>
+              ))}
+            </>
+          ) : (
+            <div className={s.item}>Social Network</div>
+          )}
+        </div>
+        {isAuth && (
+          <div className={s.logoutSection}>
+            <div>
               <div>{login}</div>
               <div>{email}</div>
-              <button type="button" onClick={logoutHandler}>
-                Log out
-              </button>
             </div>
-          ) : (
-            <div className={s.item}>
-              <NavLink to="/login" className={pressed => (pressed ? s.active : s.link)}>
-                Log in
-              </NavLink>
-            </div>
-          )}
-
-          <div className={s.item}>
-            <NavLink to="/settings" className={pressed => (pressed ? s.active : s.link)}>
-              Settings
-            </NavLink>
+            <ButtonComponent
+              disabled={false}
+              type="submit"
+              callback={logoutHandler}
+              title="Log out"
+            />
           </div>
-        </div>
+        )}
       </div>
       <Outlet />
     </>

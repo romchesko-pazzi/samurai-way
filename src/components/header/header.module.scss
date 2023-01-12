@@ -1,39 +1,37 @@
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #689CD2;
-    color: #fff;
-}
+@import '../../assets/sass/abstracts/vars';
 
-.item a {
-    text-decoration: none;
-    font-size: 24px;
+.header {
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: .4rem .6rem .8rem rgba(34, 60, 80, 0.2);
+  background-color: white;
+  font-size: 1.9rem;
 }
 
 .item {
-    padding: 10px 15px;
-    margin-left: 30px;
-}
+  padding: 1rem 1.5rem;
+  cursor: pointer;
 
-.item:hover {
-    background-color: #c7ffac;
-    border-radius: 4px;
+  &:first-child {
+    margin-left: 3rem;
+  }
+
+  &:hover a {
+    color: $color-blue-main;
+  }
 }
 
 .section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.active {
-    color: gold;
-}
-
-.link {
-    color: #1e0525;
-}
-
-.login {
-
+.logoutSection {
+  display: flex;
+  align-items: center;
+  min-width: 45rem;
+  justify-content: space-between;
+  margin-right: 3rem;
 }
