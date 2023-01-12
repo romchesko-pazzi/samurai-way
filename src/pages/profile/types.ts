@@ -1,4 +1,4 @@
-export type SocialNetworksType = {
+export type ContactsType = {
   facebook: string;
   website: string;
   twitter: string;
@@ -16,15 +16,9 @@ export type PhotosType = {
 
 export type UserProfileType = {
   aboutMe: string;
-  isLookingForAJob: boolean;
+  lookingForAJob: boolean;
   lookingForAJobDescription: string;
   fullName: string;
   photos: PhotosType;
-  contacts: SocialNetworksType;
-};
-
-export type ProfileInfoPropsType = {
-  userProfile: UserProfileType;
-  status: string;
-  updateUserStatusTC: (status: string) => void;
+  contacts: ContactsType;
 };

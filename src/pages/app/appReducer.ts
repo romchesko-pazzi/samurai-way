@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { authAPI } from '../../services/authAPI';
 
-const initialState = { initialized: false };
+const initialState = {
+  isInitialized: false,
+};
 
 export const initializeApp = createAsyncThunk(
   'app/initApp',
@@ -27,7 +29,7 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder =>
     builder.addCase(initializeApp.fulfilled, state => {
-      state.initialized = true;
+      state.isInitialized = true;
     }),
 });
 

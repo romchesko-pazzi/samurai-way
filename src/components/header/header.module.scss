@@ -7,7 +7,6 @@
   justify-content: space-between;
   box-shadow: .4rem .6rem .8rem rgba(34, 60, 80, 0.2);
   background-color: white;
-  font-size: 1.9rem;
 }
 
 .item {
@@ -26,6 +25,7 @@
 .section {
   display: flex;
   align-items: center;
+  font-size: 2rem;
 }
 
 .logoutSection {
@@ -34,4 +34,5 @@
   min-width: 45rem;
   justify-content: space-between;
   margin-right: 3rem;
+  font-size: 1.7rem;
 }

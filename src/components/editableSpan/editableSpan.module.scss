@@ -1,0 +1,21 @@
+.input {
+  font-size: inherit !important;
+  font-family: inherit !important;
+}
+
+.spanBox {
+  display: flex;
+  align-items: center;
+
+  & span {
+    max-width: 40rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  & button {
+    cursor: pointer;
+    display: flex;
+    margin-left: 1rem;
+  }
+}

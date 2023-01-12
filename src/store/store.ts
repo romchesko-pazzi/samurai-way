@@ -2,9 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import { profileReducer } from '../components/profile';
 import { appReducer } from '../pages/app';
 import { authReducer } from '../pages/auth';
+import { profileReducer } from '../pages/profile';
 
 import { MessagesReducer } from './reducers/MessagesReducer';
 import { UsersReducer } from './reducers/UsersReducer';

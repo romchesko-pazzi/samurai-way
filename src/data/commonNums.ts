@@ -1,3 +1,3 @@
 export enum commonNums {
-  minPasswordLength = 8,
+  minPasswordLength = 4,
 }

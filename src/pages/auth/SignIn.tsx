@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ButtonComponent } from '../../components/buttonComponent';
 import { Wrapper } from '../../components/wrapper/Wrapper';
+import { path } from '../../data/paths';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../store/hooks';
 import { signInValidate } from '../../utils/validators';
@@ -29,7 +30,7 @@ export const SignIn = () => {
 
   useEffect(() => {
     if (isAuth) {
-      navigate('/profile');
+      navigate(path.profile);
     }
   }, [isAuth, navigate]);
 

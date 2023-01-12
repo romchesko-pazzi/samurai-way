@@ -10,7 +10,7 @@ const emailValidation = yup
 const passwordValidation = yup
   .string()
   .required('Password is required')
-  .min(commonNums.minPasswordLength, 'Password must be more than 7 symbols');
+  .min(commonNums.minPasswordLength, 'Password must be more than 3 symbols');
 
 export const signInValidate = yup.object({
   email: emailValidation,
