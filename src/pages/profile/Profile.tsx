@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 
+import { Contacts } from '../../components/contacts';
 import { EditableSpan } from '../../components/editableSpan/EditableSpan';
 import { MyPostsContainer } from '../../components/My Posts/MyPostsContainer';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { SvgSelector } from '../../components/svgSelector';
+import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserId } from '../auth';
 
 import s from './profile.module.scss';
-import { getUserProfile, getUserStatus, updateUserStatus } from './profileReducer';
 import {
   selectAboutMe,
   selectFullName,
@@ -16,38 +17,45 @@ import {
   selectSocials,
   selectStatus,
 } from './profileSelectors';
-import { UserProfileType } from './types';
 
-export type ProfilePageType = {
-  status: string;
-  userProfile: UserProfileType;
-};
+import { profileActions } from './index';
 
 export const Profile = () => {
-  const dispatch = useAppDispatch();
+  const { getUserProfile, updateUserStatus, getUserStatus, updateUserAvatar } =
+    useActions(profileActions);
   const userId = useAppSelector(selectUserId);
   const name = useAppSelector(selectFullName);
   const largePhoto = useAppSelector(selectLargePhoto);
   const isLookingForAJob = useAppSelector(selectIsLookingForAJob);
   const aboutMe = useAppSelector(selectAboutMe);
   const status = useAppSelector(selectStatus);
-  const { mainLink, twitter, instagram, github } = useAppSelector(selectSocials);
+  const { mainLink, twitter, instagram, github, youtube, vk, website, facebook } =
+    useAppSelector(selectSocials);
 
   useEffect(() => {
-    dispatch(getUserProfile(userId!));
-    dispatch(getUserStatus(userId!));
-  }, [dispatch, userId]);
+    getUserProfile(userId!);
+    getUserStatus(userId!);
+  }, []);
 
   const updateUserStatusHandler = (localStatus: string) => {
-    dispatch(updateUserStatus(localStatus));
+    updateUserStatus(localStatus);
   };
 
   const contacts = [
-    { link: mainLink, title: 'LinkedIn' },
-    { link: github, title: 'Github' },
-    { link: twitter, title: 'Twitter' },
-    { link: instagram, title: 'Instagram' },
+    { link: mainLink, title: 'mainLink' },
+    { link: github, title: 'github' },
+    { link: twitter, title: 'twitter' },
+    { link: instagram, title: 'instagram' },
+    { link: vk, title: 'vk' },
+    { link: facebook, title: 'facebook' },
+    { link: website, title: 'website' },
+    { link: youtube, title: 'youtube' },
   ];
+
+  const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    updateUserAvatar(e.target.files[0]);
+  };
 
   return (
     <div className={s.wrapper}>
@@ -61,6 +69,12 @@ export const Profile = () => {
           ) : (
             <img src={largePhoto} alt="avatar" />
           )}
+          <div className={s.svgPhoto}>
+            <SvgSelector id="uploadPhoto" />
+          </div>
+          <div className={s.round}>
+            <input type="file" onChange={selectFile} />
+          </div>
         </div>
         <div className={s.userName}>{name}</div>
         <div className={s.introduction}>{aboutMe}</div>
@@ -73,10 +87,9 @@ export const Profile = () => {
           <div>I am not looking for a job</div>
         )}
         <div className={s.contacts}>
+          <h3>Contacts</h3>
           {contacts.map(contact => (
-            <a key={contact.title} target="_blank" href={contact.link} rel="noreferrer">
-              {contact.title}: {contact.link}
-            </a>
+            <Contacts key={contact.title} title={contact.title} link={contact.link} />
           ))}
         </div>
       </div>

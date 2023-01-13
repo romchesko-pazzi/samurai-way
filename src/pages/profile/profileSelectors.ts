@@ -5,7 +5,7 @@ export const selectFullName = (state: RootStateType) =>
   state.profile.userProfile.fullName;
 
 export const selectLargePhoto = (state: RootStateType) =>
-  state.profile.userProfile.photos.large;
+  state.profile.userProfile.photos?.large;
 
 export const selectIsLookingForAJob = (state: RootStateType) =>
   state.profile.userProfile.lookingForAJob;

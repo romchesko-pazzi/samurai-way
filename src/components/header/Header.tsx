@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
-import { authActions } from '../../pages/auth';
-import { selectEmail, selectIsAuth, selectLogin } from '../../pages/auth/authSelectors';
+import { authActions, selectEmail, selectIsAuth, selectLogin } from '../../pages/auth';
 import { useAppSelector } from '../../store/hooks';
 import { ButtonComponent } from '../buttonComponent';
 
@@ -51,7 +50,7 @@ export const Header = () => {
             </div>
             <ButtonComponent
               disabled={false}
-              type="submit"
+              type="button"
               callback={logoutHandler}
               title="Log out"
             />

@@ -26,6 +26,8 @@ export const getAuthUserData = createAsyncThunk(
 
         return { id, email, login, isAuth: true, error: '' };
       }
+
+      return rejectWithValue(response.data);
     } catch (err: any) {
       return rejectWithValue(err.message);
     }
@@ -70,13 +72,13 @@ const slice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(getAuthUserData.fulfilled, (state, action) => {
-        return { ...state, ...action.payload };
+        Object.assign(state, action.payload);
       })
       .addCase(logout.fulfilled, (state, action) => {
-        return { ...state, ...action.payload };
+        Object.assign(state, action.payload);
       })
       .addCase(initializeApp.fulfilled, (state, action) => {
-        return { ...state, ...action.payload };
+        Object.assign(state, action.payload);
       }),
 });
 
