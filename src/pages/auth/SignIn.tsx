@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { ButtonComponent } from '../../components/buttonComponent';
@@ -44,7 +44,7 @@ export const SignIn = () => {
     resolver: yupResolver(signInValidate),
   });
 
-  const onSubmit: SubmitHandler<LoginDataType> = data => {
+  const onSubmit = (data: LoginDataType) => {
     login(data);
     reset();
   };
