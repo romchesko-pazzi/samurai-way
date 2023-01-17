@@ -1,98 +1,139 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+
+import { TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
 
 import { Contacts } from '../../components/contacts';
 import { EditableSpan } from '../../components/editableSpan/EditableSpan';
 import { MyPostsContainer } from '../../components/My Posts/MyPostsContainer';
-import { SvgSelector } from '../../components/svgSelector';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserId } from '../auth';
 
 import s from './profile.module.scss';
+import { ProfileAvatar } from './profileAvatar/ProfileAvatar';
 import {
   selectAboutMe,
   selectFullName,
   selectIsLookingForAJob,
   selectLargePhoto,
+  selectLookingForAJobDescription,
   selectSocials,
   selectStatus,
 } from './profileSelectors';
 
-import { profileActions } from './index';
+import { profileActions, ProfileFormDataType } from './index';
 
 export const Profile = () => {
-  const { getUserProfile, updateUserStatus, getUserStatus, updateUserAvatar } =
-    useActions(profileActions);
+  const {
+    getUserProfile,
+    updateUserStatus,
+    getUserStatus,
+    updateUserAvatar,
+    updateUserData,
+  } = useActions(profileActions);
   const userId = useAppSelector(selectUserId);
   const name = useAppSelector(selectFullName);
+  const aboutMe = useAppSelector(selectAboutMe);
   const largePhoto = useAppSelector(selectLargePhoto);
   const isLookingForAJob = useAppSelector(selectIsLookingForAJob);
-  const aboutMe = useAppSelector(selectAboutMe);
+  const lookingForAJobDescription = useAppSelector(selectLookingForAJobDescription);
   const status = useAppSelector(selectStatus);
-  const { mainLink, twitter, instagram, github, youtube, vk, website, facebook } =
-    useAppSelector(selectSocials);
+  const { contacts } = useAppSelector(selectSocials);
 
   useEffect(() => {
     getUserProfile(userId!);
     getUserStatus(userId!);
   }, []);
 
-  const updateUserStatusHandler = (localStatus: string) => {
-    updateUserStatus(localStatus);
-  };
+  const [isEdit, setIsEdit] = useState(false);
 
-  const contacts = [
-    { link: mainLink, title: 'mainLink' },
-    { link: github, title: 'github' },
-    { link: twitter, title: 'twitter' },
-    { link: instagram, title: 'instagram' },
-    { link: vk, title: 'vk' },
-    { link: facebook, title: 'facebook' },
-    { link: website, title: 'website' },
-    { link: youtube, title: 'youtube' },
-  ];
+  const { register, handleSubmit } = useForm<ProfileFormDataType>();
+
+  const updateUserStatusHandler = (localStatus: string) => updateUserStatus(localStatus);
 
   const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     updateUserAvatar(e.target.files[0]);
   };
 
+  const changeFields = () => setIsEdit(true);
+
+  const collectAllData = (data: ProfileFormDataType) => {
+    updateUserData({ data, userId: userId! });
+    setIsEdit(false);
+  };
+
   return (
     <div className={s.wrapper}>
-      <div className={s.profile}>
-        <div className={s.avatar}>
-          {largePhoto === null ? (
-            <img
-              src="https://icon-library.com/images/avatar-png-icon/avatar-png-icon-13.jpg"
-              alt="avatar"
+      <form className={s.profile} onSubmit={handleSubmit(collectAllData)}>
+        <ProfileAvatar photo={largePhoto!} callback={selectFile} />
+        {isEdit ? (
+          <TextField
+            sx={{ display: 'block' }}
+            InputProps={{ className: s.input }}
+            variant="standard"
+            {...register('fullName', {
+              value: name,
+            })}
+            type="text"
+          />
+        ) : (
+          <div className={s.userName}>{name}</div>
+        )}
+        {isEdit ? (
+          <div className={s.aboutMe}>
+            <textarea
+              cols={72}
+              {...register('aboutMe', {
+                value: aboutMe,
+              })}
+            />
+          </div>
+        ) : (
+          <div className={s.introduction}>{aboutMe}</div>
+        )}
+        <div className={s.skills}>
+          <b>My skills:</b>
+          {isEdit ? (
+            <TextField
+              InputProps={{ className: s.input }}
+              variant="standard"
+              {...register('lookingForAJobDescription', {
+                value: lookingForAJobDescription,
+              })}
+              type="text"
             />
           ) : (
-            <img src={largePhoto} alt="avatar" />
+            <div>{lookingForAJobDescription}</div>
           )}
-          <div className={s.svgPhoto}>
-            <SvgSelector id="uploadPhoto" />
-          </div>
-          <div className={s.round}>
-            <input type="file" onChange={selectFile} />
-          </div>
         </div>
-        <div className={s.userName}>{name}</div>
-        <div className={s.introduction}>{aboutMe}</div>
         <div className={s.status}>
           <EditableSpan status={status} callback={updateUserStatusHandler} />
         </div>
+        {isEdit && (
+          <div className={s.checkbox}>
+            <label>
+              Are you looking for a job?
+              <input
+                type="checkbox"
+                {...register('isLookingForAJob', { value: isLookingForAJob })}
+              />
+            </label>
+          </div>
+        )}
         {isLookingForAJob ? (
           <div>I am looking for a job</div>
         ) : (
           <div>I am not looking for a job</div>
         )}
-        <div className={s.contacts}>
-          <h3>Contacts</h3>
-          {contacts.map(contact => (
-            <Contacts key={contact.title} title={contact.title} link={contact.link} />
-          ))}
-        </div>
-      </div>
+        <Contacts
+          callback={changeFields}
+          register={register}
+          isEdit={isEdit}
+          contacts={contacts}
+        />
+      </form>
       <MyPostsContainer />
     </div>
   );

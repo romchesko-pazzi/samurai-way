@@ -21,4 +21,5 @@ export type {
   ProfileResponseType,
   ProfileUpdateDataType,
   UpdateUserAvatarType,
+  ProfileFormDataType,
 } from './types';

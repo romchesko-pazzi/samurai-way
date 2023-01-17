@@ -7,13 +7,14 @@ import {
   ACTIONS_TYPE,
   ProfileAndMessageActionType,
 } from '../../store/ProfileAndMessagesActions';
+import { RootStateType } from '../../store/store';
 
-import { UserProfileType } from './types';
+import { ProfileFormDataType, ProfileResponseType, ProfileUpdateDataType } from './types';
 
 type InitType = {
   posts: Array<PostsType>;
   newPostText: string;
-  userProfile: UserProfileType;
+  userProfile: ProfileResponseType;
   isAuth: boolean;
   status: string;
 };
@@ -71,7 +72,7 @@ export const getUserStatus = createAsyncThunk(
 
       return response.data;
     } catch (err: any) {
-      return rejectWithValue;
+      return rejectWithValue('err');
     }
   },
 );
@@ -85,6 +86,72 @@ export const updateUserStatus = createAsyncThunk(
       if (response.data.resultCode === 0) return status;
     } catch (err: any) {
       return rejectWithValue('some error occurred');
+    }
+  },
+);
+
+export const updateUserAvatar = createAsyncThunk(
+  'profile/updateUserAvatar',
+  async (photo: File, { rejectWithValue }) => {
+    try {
+      const response = await profileAPI.updateUserAvatar(photo);
+
+      if (response.data.resultCode === 0) return { photos: response.data.data.photos };
+
+      return rejectWithValue('some error occurred');
+    } catch (err: any) {
+      return rejectWithValue('some error occurred');
+    }
+  },
+);
+
+export const updateUserData = createAsyncThunk<
+  any,
+  { data: ProfileFormDataType; userId: number },
+  { state: RootStateType }
+>(
+  'profile/updateUserData',
+  async (params: { data: ProfileFormDataType; userId: number }, { rejectWithValue }) => {
+    try {
+      const {
+        youtube,
+        website,
+        vk,
+        twitter,
+        mainLink,
+        instagram,
+        facebook,
+        github,
+        lookingForAJobDescription,
+        isLookingForAJob,
+        fullName,
+        aboutMe,
+      } = params.data;
+
+      const model: ProfileUpdateDataType = {
+        userId: params.userId,
+        fullName,
+        lookingForAJobDescription,
+        lookingForAJob: isLookingForAJob,
+        AboutMe: aboutMe,
+        contacts: {
+          facebook,
+          website,
+          vk,
+          twitter,
+          youtube,
+          github,
+          instagram,
+          mainLink,
+        },
+      };
+      const response = await profileAPI.updateProfileData(model);
+
+      if (response.data.resultCode === 0) return model;
+
+      return rejectWithValue('error');
+    } catch (err: any) {
+      return rejectWithValue('error');
     }
   },
 );
@@ -103,6 +170,17 @@ const slice = createSlice({
       })
       .addCase(updateUserStatus.fulfilled, (state, action) => {
         state.status = action.payload!;
+      })
+      .addCase(updateUserAvatar.fulfilled, (state, action) => {
+        state.userProfile.photos = action.payload.photos;
+      })
+      .addCase(updateUserData.fulfilled, (state, action) => {
+        state.userProfile.aboutMe = action.payload.AboutMe;
+        state.userProfile.fullName = action.payload.fullName;
+        state.userProfile.lookingForAJobDescription =
+          action.payload.lookingForAJobDescription;
+        state.userProfile.lookingForAJob = action.payload.lookingForAJob;
+        state.userProfile.contacts = action.payload.contacts;
       });
   },
 });

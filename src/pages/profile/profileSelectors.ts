@@ -4,6 +4,8 @@ export const selectSocials = (state: RootStateType) => state.profile.userProfile
 export const selectFullName = (state: RootStateType) =>
   state.profile.userProfile.fullName;
 
+export const selectAboutMe = (state: RootStateType) => state.profile.userProfile.aboutMe;
+
 export const selectLargePhoto = (state: RootStateType) =>
   state.profile.userProfile.photos?.large;
 

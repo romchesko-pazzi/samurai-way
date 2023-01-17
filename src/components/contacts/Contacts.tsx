@@ -1,68 +1,76 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React from 'react';
 
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
-import { useActions } from '../../hooks/useActions';
-import { selectUserId } from '../../pages/auth';
-import { profileActions } from '../../pages/profile';
-import { useAppSelector } from '../../store/hooks';
-import { SvgSelector } from '../svgSelector';
+import { ContactsType } from '../../pages/profile';
+import { ButtonComponent } from '../buttonComponent';
 
 import s from './contacts.module.scss';
 
-export const Contacts: React.FC<ContactsPropsType> = ({ link, title }) => {
-  const [field, setField] = useState<'a' | 'input'>('a');
-  const [localValue, setLocalValue] = useState(link);
-  const userId = useAppSelector(selectUserId);
-
-  const { updateUserData } = useActions(profileActions);
-
-  useEffect(() => {
-    setLocalValue(link);
-  }, [link]);
-
-  const switchToInput = () => {
-    setField('input');
-  };
-
-  const sendUpdatedData = () => {
-    setField('a');
-    updateUserData({ title, value: localValue, userId: userId! });
-  };
-
-  const onChangeHandler = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setLocalValue(event.currentTarget.value);
-  };
-
+export const Contacts: React.FC<ContactsPropsType> = ({
+  callback,
+  contacts,
+  isEdit,
+  register,
+}) => {
   return (
-    <div className={s.contactBox}>
-      {field === 'a' ? (
-        <>
-          <a key={title} target="_blank" href={localValue} rel="noreferrer">
-            {title}: {localValue}
-          </a>
-          <button className={s.button} onClick={switchToInput} type="button">
-            <SvgSelector id="edit" />
-          </button>
-        </>
-      ) : (
-        <TextField
-          InputProps={{ className: s.input }}
-          onBlur={sendUpdatedData}
-          autoFocus
-          variant="standard"
-          onChange={onChangeHandler}
-          value={localValue}
-          type="text"
-        />
-      )}
+    <div className={s.contacts}>
+      <div className={s.contactsHeader}>
+        <h3>Contacts</h3>
+        {isEdit ? (
+          <ButtonComponent type="submit" title="save" disabled={false} />
+        ) : (
+          <Button
+            sx={[
+              { backgroundColor: '#366EFF' },
+              { '&:hover': { backgroundColor: '#366EFF' } },
+            ]}
+            onClick={callback}
+            className={s.editButton}
+            type="button"
+            variant="contained"
+            disabled={false}
+          >
+            edit
+          </Button>
+        )}
+      </div>
+      {Object.keys(contacts).map(key => (
+        <div key={key}>
+          {isEdit ? (
+            <div className={s.spanAndInput}>
+              <span>{key}: </span>
+              <TextField
+                sx={{ flex: 1 }}
+                InputProps={{ className: s.input }}
+                variant="standard"
+                {...register(key as keyof typeof contacts, {
+                  value: contacts[key as keyof typeof contacts],
+                })}
+                type="text"
+              />
+            </div>
+          ) : (
+            <>
+              <span>{key}: </span>
+              <a
+                href={contacts[key as keyof typeof contacts]}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {contacts[key as keyof typeof contacts]}
+              </a>
+            </>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
 
 type ContactsPropsType = {
-  title: string;
-  link: string;
+  isEdit: boolean;
+  contacts: ContactsType;
+  register: any;
+  callback: () => void;
 };

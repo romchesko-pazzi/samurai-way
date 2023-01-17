@@ -1,8 +1,26 @@
-.contactBox {
+@import "../../assets/sass/abstracts/mixins";
+
+.contacts {
+  & div:not(:last-child) {
+    margin-bottom: .9rem;
+  }
+}
+
+.contactsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editButton {
+  @include buttonStyle;
+}
+
+.spanAndInput {
   display: flex;
   align-items: center;
 
-  & a {
+  & span {
     margin-right: 1rem;
   }
 }
@@ -13,6 +31,5 @@
 }
 
 .input {
-  font-size: inherit !important;
-  font-family: inherit !important;
+  @include setTextField;
 }

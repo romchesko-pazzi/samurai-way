@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { commonNums } from '../data/commonNums';
+import { minPasswordLength } from '../data/commonNums';
 
 const emailValidation = yup
   .string()
@@ -10,7 +10,7 @@ const emailValidation = yup
 const passwordValidation = yup
   .string()
   .required('Password is required')
-  .min(commonNums.minPasswordLength, 'Password must be more than 3 symbols');
+  .min(minPasswordLength, 'Password must be more than 3 symbols');
 
 export const signInValidate = yup.object({
   email: emailValidation,

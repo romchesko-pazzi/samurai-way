@@ -1,3 +1,1 @@
-export enum commonNums {
-  minPasswordLength = 4,
-}
+export const minPasswordLength = 4;
