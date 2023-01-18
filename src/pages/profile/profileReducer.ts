@@ -1,25 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v1 } from 'uuid';
 
-import { PostsType } from '../../components/My Posts/MyPosts';
 import { profileAPI } from '../../services/profileAPI';
-import {
-  ACTIONS_TYPE,
-  ProfileAndMessageActionType,
-} from '../../store/ProfileAndMessagesActions';
 import { RootStateType } from '../../store/store';
 
-import { ProfileFormDataType, ProfileResponseType, ProfileUpdateDataType } from './types';
+import { IProfileFormData, IProfileState, IProfileUpdateData } from './interfaces';
 
-type InitType = {
-  posts: Array<PostsType>;
-  newPostText: string;
-  userProfile: ProfileResponseType;
-  isAuth: boolean;
-  status: string;
-};
-
-const initialState: InitType = {
+const initialState: IProfileState = {
   newPostText: '',
   posts: [
     { id: v1(), message: 'MyPost1', likesCount: 10 },
@@ -107,11 +94,11 @@ export const updateUserAvatar = createAsyncThunk(
 
 export const updateUserData = createAsyncThunk<
   any,
-  { data: ProfileFormDataType; userId: number },
+  { data: IProfileFormData; userId: number },
   { state: RootStateType }
 >(
   'profile/updateUserData',
-  async (params: { data: ProfileFormDataType; userId: number }, { rejectWithValue }) => {
+  async (params: { data: IProfileFormData; userId: number }, { rejectWithValue }) => {
     try {
       const {
         youtube,
@@ -123,16 +110,16 @@ export const updateUserData = createAsyncThunk<
         facebook,
         github,
         lookingForAJobDescription,
-        isLookingForAJob,
+        lookingForAJob,
         fullName,
         aboutMe,
       } = params.data;
 
-      const model: ProfileUpdateDataType = {
+      const model: IProfileUpdateData = {
         userId: params.userId,
         fullName,
         lookingForAJobDescription,
-        lookingForAJob: isLookingForAJob,
+        lookingForAJob,
         AboutMe: aboutMe,
         contacts: {
           facebook,
@@ -159,7 +146,13 @@ export const updateUserData = createAsyncThunk<
 const slice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {},
+  reducers: {
+    addPost: (state, action: PayloadAction<string>) => {
+      const model = { id: v1(), message: action.payload, likesCount: 0 };
+
+      state.posts.unshift(model);
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getUserProfile.fulfilled, (state, action) => {
@@ -185,18 +178,5 @@ const slice = createSlice({
   },
 });
 
-export const _ProfileReducer = (
-  state = initialState,
-  action: ProfileAndMessageActionType,
-): InitType => {
-  switch (action.type) {
-    case ACTIONS_TYPE.ADD_POST: {
-      const x = { id: v1(), message: action.payload.newPostText, likesCount: 0 };
-
-      return { ...state, posts: [x, ...state.posts], newPostText: '' };
-    }
-    default:
-      return state;
-  }
-};
 export const profileReducer = slice.reducer;
+export const { addPost } = slice.actions;

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { Contacts } from '../../components/contacts';
 import { EditableSpan } from '../../components/editableSpan/EditableSpan';
-import { MyPostsContainer } from '../../components/My Posts/MyPostsContainer';
+import { MyPosts } from '../../components/my posts';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../store/hooks';
 import { selectUserId } from '../auth';
@@ -22,7 +22,7 @@ import {
   selectStatus,
 } from './profileSelectors';
 
-import { profileActions, ProfileFormDataType } from './index';
+import { profileActions, IProfileFormData } from './index';
 
 export const Profile = () => {
   const {
@@ -36,7 +36,7 @@ export const Profile = () => {
   const name = useAppSelector(selectFullName);
   const aboutMe = useAppSelector(selectAboutMe);
   const largePhoto = useAppSelector(selectLargePhoto);
-  const isLookingForAJob = useAppSelector(selectIsLookingForAJob);
+  const lookingForAJob = useAppSelector(selectIsLookingForAJob);
   const lookingForAJobDescription = useAppSelector(selectLookingForAJobDescription);
   const status = useAppSelector(selectStatus);
   const { contacts } = useAppSelector(selectSocials);
@@ -48,7 +48,7 @@ export const Profile = () => {
 
   const [isEdit, setIsEdit] = useState(false);
 
-  const { register, handleSubmit } = useForm<ProfileFormDataType>();
+  const { register, handleSubmit } = useForm<IProfileFormData>();
 
   const updateUserStatusHandler = (localStatus: string) => updateUserStatus(localStatus);
 
@@ -59,7 +59,7 @@ export const Profile = () => {
 
   const changeFields = () => setIsEdit(true);
 
-  const collectAllData = (data: ProfileFormDataType) => {
+  const collectAllData = (data: IProfileFormData) => {
     updateUserData({ data, userId: userId! });
     setIsEdit(false);
   };
@@ -117,12 +117,12 @@ export const Profile = () => {
               Are you looking for a job?
               <input
                 type="checkbox"
-                {...register('isLookingForAJob', { value: isLookingForAJob })}
+                {...register('lookingForAJob', { value: lookingForAJob })}
               />
             </label>
           </div>
         )}
-        {isLookingForAJob ? (
+        {lookingForAJob ? (
           <div>I am looking for a job</div>
         ) : (
           <div>I am not looking for a job</div>
@@ -134,7 +134,7 @@ export const Profile = () => {
           contacts={contacts}
         />
       </form>
-      <MyPostsContainer />
+      <MyPosts />
     </div>
   );
 };

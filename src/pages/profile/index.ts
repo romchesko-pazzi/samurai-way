@@ -4,6 +4,7 @@ import {
   updateUserStatus,
   getUserProfile,
   updateUserAvatar,
+  addPost,
 } from './profileReducer';
 
 export const profileActions = {
@@ -12,14 +13,8 @@ export const profileActions = {
   updateUserStatus,
   getUserProfile,
   updateUserAvatar,
+  addPost,
 };
 
 export { profileReducer } from './profileReducer';
-export type {
-  PhotosType,
-  ContactsType,
-  ProfileResponseType,
-  ProfileUpdateDataType,
-  UpdateUserAvatarType,
-  ProfileFormDataType,
-} from './types';
+export * from './interfaces';

@@ -1,4 +1,4 @@
-import { ProfileUpdateDataType, UpdateUserAvatarType } from '../pages/profile';
+import { IProfileUpdateData, IUpdateUserAvatar } from '../pages/profile';
 
 import { instance } from './instance';
 
@@ -6,7 +6,7 @@ export const profileAPI = {
   getStatus(userId: number) {
     return instance.get(`/profile/status/${userId}`);
   },
-  updateProfileData(data: ProfileUpdateDataType) {
+  updateProfileData(data: IProfileUpdateData) {
     return instance.put(`/profile`, data);
   },
   updateUserAvatar(photo: File) {
@@ -14,7 +14,7 @@ export const profileAPI = {
 
     formData.append('image', photo);
 
-    return instance.put<UpdateUserAvatarType>('/profile/photo', formData, {
+    return instance.put<IUpdateUserAvatar>('/profile/photo', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

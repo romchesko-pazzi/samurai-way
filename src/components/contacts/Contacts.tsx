@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, TextField } from '@mui/material';
 
-import { ContactsType } from '../../pages/profile';
+import { IContacts } from '../../pages/profile';
 import { ButtonComponent } from '../buttonComponent';
 
 import s from './contacts.module.scss';
@@ -70,7 +70,7 @@ export const Contacts: React.FC<ContactsPropsType> = ({
 
 type ContactsPropsType = {
   isEdit: boolean;
-  contacts: ContactsType;
+  contacts: IContacts;
   register: any;
   callback: () => void;
 };

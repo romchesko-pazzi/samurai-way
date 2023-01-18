@@ -16,3 +16,5 @@ export const selectLookingForAJobDescription = (state: RootStateType) =>
   state.profile.userProfile.lookingForAJobDescription;
 
 export const selectStatus = (state: RootStateType) => state.profile.status;
+
+export const selectPosts = (state: RootStateType) => state.profile;

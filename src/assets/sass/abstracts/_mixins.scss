@@ -1,5 +1,5 @@
 @mixin setTextField {
-  font-size: 1.6rem !important;
+  font-size: 1.5rem !important;
   font-family: inherit !important;
 }
 
@@ -23,7 +23,7 @@
 @mixin buttonStyle {
   @include setTextField;
   font-weight: 500 !important;
-  padding: 1rem 2rem !important;
+  padding: .8rem 1.6rem !important;
   border-radius: 1rem !important;
   transition: all .1s !important;
 
