@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 
+import { LinearProgress } from '@mui/material';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
-import { authActions, selectEmail, selectIsAuth, selectLogin } from '../../pages/auth';
-import { useAppSelector } from '../../store/hooks';
-import { ButtonComponent } from '../buttonComponent';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectIsLoading } from '../../modules/app/appSelectors';
+import { authActions, selectEmail, selectIsAuth, selectLogin } from '../../modules/auth';
+import { ButtonComponent } from '../../ui/button';
 
 import s from './header.module.scss';
 import { headerItems, isStyleActive } from './utils';
@@ -14,6 +16,7 @@ export const Header = () => {
   const isAuth = useAppSelector(selectIsAuth);
   const login = useAppSelector(selectLogin);
   const email = useAppSelector(selectEmail);
+  const isLoading = useAppSelector(selectIsLoading);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +29,7 @@ export const Header = () => {
 
   return (
     <>
+      {isLoading ? <LinearProgress /> : <div className={s.transparentLoading} />}
       <div className={s.header}>
         <div className={s.section}>
           {isAuth ? (

@@ -9,6 +9,10 @@
   background-color: white;
 }
 
+.transparentLoading {
+  height: .4rem;
+}
+
 .item {
   padding: 1rem 1.5rem;
   cursor: pointer;
@@ -26,6 +30,7 @@
   display: flex;
   align-items: center;
   font-size: 2rem;
+  margin-bottom: .4rem;
 }
 
 .logoutSection {
@@ -35,4 +40,5 @@
   justify-content: space-between;
   margin-right: 3rem;
   font-size: 1.7rem;
+  margin-bottom: .4rem;
 }

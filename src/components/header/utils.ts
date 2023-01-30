@@ -2,6 +2,7 @@ import { path } from '../../data/paths';
 
 const activeStyle = {
   color: '#4879fc',
+  fontWeight: 500,
 };
 
 export const isStyleActive = ({ isActive }: any) => (isActive ? activeStyle : undefined);

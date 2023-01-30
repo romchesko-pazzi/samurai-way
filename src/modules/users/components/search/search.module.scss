@@ -1,0 +1,35 @@
+.search {
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+
+.inputBlock {
+  margin-top: 1rem;
+  display: flex;
+  max-width: 30%;
+}
+
+.inputButton {
+  display: flex;
+  align-items: center;
+
+  & svg {
+    cursor: pointer;
+  }
+}
+
+.input {
+  width: 90%;
+  font-size: inherit;
+  font-family: inherit;
+  padding: .7rem 2rem;
+  border: none;
+  box-shadow: 0 0 0 .1rem rgba(0, 0, 0, 0.15);
+  outline: none;
+  margin-right: -3.5rem;
+  border-radius: 10rem;
+
+  &::placeholder {
+    padding-left: 1rem;
+  }
+}
