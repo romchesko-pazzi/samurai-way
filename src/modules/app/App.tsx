@@ -35,7 +35,7 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<Header />}>
         <Route index element={<SignIn />} />
-        <Route path={`${path.profile}/:userId?`} element={<Profile />} />
+        <Route path={`${path.profile}/:userId`} element={<Profile />} />
         <Route path={path.messages} element={<DialogsContainer />} />
         <Route path={path.users} element={<Users />} />
       </Route>

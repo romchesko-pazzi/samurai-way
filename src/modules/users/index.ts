@@ -4,6 +4,7 @@ import {
   setCurrentPage,
   setUsersPerPage,
   setName,
+  setIsFriend,
 } from './store/usersReducer';
 
 export * from './interfaces';
@@ -14,6 +15,7 @@ export const usersActions = {
   setCurrentPage,
   setUsersPerPage,
   setName,
+  setIsFriend,
 };
 
 export { Users } from './Users';

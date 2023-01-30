@@ -67,6 +67,9 @@ const slice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.queryParams.term = action.payload;
     },
+    setIsFriend: (state, action: PayloadAction<boolean>) => {
+      state.queryParams.friend = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -83,4 +86,4 @@ const slice = createSlice({
 });
 
 export const usersReducer = slice.reducer;
-export const { setCurrentPage, setUsersPerPage, setName } = slice.actions;
+export const { setCurrentPage, setUsersPerPage, setName, setIsFriend } = slice.actions;
