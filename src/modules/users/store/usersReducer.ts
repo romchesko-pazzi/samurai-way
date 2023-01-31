@@ -67,7 +67,7 @@ const slice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.queryParams.term = action.payload;
     },
-    setIsFriend: (state, action: PayloadAction<boolean>) => {
+    setIsFriend: (state, action: PayloadAction<boolean | null>) => {
       state.queryParams.friend = action.payload;
     },
   },

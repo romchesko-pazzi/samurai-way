@@ -5,7 +5,6 @@ export interface IUser {
   id: number;
   uniqueUrlName: null | string;
   status: null | string;
-  // location: { city: string; country: string };
   photos: IPhotos;
   followed: boolean;
 }
@@ -30,7 +29,3 @@ export interface IGetUser {
   totalCount: number;
   error: null | string;
 }
-
-// export interface IGetUsers {
-//
-// }

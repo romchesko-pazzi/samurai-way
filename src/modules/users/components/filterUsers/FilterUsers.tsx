@@ -14,7 +14,7 @@ export const FilterUsers = () => {
   const { setIsFriend } = useActions(usersActions);
 
   const getFriends = () => setIsFriend(true);
-  const getAllUsers = () => setIsFriend(false);
+  const getAllUsers = () => setIsFriend(null);
 
   return (
     <div className={s.main}>
