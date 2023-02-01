@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   padding: 1rem;
-  position: relative;
 
   & img {
     width: 17rem;
@@ -13,32 +12,38 @@
   }
 }
 
+.avatarBox {
+  position: relative;
+  display: flex;
+}
+
 .svgPhoto {
   position: absolute;
-  top: 138px;
-  left: 416.6px;
   z-index: 2;
+  right: 0;
+  bottom: 0;
 
   & svg {
-    width: 3.5rem;
-    height: 3.5rem;
+    display: flex;
+    bottom: .5rem;
+    right: .4rem;
+    position: relative;
+    z-index: 1;
   }
 }
 
 .round {
   position: absolute;
-  top: 13.6rem;
-  left: 414px;
-  background: $color-gray-darkest;
+  background: $color-blue-main;
   width: 4rem;
   height: 4rem;
   border-radius: 10rem;
+  right: 0;
+  bottom: 0;
 
   & input[type='file'] {
-    position: absolute;
+    position: relative;
     transform: scale(2);
-    top: .9rem;
-    left: 7.4rem;
     z-index: 3;
     opacity: 0;
     cursor: pointer;

@@ -5,6 +5,7 @@ import {
   getUserProfile,
   updateUserAvatar,
   addPost,
+  setIsProfileFetched,
 } from './store/profileReducer';
 
 export const profileActions = {
@@ -14,6 +15,7 @@ export const profileActions = {
   getUserProfile,
   updateUserAvatar,
   addPost,
+  setIsProfileFetched,
 };
 
 export { profileReducer } from './store/profileReducer';

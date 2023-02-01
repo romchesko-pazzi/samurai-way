@@ -6,6 +6,8 @@ import { IProfileFormData, IProfileState, IProfileUpdateData } from '../interfac
 
 const initialState: IProfileState = {
   newPostText: '',
+  status: '',
+  isProfileFetched: false,
   posts: [
     { id: v1(), message: 'MyPost1', likesCount: 10 },
     { id: v1(), message: 'MyPost2', likesCount: 12 },
@@ -17,6 +19,7 @@ const initialState: IProfileState = {
     lookingForAJob: false,
     lookingForAJobDescription: '',
     fullName: '',
+    userId: null,
     photos: {
       small: '',
       large: '',
@@ -32,8 +35,6 @@ const initialState: IProfileState = {
       vk: '',
     },
   },
-  isAuth: false,
-  status: '',
 };
 
 export const getUserProfile = createAsyncThunk(
@@ -146,11 +147,15 @@ const slice = createSlice({
 
       state.posts.unshift(model);
     },
+    setIsProfileFetched: (state, action: PayloadAction<boolean>) => {
+      state.isProfileFetched = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.userProfile = action.payload.profile;
+        state.isProfileFetched = true;
       })
       .addCase(getUserStatus.fulfilled, (state, action) => {
         state.status = action.payload;
@@ -173,4 +178,4 @@ const slice = createSlice({
 });
 
 export const profileReducer = slice.reducer;
-export const { addPost } = slice.actions;
+export const { addPost, setIsProfileFetched } = slice.actions;

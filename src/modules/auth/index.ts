@@ -5,7 +5,7 @@ export const authActions = { login, logout };
 export { SignIn } from './SignIn';
 export { authReducer } from './store/authReducer';
 export {
-  selectUserId,
+  selectAuthId,
   selectIsAuth,
   selectEmail,
   selectLogin,

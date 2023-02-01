@@ -6,7 +6,7 @@ import { SvgSelector } from '../../../../ui/svgSelector';
 
 import s from './editableSpan.module.scss';
 
-export const EditableSpan: React.FC<PropsType> = ({ status, callback }) => {
+export const EditableSpan: React.FC<PropsType> = ({ status, callback, isMyPage }) => {
   const [field, setField] = useState<'span' | 'input'>('span');
   const [value, setValue] = useState(status);
 
@@ -34,7 +34,7 @@ export const EditableSpan: React.FC<PropsType> = ({ status, callback }) => {
       {field === 'span' ? (
         <div className={s.spanBox}>
           <span>{value}</span>
-          <button type="button" onClick={onClickHandler}>
+          <button disabled={isMyPage} type="button" onClick={onClickHandler}>
             <SvgSelector id="edit" />
           </button>
         </div>
@@ -54,6 +54,7 @@ export const EditableSpan: React.FC<PropsType> = ({ status, callback }) => {
 };
 
 type PropsType = {
+  isMyPage: boolean;
   status: string;
   callback: (name: string) => void;
 };

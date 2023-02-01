@@ -27,6 +27,7 @@ export interface IPhotos {
 
 export interface IProfileResponse extends IProfileCommon {
   aboutMe: string;
+  userId: number | null;
   photos: IPhotos;
 }
 
@@ -56,6 +57,6 @@ export interface IProfileState {
   posts: Array<IPosts>;
   newPostText: string;
   userProfile: IProfileResponse;
-  isAuth: boolean;
   status: string;
+  isProfileFetched: boolean;
 }

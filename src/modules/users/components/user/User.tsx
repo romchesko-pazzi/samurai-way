@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
+import { path } from '../../../../data/paths';
 import { useActions } from '../../../../hooks/useActions';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { ButtonComponent } from '../../../../ui/button';
@@ -45,7 +48,9 @@ export const User = () => {
                 disabled={false}
               />
             )}
-            <ButtonComponent title="view profile" disabled={false} />
+            <Link to={`${path.profile}/${user.id}`}>
+              <ButtonComponent title="view profile" disabled={false} />
+            </Link>
           </div>
         </div>
       ))}

@@ -12,6 +12,7 @@ export const Contacts: React.FC<ContactsPropsType> = ({
   contacts,
   isEdit,
   register,
+  isDisabled,
 }) => {
   return (
     <div className={s.contacts}>
@@ -29,7 +30,7 @@ export const Contacts: React.FC<ContactsPropsType> = ({
             className={s.editButton}
             type="button"
             variant="contained"
-            disabled={false}
+            disabled={isDisabled}
           >
             edit
           </Button>
@@ -73,4 +74,5 @@ type ContactsPropsType = {
   contacts: IContacts;
   register: any;
   callback: () => void;
+  isDisabled: boolean;
 };

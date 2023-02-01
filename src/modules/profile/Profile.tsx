@@ -2,10 +2,12 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
+import c from '../../assets/commonStyles/commonStyles.module.scss';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectUserId } from '../auth';
+import { selectAuthId } from '../auth';
 
 import { Contacts } from './components/contacts';
 import { EditableSpan } from './components/editableSpan/EditableSpan';
@@ -16,24 +18,34 @@ import {
   selectAboutMe,
   selectFullName,
   selectIsLookingForAJob,
+  selectIsProfileFetched,
   selectLargePhoto,
   selectLookingForAJobDescription,
   selectSocials,
   selectStatus,
+  selectUserId,
 } from './store/profileSelectors';
 
 import { profileActions, IProfileFormData } from './index';
 
 export const Profile = () => {
+  const { paramId } = useParams();
+  const { register, handleSubmit } = useForm<IProfileFormData>();
+  const [isEdit, setIsEdit] = useState(false);
+
   const {
     getUserProfile,
     updateUserStatus,
     getUserStatus,
     updateUserAvatar,
     updateUserData,
+    setIsProfileFetched,
   } = useActions(profileActions);
+
+  const authId = useAppSelector(selectAuthId);
   const userId = useAppSelector(selectUserId);
   const name = useAppSelector(selectFullName);
+  const isProfileFetched = useAppSelector(selectIsProfileFetched);
   const aboutMe = useAppSelector(selectAboutMe);
   const largePhoto = useAppSelector(selectLargePhoto);
   const lookingForAJob = useAppSelector(selectIsLookingForAJob);
@@ -42,13 +54,20 @@ export const Profile = () => {
   const { contacts } = useAppSelector(selectSocials);
 
   useEffect(() => {
-    getUserProfile(userId!);
-    getUserStatus(userId!);
-  }, []);
+    if (paramId) {
+      getUserProfile(+paramId);
+      getUserStatus(+paramId);
+    } else {
+      getUserProfile(authId!);
+      getUserStatus(authId!);
+    }
+  }, [paramId, authId, getUserStatus, getUserProfile]);
 
-  const [isEdit, setIsEdit] = useState(false);
-
-  const { register, handleSubmit } = useForm<IProfileFormData>();
+  useEffect(() => {
+    return () => {
+      setIsProfileFetched(false);
+    };
+  }, [setIsProfileFetched]);
 
   const updateUserStatusHandler = (localStatus: string) => updateUserStatus(localStatus);
 
@@ -60,14 +79,26 @@ export const Profile = () => {
   const changeFields = () => setIsEdit(true);
 
   const collectAllData = (data: IProfileFormData) => {
-    updateUserData({ data, userId: userId! });
+    updateUserData({ data, userId: authId! });
     setIsEdit(false);
   };
+
+  if (!isProfileFetched) {
+    return (
+      <div className={c.center}>
+        <div className={c.loader} />
+      </div>
+    );
+  }
 
   return (
     <div className={s.wrapper}>
       <form className={s.profile} onSubmit={handleSubmit(collectAllData)}>
-        <ProfileAvatar photo={largePhoto!} callback={selectFile} />
+        <ProfileAvatar
+          isMyPage={userId === authId}
+          photo={largePhoto!}
+          callback={selectFile}
+        />
         {isEdit ? (
           <TextField
             sx={{ display: 'block' }}
@@ -109,7 +140,12 @@ export const Profile = () => {
           )}
         </div>
         <div className={s.status}>
-          <EditableSpan status={status} callback={updateUserStatusHandler} />
+          <span>Status: </span>
+          <EditableSpan
+            isMyPage={userId !== authId}
+            status={status}
+            callback={updateUserStatusHandler}
+          />
         </div>
         {isEdit && (
           <div className={s.checkbox}>
@@ -131,6 +167,7 @@ export const Profile = () => {
           callback={changeFields}
           register={register}
           isEdit={isEdit}
+          isDisabled={userId !== authId}
           contacts={contacts}
         />
       </form>

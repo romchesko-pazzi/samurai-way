@@ -4,8 +4,11 @@ import Textarea from '@mui/joy/Textarea';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useActions } from '../../../../hooks/useActions';
+import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { ButtonComponent } from '../../../../ui/button';
+import { selectAuthId } from '../../../auth';
 import { profileActions } from '../../index';
+import { selectUserId } from '../../store/profileSelectors';
 
 import s from './myPosts.module.scss';
 
@@ -15,6 +18,8 @@ type FormInputs = {
 
 export const AddPostForm = () => {
   const { addPost } = useActions(profileActions);
+  const authId = useAppSelector(selectAuthId);
+  const userId = useAppSelector(selectUserId);
 
   const { handleSubmit, register, reset } = useForm<FormInputs>({ mode: 'onBlur' });
 
@@ -40,9 +45,10 @@ export const AddPostForm = () => {
             },
           })}
           minRows={2}
+          disabled={authId !== userId}
         />
         <div className={s.btn}>
-          <ButtonComponent title="add post" type="submit" disabled={false} />
+          <ButtonComponent title="add post" type="submit" disabled={authId !== userId} />
         </div>
       </div>
     </form>
