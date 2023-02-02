@@ -9,7 +9,6 @@ export const isStyleActive = ({ isActive }: any) => (isActive ? activeStyle : un
 
 export const headerItems: NavLinkType[] = [
   { path: path.profile, destination: 'Profile' },
-  { path: path.messages, destination: 'Messages' },
   { path: path.users, destination: 'Users' },
 ];
 type NavLinkType = {

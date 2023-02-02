@@ -1,4 +1,4 @@
-import { IPhotos } from '../profile';
+import { IPhotos } from '../../profile';
 
 export interface IUser {
   name: string;

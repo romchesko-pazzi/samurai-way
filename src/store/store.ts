@@ -7,13 +7,10 @@ import { authReducer } from '../modules/auth';
 import { profileReducer } from '../modules/profile';
 import { usersReducer } from '../modules/users/store/usersReducer';
 
-import { MessagesReducer } from './reducers/MessagesReducer';
-
 export type RootStateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
   profile: profileReducer,
-  messagePage: MessagesReducer,
   users: usersReducer,
   auth: authReducer,
   app: appReducer,

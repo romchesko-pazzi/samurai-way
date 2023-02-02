@@ -1,5 +1,5 @@
-import { initializeApp, setIsLoading } from './appReducer';
+import { initializeApp, setIsLoading } from './store/appReducer';
 
 export const appActions = { initializeApp, setIsLoading };
-export { appReducer } from './appReducer';
-export { selectIsInitialized } from './appSelectors';
+export { appReducer } from './store/appReducer';
+export { selectIsInitialized } from './store/appSelectors';

@@ -6,6 +6,7 @@ import {
   updateUserAvatar,
   addPost,
   setIsProfileFetched,
+  resetPosts,
 } from './store/profileReducer';
 
 export const profileActions = {
@@ -16,9 +17,10 @@ export const profileActions = {
   updateUserAvatar,
   addPost,
   setIsProfileFetched,
+  resetPosts,
 };
 
 export { profileReducer } from './store/profileReducer';
-export * from './interfaces';
+export * from './data/interfaces';
 
 export { Profile } from './Profile';

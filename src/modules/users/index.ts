@@ -7,7 +7,7 @@ import {
   setIsFriend,
 } from './store/usersReducer';
 
-export * from './interfaces';
+export * from './data/interfaces';
 
 export const usersActions = {
   getUsers,

@@ -2,18 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v1 } from 'uuid';
 
 import { profileAPI } from '../api/profileAPI';
-import { IProfileFormData, IProfileState, IProfileUpdateData } from '../interfaces';
+import { IProfileFormData, IProfileState, IProfileUpdateData } from '../data/interfaces';
+import { posts } from '../data/userPosts';
 
 const initialState: IProfileState = {
   newPostText: '',
   status: '',
   isProfileFetched: false,
-  posts: [
-    { id: v1(), message: 'MyPost1', likesCount: 10 },
-    { id: v1(), message: 'MyPost2', likesCount: 12 },
-    { id: v1(), message: 'MyPost3', likesCount: 16 },
-    { id: v1(), message: 'MyPost4', likesCount: 7 },
-  ],
+  posts,
   userProfile: {
     aboutMe: '',
     lookingForAJob: false,
@@ -150,6 +146,9 @@ const slice = createSlice({
     setIsProfileFetched: (state, action: PayloadAction<boolean>) => {
       state.isProfileFetched = action.payload;
     },
+    resetPosts: state => {
+      state.posts = posts;
+    },
   },
   extraReducers: builder => {
     builder
@@ -178,4 +177,4 @@ const slice = createSlice({
 });
 
 export const profileReducer = slice.reducer;
-export const { addPost, setIsProfileFetched } = slice.actions;
+export const { addPost, setIsProfileFetched, resetPosts } = slice.actions;

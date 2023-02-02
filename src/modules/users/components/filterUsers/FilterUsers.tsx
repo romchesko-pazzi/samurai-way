@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useActions } from '../../../../hooks/useActions';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
-import { selectIsLoading } from '../../../app/appSelectors';
+import { selectIsLoading } from '../../../app/store/appSelectors';
 import { usersActions } from '../../index';
 import { selectIsFriend } from '../../store/usersSelectors';
 

@@ -1,8 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 
-import { ActionTypeForApp } from '../store/hooks';
-import { RootStateType } from '../store/store';
+import { store } from '../store/store';
 
-export const useAppDispatch: () => ThunkDispatchType = useDispatch;
-export type ThunkDispatchType = ThunkDispatch<RootStateType, unknown, ActionTypeForApp>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;

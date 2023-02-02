@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootStateType } from '../../../store/store';
 import { appActions } from '../../app';
 import { usersAPI } from '../api/usersAPI';
-import { IUsersPage } from '../interfaces';
+import { IUsersPage } from '../data/interfaces';
 
 const initialState: IUsersPage = {
   users: [],

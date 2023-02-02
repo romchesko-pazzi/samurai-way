@@ -174,7 +174,7 @@
         ],
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-magic-numbers": [
-            "error",
+            "warn",
             {
                 "ignoreEnums": true,
                 "ignore": [0, 1, -1, 2]

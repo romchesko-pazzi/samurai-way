@@ -5,7 +5,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectIsLoading } from '../../modules/app/appSelectors';
+import { selectIsLoading } from '../../modules/app/store/appSelectors';
 import { authActions, selectEmail, selectIsAuth, selectLogin } from '../../modules/auth';
 import { ButtonComponent } from '../../ui/button';
 

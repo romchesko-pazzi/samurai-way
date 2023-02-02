@@ -26,7 +26,7 @@ import {
   selectUserId,
 } from './store/profileSelectors';
 
-import { profileActions, IProfileFormData } from './index';
+import { IProfileFormData, profileActions } from './index';
 
 export const Profile = () => {
   const { paramId } = useParams();

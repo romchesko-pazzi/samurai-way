@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { authAPI } from '../auth/api/authAPI';
+import { authAPI } from '../../auth/api/authAPI';
 
 const initialState = {
   isInitialized: false,

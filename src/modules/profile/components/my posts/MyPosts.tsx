@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useActions } from '../../../../hooks/useActions';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
+import { profileActions } from '../../index';
 import { selectFullName, selectPosts } from '../../store/profileSelectors';
 
 import { AddPostForm } from './AddPostForm';
@@ -9,6 +11,13 @@ import s from './myPosts.module.scss';
 export const MyPosts = () => {
   const { posts } = useAppSelector(selectPosts);
   const userName = useAppSelector(selectFullName);
+  const { resetPosts } = useActions(profileActions);
+
+  useEffect(() => {
+    return () => {
+      resetPosts();
+    };
+  }, [resetPosts]);
 
   return (
     <div className={s.main}>

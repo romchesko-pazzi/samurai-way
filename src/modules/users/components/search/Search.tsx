@@ -4,7 +4,7 @@ import { useActions } from '../../../../hooks/useActions';
 import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { useDebounce } from '../../../../hooks/useDebounce';
 import { SvgSelector } from '../../../../ui/svgSelector';
-import { selectIsLoading } from '../../../app/appSelectors';
+import { selectIsLoading } from '../../../app/store/appSelectors';
 import { usersActions } from '../../index';
 
 import s from './search.module.scss';
