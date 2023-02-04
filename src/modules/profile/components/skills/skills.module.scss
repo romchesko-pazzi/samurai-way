@@ -1,0 +1,9 @@
+.skills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & b {
+    margin-right: 1rem;
+  }
+}

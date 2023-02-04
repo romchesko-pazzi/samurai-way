@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import s from './wrapper.module.scss';
 
-export const Wrapper = ({ children, ...props }: propsType) => {
+export const Wrapper = ({ children, ...props }: IProps) => {
   const { heading } = props;
 
   return (
@@ -17,7 +17,7 @@ export const Wrapper = ({ children, ...props }: propsType) => {
   );
 };
 
-type propsType = {
+interface IProps {
   children: ReactNode;
   heading: string;
-};
+}

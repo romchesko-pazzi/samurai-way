@@ -1,12 +1,17 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
 
-import { SvgSelector } from '../../../../ui/svgSelector';
+import { selectStatus } from '../../store/profileSelectors';
 
 import s from './editableSpan.module.scss';
 
-export const EditableSpan: React.FC<PropsType> = ({ status, callback, isMyPage }) => {
+import { useAppSelector } from 'hooks/useAppSelector';
+import { SvgSelector } from 'ui/svgSelector';
+
+export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
+  const status = useAppSelector(selectStatus);
+
   const [field, setField] = useState<'span' | 'input'>('span');
   const [value, setValue] = useState(status);
 
@@ -51,10 +56,9 @@ export const EditableSpan: React.FC<PropsType> = ({ status, callback, isMyPage }
       )}
     </div>
   );
-};
+});
 
-type PropsType = {
+interface IProps {
   isMyPage: boolean;
-  status: string;
   callback: (name: string) => void;
-};
+}

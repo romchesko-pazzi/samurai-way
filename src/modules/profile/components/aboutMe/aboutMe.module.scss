@@ -1,0 +1,10 @@
+.aboutMe {
+  & textarea {
+    font-family: inherit;
+  }
+}
+
+.introduction {
+  min-width: 50rem;
+  margin: 0 auto;
+}

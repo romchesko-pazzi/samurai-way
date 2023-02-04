@@ -9,18 +9,21 @@ import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { path } from '../../data/paths';
-import { useActions } from '../../hooks/useActions';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { ButtonComponent } from '../../ui/button';
-import { Wrapper } from '../../ui/wrapper/Wrapper';
-
+import { rememberMe, testAuthData } from './data/constants';
 import s from './signIn.module.scss';
 import { selectIsAuth } from './store/authSelectors';
 import { LoginDataType } from './types';
 import { signInValidate } from './utils/validators';
 
 import { authActions } from './index';
+
+import { buttonTitle } from 'data/buttonTitle';
+import { path } from 'data/paths';
+import { wrapperHeading } from 'data/wrapperHeadings';
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { ButtonComponent } from 'ui/button';
+import { Wrapper } from 'ui/wrapper/Wrapper';
 
 export const SignIn = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -52,7 +55,7 @@ export const SignIn = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    <Wrapper heading="Sign in">
+    <Wrapper heading={wrapperHeading.signIn}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <TextField
           {...register('email')}
@@ -92,16 +95,14 @@ export const SignIn = () => {
             id="check"
             sx={{ '& .MuiSvgIcon-root': { fontSize: 25 } }}
           />
-          <label style={{ cursor: 'pointer' }} htmlFor="check">
-            Remember me
-          </label>
+          <label htmlFor="check">{rememberMe}</label>
         </div>
         <div className={s.button}>
-          <ButtonComponent disabled={false} type="submit" title="Sign in" />
+          <ButtonComponent type="submit" title={buttonTitle.signIn} />
         </div>
         <div className={s.test}>
-          <div>Email: free@samuraijs.com</div>
-          <div>Password: free</div>
+          <div>{testAuthData.email}</div>
+          <div>{testAuthData.password}</div>
         </div>
       </form>
     </Wrapper>

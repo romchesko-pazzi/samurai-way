@@ -29,5 +29,5 @@ type ButtonPropsType = {
   title: string;
   color?: string;
   callback?: () => void;
-  disabled: boolean;
+  disabled?: boolean;
 };

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 
-import { useActions } from '../../../../hooks/useActions';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { profileActions } from '../../index';
 import { selectFullName, selectPosts } from '../../store/profileSelectors';
 
 import { AddPostForm } from './AddPostForm';
 import s from './myPosts.module.scss';
+
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
 
 export const MyPosts = () => {
   const { posts } = useAppSelector(selectPosts);

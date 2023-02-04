@@ -3,14 +3,15 @@ import React from 'react';
 import Textarea from '@mui/joy/Textarea';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useActions } from '../../../../hooks/useActions';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
-import { ButtonComponent } from '../../../../ui/button';
-import { selectAuthId } from '../../../auth';
 import { profileActions } from '../../index';
 import { selectUserId } from '../../store/profileSelectors';
 
 import s from './myPosts.module.scss';
+
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { selectAuthId } from 'modules/auth';
+import { ButtonComponent } from 'ui/button';
 
 type FormInputs = {
   newPostText: string;

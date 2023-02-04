@@ -1,78 +1,78 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Button, TextField } from '@mui/material';
 
-import { ButtonComponent } from '../../../../ui/button';
-import { IContacts } from '../../index';
+import { selectSocials } from '../../store/profileSelectors';
 
 import s from './contacts.module.scss';
 
-export const Contacts: React.FC<ContactsPropsType> = ({
-  callback,
-  contacts,
-  isEdit,
-  register,
-  isDisabled,
-}) => {
-  return (
-    <div className={s.contacts}>
-      <div className={s.contactsHeader}>
-        <h3>Contacts</h3>
-        {isEdit ? (
-          <ButtonComponent type="submit" title="save" disabled={false} />
-        ) : (
-          <Button
-            sx={[
-              { backgroundColor: '#366EFF' },
-              { '&:hover': { backgroundColor: '#366EFF' } },
-            ]}
-            onClick={callback}
-            className={s.editButton}
-            type="button"
-            variant="contained"
-            disabled={isDisabled}
-          >
-            edit
-          </Button>
-        )}
-      </div>
-      {Object.keys(contacts).map(key => (
-        <div key={key}>
+import { buttonTitle } from 'data/buttonTitle';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { ButtonComponent } from 'ui/button';
+
+export const Contacts = memo(
+  ({ callback, isEdit, register, isDisabled }: IContactsProps) => {
+    const { contacts } = useAppSelector(selectSocials);
+
+    return (
+      <div className={s.contacts}>
+        <div className={s.contactsHeader}>
+          <h3>Contacts</h3>
           {isEdit ? (
-            <div className={s.spanAndInput}>
-              <span>{key}: </span>
-              <TextField
-                sx={{ flex: 1 }}
-                InputProps={{ className: s.input }}
-                variant="standard"
-                {...register(key as keyof typeof contacts, {
-                  value: contacts[key as keyof typeof contacts],
-                })}
-                type="text"
-              />
-            </div>
+            <ButtonComponent type="submit" title={buttonTitle.save} disabled={false} />
           ) : (
-            <>
-              <span>{key}: </span>
-              <a
-                href={contacts[key as keyof typeof contacts]}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {contacts[key as keyof typeof contacts]}
-              </a>
-            </>
+            <Button
+              sx={[
+                { backgroundColor: '#366EFF' },
+                { '&:hover': { backgroundColor: '#366EFF' } },
+              ]}
+              onClick={callback}
+              className={s.editButton}
+              type="button"
+              variant="contained"
+              disabled={isDisabled}
+            >
+              edit
+            </Button>
           )}
         </div>
-      ))}
-    </div>
-  );
-};
+        {Object.keys(contacts).map(key => (
+          <div key={key}>
+            {isEdit ? (
+              <div className={s.spanAndInput}>
+                <span>{key}: </span>
+                <TextField
+                  sx={{ flex: 1 }}
+                  InputProps={{ className: s.input }}
+                  variant="standard"
+                  {...register(key as keyof typeof contacts, {
+                    value: contacts[key as keyof typeof contacts],
+                  })}
+                  type="text"
+                />
+              </div>
+            ) : (
+              <>
+                <span>{key}: </span>
+                <a
+                  href={contacts[key as keyof typeof contacts]}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {contacts[key as keyof typeof contacts]}
+                </a>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  },
+);
 
-type ContactsPropsType = {
-  isEdit: boolean;
-  contacts: IContacts;
-  register: any;
+interface IContactsProps {
   callback: () => void;
+  isEdit: boolean;
+  register: any;
   isDisabled: boolean;
-};
+}

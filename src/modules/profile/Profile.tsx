@@ -1,57 +1,38 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import c from '../../assets/commonStyles/commonStyles.module.scss';
-import { useActions } from '../../hooks/useActions';
-import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectAuthId } from '../auth';
 
+import { AboutMe } from './components/aboutMe/AboutMe';
 import { Contacts } from './components/contacts';
-import { EditableSpan } from './components/editableSpan/EditableSpan';
-import { MyPosts } from './components/my posts';
+import { JobSearching } from './components/jobSearching/JobSearching';
+import { MyPosts } from './components/myPosts';
+import { ProfileAvatar } from './components/profileAvatar/ProfileAvatar';
+import { Skills } from './components/skills/Skills';
+import { Status } from './components/status/Status';
+import { UserName } from './components/userName/UserName';
 import s from './profile.module.scss';
-import { ProfileAvatar } from './profileAvatar/ProfileAvatar';
-import {
-  selectAboutMe,
-  selectFullName,
-  selectIsLookingForAJob,
-  selectIsProfileFetched,
-  selectLargePhoto,
-  selectLookingForAJobDescription,
-  selectSocials,
-  selectStatus,
-  selectUserId,
-} from './store/profileSelectors';
+import { selectIsProfileFetched, selectUserId } from './store/profileSelectors';
 
 import { IProfileFormData, profileActions } from './index';
 
+import c from 'assets/commonStyles/commonStyles.module.scss';
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+
 export const Profile = () => {
+  const [isEdit, setIsEdit] = useState(false);
   const { paramId } = useParams();
   const { register, handleSubmit } = useForm<IProfileFormData>();
-  const [isEdit, setIsEdit] = useState(false);
 
-  const {
-    getUserProfile,
-    updateUserStatus,
-    getUserStatus,
-    updateUserAvatar,
-    updateUserData,
-    setIsProfileFetched,
-  } = useActions(profileActions);
+  const { getUserProfile, getUserStatus, updateUserData, setIsProfileFetched } =
+    useActions(profileActions);
 
   const authId = useAppSelector(selectAuthId);
   const userId = useAppSelector(selectUserId);
-  const name = useAppSelector(selectFullName);
   const isProfileFetched = useAppSelector(selectIsProfileFetched);
-  const aboutMe = useAppSelector(selectAboutMe);
-  const largePhoto = useAppSelector(selectLargePhoto);
-  const lookingForAJob = useAppSelector(selectIsLookingForAJob);
-  const lookingForAJobDescription = useAppSelector(selectLookingForAJobDescription);
-  const status = useAppSelector(selectStatus);
-  const { contacts } = useAppSelector(selectSocials);
 
   useEffect(() => {
     if (paramId) {
@@ -69,19 +50,12 @@ export const Profile = () => {
     };
   }, [setIsProfileFetched]);
 
-  const updateUserStatusHandler = (localStatus: string) => updateUserStatus(localStatus);
-
-  const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    updateUserAvatar(e.target.files[0]);
-  };
-
-  const changeFields = () => setIsEdit(true);
-
   const collectAllData = (data: IProfileFormData) => {
     updateUserData({ data, userId: authId! });
     setIsEdit(false);
   };
+
+  const openEdit = () => setIsEdit(true);
 
   if (!isProfileFetched) {
     return (
@@ -94,81 +68,17 @@ export const Profile = () => {
   return (
     <div className={s.wrapper}>
       <form className={s.profile} onSubmit={handleSubmit(collectAllData)}>
-        <ProfileAvatar
-          isMyPage={userId === authId}
-          photo={largePhoto!}
-          callback={selectFile}
-        />
-        {isEdit ? (
-          <TextField
-            sx={{ display: 'block' }}
-            InputProps={{ className: s.input }}
-            variant="standard"
-            {...register('fullName', {
-              value: name,
-            })}
-            type="text"
-          />
-        ) : (
-          <div className={s.userName}>{name}</div>
-        )}
-        {isEdit ? (
-          <div className={s.aboutMe}>
-            <textarea
-              cols={72}
-              {...register('aboutMe', {
-                value: aboutMe,
-              })}
-            />
-          </div>
-        ) : (
-          <div className={s.introduction}>{aboutMe}</div>
-        )}
-        <div className={s.skills}>
-          <b>My skills:</b>
-          {isEdit ? (
-            <TextField
-              InputProps={{ className: s.input }}
-              variant="standard"
-              {...register('lookingForAJobDescription', {
-                value: lookingForAJobDescription,
-              })}
-              type="text"
-            />
-          ) : (
-            <div>{lookingForAJobDescription}</div>
-          )}
-        </div>
-        <div className={s.status}>
-          <span>Status: </span>
-          <EditableSpan
-            isMyPage={userId !== authId}
-            status={status}
-            callback={updateUserStatusHandler}
-          />
-        </div>
-        {isEdit && (
-          <div className={s.checkbox}>
-            <label>
-              Are you looking for a job?
-              <input
-                type="checkbox"
-                {...register('lookingForAJob', { value: lookingForAJob })}
-              />
-            </label>
-          </div>
-        )}
-        {lookingForAJob ? (
-          <div>I am looking for a job</div>
-        ) : (
-          <div>I am not looking for a job</div>
-        )}
+        <ProfileAvatar isMyPage={userId === authId} />
+        <UserName isEdit={isEdit} register={register} />
+        <AboutMe isEdit={isEdit} register={register} />
+        <Skills isEdit={isEdit} register={register} />
+        <Status userId={userId!} authId={authId!} />
+        <JobSearching isEdit={isEdit} register={register} />
         <Contacts
-          callback={changeFields}
-          register={register}
+          callback={openEdit}
           isEdit={isEdit}
+          register={register}
           isDisabled={userId !== authId}
-          contacts={contacts}
         />
       </form>
       <MyPosts />

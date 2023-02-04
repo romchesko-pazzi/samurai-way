@@ -1,44 +1,49 @@
-@import "/src/assets/sass/abstracts/vars";
-@import "/src/assets/sass/abstracts/mixins";
+@import "src/assets/sass/abstracts/vars";
+@import "src/assets/sass/abstracts/mixins";
 
 .form {
-    @include formDirection;
-    font-size: 1.8rem;
+  @include formDirection;
+  font-size: 1.8rem;
 }
 
 .input {
-    @include setTextField;
+  @include setTextField;
 
-    & svg {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
+  & svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 .checkbox {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+
+  & label {
+    cursor: pointer;
+  }
 }
 
 .button {
-    display: flex;
-    & > button {
-        flex: 1;
-    }
+  display: flex;
+
+  & > button {
+    flex: 1;
+  }
 }
 
 .text {
-    text-align: center;
+  text-align: center;
 }
 
 .link {
-    color: $color-blue-main;
+  color: $color-blue-main;
 }
 
 .test {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.4rem;
-    color: $color-gray-darkest;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.4rem;
+  color: $color-gray-darkest;
 }
