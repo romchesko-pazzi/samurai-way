@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import { profileActions } from '../../index';
 import { selectFullName, selectPosts } from '../../store/profileSelectors';
@@ -9,8 +9,9 @@ import s from './myPosts.module.scss';
 import { useActions } from 'hooks/useActions';
 import { useAppSelector } from 'hooks/useAppSelector';
 
-export const MyPosts = () => {
-  const { posts } = useAppSelector(selectPosts);
+export const MyPosts = memo(() => {
+  const posts = useAppSelector(selectPosts);
+
   const userName = useAppSelector(selectFullName);
   const { resetPosts } = useActions(profileActions);
 
@@ -35,4 +36,4 @@ export const MyPosts = () => {
       </div>
     </div>
   );
-};
+});

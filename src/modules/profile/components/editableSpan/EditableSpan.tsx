@@ -2,7 +2,7 @@ import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
 
-import { selectStatus } from '../../store/profileSelectors';
+import { selectError, selectStatus } from '../../store/profileSelectors';
 
 import s from './editableSpan.module.scss';
 
@@ -11,7 +11,7 @@ import { SvgSelector } from 'ui/svgSelector';
 
 export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
   const status = useAppSelector(selectStatus);
-
+  const error = useAppSelector(selectError);
   const [field, setField] = useState<'span' | 'input'>('span');
   const [value, setValue] = useState(status);
 
@@ -24,8 +24,8 @@ export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
   };
 
   const onBlurHandler = () => {
-    setField('span');
     callback(value);
+    setField('span');
   };
 
   const onChangeHandler = (
@@ -39,9 +39,11 @@ export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
       {field === 'span' ? (
         <div className={s.spanBox}>
           <span>{value}</span>
-          <button disabled={isMyPage} type="button" onClick={onClickHandler}>
-            <SvgSelector id="edit" />
-          </button>
+          {isMyPage && (
+            <button type="button" onClick={onClickHandler}>
+              <SvgSelector id="edit" />
+            </button>
+          )}
         </div>
       ) : (
         <TextField
@@ -52,6 +54,8 @@ export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
           onChange={onChangeHandler}
           value={value}
           type="text"
+          error={!!error}
+          helperText={error && 'Max length is 300'}
         />
       )}
     </div>

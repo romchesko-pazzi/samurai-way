@@ -1,15 +1,16 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 
-import { useActions } from '../../../../hooks/useActions';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
-import { useDebounce } from '../../../../hooks/useDebounce';
-import { SvgSelector } from '../../../../ui/svgSelector';
-import { selectIsLoading } from '../../../app/store/appSelectors';
 import { usersActions } from '../../index';
 
 import s from './search.module.scss';
 
-export const Search = () => {
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { useDebounce } from 'hooks/useDebounce';
+import { selectIsLoading } from 'modules/app/store/appSelectors';
+import { SvgSelector } from 'ui/svgSelector';
+
+export const Search = memo(() => {
   const [value, setValue] = useState<string>('');
   const isLoading = useAppSelector(selectIsLoading);
   const debouncedValue = useDebounce(value);
@@ -45,4 +46,4 @@ export const Search = () => {
       </div>
     </div>
   );
-};
+});

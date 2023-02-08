@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { LinearProgress } from '@mui/material';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
-import { useActions } from '../../hooks/useActions';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectIsLoading } from '../../modules/app/store/appSelectors';
-import { authActions, selectEmail, selectIsAuth, selectLogin } from '../../modules/auth';
-import { ButtonComponent } from '../../ui/button';
-
 import s from './header.module.scss';
 import { headerItems, isStyleActive } from './utils';
+
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { selectIsLoading } from 'modules/app/store/appSelectors';
+import { authActions, selectEmail, selectIsAuth, selectLogin } from 'modules/auth';
+import { ButtonComponent } from 'ui/button';
 
 export const Header = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -25,7 +25,7 @@ export const Header = () => {
     }
   }, [isAuth, navigate]);
   const { logout } = useActions(authActions);
-  const logoutHandler = () => logout();
+  const logoutHandler = useCallback(() => logout(), [logout]);
 
   return (
     <>

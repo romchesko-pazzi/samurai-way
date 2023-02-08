@@ -11,29 +11,36 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { ButtonComponent } from 'ui/button';
 
 export const Contacts = memo(
-  ({ callback, isEdit, register, isDisabled }: IContactsProps) => {
-    const { contacts } = useAppSelector(selectSocials);
+  ({ callback, isEdit, register, isMyPage }: IContactsProps) => {
+    const contacts = useAppSelector(selectSocials);
 
     return (
       <div className={s.contacts}>
         <div className={s.contactsHeader}>
           <h3>Contacts</h3>
-          {isEdit ? (
-            <ButtonComponent type="submit" title={buttonTitle.save} disabled={false} />
-          ) : (
-            <Button
-              sx={[
-                { backgroundColor: '#366EFF' },
-                { '&:hover': { backgroundColor: '#366EFF' } },
-              ]}
-              onClick={callback}
-              className={s.editButton}
-              type="button"
-              variant="contained"
-              disabled={isDisabled}
-            >
-              edit
-            </Button>
+          {isMyPage && (
+            <div>
+              {isEdit ? (
+                <ButtonComponent
+                  type="submit"
+                  title={buttonTitle.save}
+                  disabled={false}
+                />
+              ) : (
+                <Button
+                  sx={[
+                    { backgroundColor: '#366EFF' },
+                    { '&:hover': { backgroundColor: '#366EFF' } },
+                  ]}
+                  onClick={callback}
+                  className={s.editButton}
+                  type="button"
+                  variant="contained"
+                >
+                  edit
+                </Button>
+              )}
+            </div>
           )}
         </div>
         {Object.keys(contacts).map(key => (
@@ -74,5 +81,5 @@ interface IContactsProps {
   callback: () => void;
   isEdit: boolean;
   register: any;
-  isDisabled: boolean;
+  isMyPage: boolean;
 }
