@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { minPasswordLength } from '../../../data/commonNums';
+import { minPasswordLength } from 'data/commonNums';
 
 const emailValidation = yup
   .string()

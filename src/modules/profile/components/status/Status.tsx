@@ -19,7 +19,7 @@ export const Status = memo(({ authId, userId }: IProps) => {
   return (
     <div className={s.status}>
       <span>{status}</span>
-      <EditableSpan isMyPage={userId !== authId} callback={updateUserStatusHandler} />
+      <EditableSpan isMyPage={userId === authId} callback={updateUserStatusHandler} />
     </div>
   );
 });

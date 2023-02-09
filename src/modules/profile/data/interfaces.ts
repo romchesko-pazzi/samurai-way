@@ -20,7 +20,7 @@ export interface IProfileFormData extends IProfileCommon, IContacts {
   aboutMe: string;
 }
 
-export interface IPhotos {
+export interface IPhotosFields {
   small: string | null;
   large: string | null;
 }
@@ -28,7 +28,7 @@ export interface IPhotos {
 export interface IProfileResponse extends IProfileCommon {
   aboutMe: string;
   userId: number | null;
-  photos: IPhotos;
+  photos: IPhotosFields;
 }
 
 export interface IProfileUpdateData extends IProfileCommon {
@@ -36,15 +36,11 @@ export interface IProfileUpdateData extends IProfileCommon {
   AboutMe: string;
 }
 
-export interface IUpdateUserAvatar {
+export interface IResponseCommon<T = {}> {
   resultCode: number;
   messages: string[];
-  data: {
-    photos: {
-      small: string;
-      large: string;
-    };
-  };
+  data: T;
+  fieldsError: string[];
 }
 
 export interface IPosts {
@@ -59,4 +55,9 @@ export interface IProfileState {
   userProfile: IProfileResponse;
   status: string;
   isProfileFetched: boolean;
+  error: string | null;
+}
+
+export interface IPhotos {
+  photos: IPhotosFields;
 }

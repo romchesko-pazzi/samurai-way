@@ -1,36 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 import { v1 } from 'uuid';
 
 import { profileAPI } from '../api/profileAPI';
 import { IProfileFormData, IProfileState, IProfileUpdateData } from '../data/interfaces';
 import { posts } from '../data/userPosts';
+import { userProfile } from '../data/userProfile';
 
 const initialState: IProfileState = {
   newPostText: '',
   status: '',
   isProfileFetched: false,
+  error: null,
   posts,
-  userProfile: {
-    aboutMe: '',
-    lookingForAJob: false,
-    lookingForAJobDescription: '',
-    fullName: '',
-    userId: null,
-    photos: {
-      small: '',
-      large: '',
-    },
-    contacts: {
-      facebook: '',
-      website: '',
-      twitter: '',
-      instagram: '',
-      youtube: '',
-      github: '',
-      mainLink: '',
-      vk: '',
-    },
-  },
+  userProfile,
 };
 
 export const getUserProfile = createAsyncThunk(
@@ -66,6 +49,8 @@ export const updateUserStatus = createAsyncThunk(
       const response = await profileAPI.updateStatus(status);
 
       if (response.data.resultCode === 0) return status;
+
+      return rejectWithValue(response.data.messages[0]);
     } catch (err: any) {
       return rejectWithValue('some error occurred');
     }
@@ -74,22 +59,29 @@ export const updateUserStatus = createAsyncThunk(
 
 export const updateUserAvatar = createAsyncThunk(
   'profile/updateUserAvatar',
-  async (photo: File, { rejectWithValue }) => {
+  async (photo: File, { dispatch, rejectWithValue }) => {
     try {
       const response = await profileAPI.updateUserAvatar(photo);
 
       if (response.data.resultCode === 0) return { photos: response.data.data.photos };
 
-      return rejectWithValue('some error occurred');
-    } catch (err: any) {
-      return rejectWithValue('some error occurred');
+      return rejectWithValue(response.data.messages[0]);
+    } catch (err) {
+      const error = err as Error | AxiosError;
+
+      return rejectWithValue(error.message);
+    } finally {
+      dispatch(resetError());
     }
   },
 );
 
 export const updateUserData = createAsyncThunk(
   'profile/updateUserData',
-  async (params: { data: IProfileFormData; userId: number }, { rejectWithValue }) => {
+  async (
+    params: { data: IProfileFormData; userId: number },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       const {
         youtube,
@@ -127,9 +119,13 @@ export const updateUserData = createAsyncThunk(
 
       if (response.data.resultCode === 0) return model;
 
-      return rejectWithValue('error');
-    } catch (err: any) {
-      return rejectWithValue('error');
+      return rejectWithValue(response.data.messages[0]);
+    } catch (err) {
+      const error = err as Error | AxiosError;
+
+      return rejectWithValue(error.message);
+    } finally {
+      dispatch(resetError());
     }
   },
 );
@@ -149,6 +145,9 @@ const slice = createSlice({
     resetPosts: state => {
       state.posts = posts;
     },
+    resetError: state => {
+      state.error = null;
+    },
   },
   extraReducers: builder => {
     builder
@@ -160,10 +159,16 @@ const slice = createSlice({
         state.status = action.payload;
       })
       .addCase(updateUserStatus.fulfilled, (state, action) => {
-        state.status = action.payload!;
+        state.status = action.payload;
+      })
+      .addCase(updateUserStatus.rejected, (state, action) => {
+        state.error = action.payload as string;
       })
       .addCase(updateUserAvatar.fulfilled, (state, action) => {
         state.userProfile.photos = action.payload.photos;
+      })
+      .addCase(updateUserAvatar.rejected, (state, action) => {
+        state.error = action.payload as string;
       })
       .addCase(updateUserData.fulfilled, (state, action) => {
         state.userProfile.aboutMe = action.payload.AboutMe;
@@ -172,9 +177,12 @@ const slice = createSlice({
           action.payload.lookingForAJobDescription;
         state.userProfile.lookingForAJob = action.payload.lookingForAJob;
         state.userProfile.contacts = action.payload.contacts;
+      })
+      .addCase(updateUserData.rejected, (state, action) => {
+        state.error = action.payload as string;
       });
   },
 });
 
 export const profileReducer = slice.reducer;
-export const { addPost, setIsProfileFetched, resetPosts } = slice.actions;
+export const { addPost, setIsProfileFetched, resetPosts, resetError } = slice.actions;

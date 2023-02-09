@@ -1,11 +1,11 @@
-import { IPhotos } from '../../profile';
+import { IPhotosFields } from '../../profile';
 
 export interface IUser {
   name: string;
   id: number;
   uniqueUrlName: null | string;
   status: null | string;
-  photos: IPhotos;
+  photos: IPhotosFields;
   followed: boolean;
 }
 

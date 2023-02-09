@@ -3,16 +3,17 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import common from '../../assets/commonStyles/commonStyles.module.scss';
-import { Header } from '../../components/header';
-import { path } from '../../data/paths';
-import { useActions } from '../../hooks/useActions';
-import { useAppSelector } from '../../hooks/useAppSelector';
 import { SignIn } from '../auth';
 import { NotFound } from '../notFound';
 import { Profile } from '../profile';
 import { Users } from '../users';
 
 import { appActions, selectIsInitialized } from './index';
+
+import { Header } from 'components/header';
+import { path } from 'data/paths';
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
 
 export const App = () => {
   const { initializeApp } = useActions(appActions);

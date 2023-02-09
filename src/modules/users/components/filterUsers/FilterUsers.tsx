@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { useActions } from '../../../../hooks/useActions';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
-import { selectIsLoading } from '../../../app/store/appSelectors';
 import { usersActions } from '../../index';
 import { selectIsFriend } from '../../store/usersSelectors';
 
 import s from './filterUsers.module.scss';
+
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { selectIsLoading } from 'modules/app/store/appSelectors';
 
 export const FilterUsers = () => {
   const isLoading = useAppSelector(selectIsLoading);

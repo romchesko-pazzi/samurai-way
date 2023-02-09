@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
@@ -14,25 +15,43 @@ import { Skills } from './components/skills/Skills';
 import { Status } from './components/status/Status';
 import { UserName } from './components/userName/UserName';
 import s from './profile.module.scss';
-import { selectIsProfileFetched, selectUserId } from './store/profileSelectors';
+import {
+  selectError,
+  selectIsProfileFetched,
+  selectUserId,
+} from './store/profileSelectors';
+import { websiteValidate } from './utils/validators';
 
 import { IProfileFormData, profileActions } from './index';
 
 import c from 'assets/commonStyles/commonStyles.module.scss';
+import { ErrorBar } from 'components/errorBar/ErrorBar';
 import { useActions } from 'hooks/useActions';
 import { useAppSelector } from 'hooks/useAppSelector';
 
 export const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
   const { paramId } = useParams();
-  const { register, handleSubmit } = useForm<IProfileFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IProfileFormData>({
+    resolver: yupResolver(websiteValidate),
+  });
 
-  const { getUserProfile, getUserStatus, updateUserData, setIsProfileFetched } =
-    useActions(profileActions);
+  const {
+    getUserProfile,
+    getUserStatus,
+    updateUserData,
+    setIsProfileFetched,
+    resetError,
+  } = useActions(profileActions);
 
   const authId = useAppSelector(selectAuthId);
   const userId = useAppSelector(selectUserId);
   const isProfileFetched = useAppSelector(selectIsProfileFetched);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     if (paramId) {
@@ -52,7 +71,7 @@ export const Profile = () => {
 
   const collectAllData = (data: IProfileFormData) => {
     updateUserData({ data, userId: authId! });
-    setIsEdit(false);
+    if (!error) setIsEdit(false);
   };
 
   const openEdit = () => setIsEdit(true);
@@ -78,10 +97,12 @@ export const Profile = () => {
           callback={openEdit}
           isEdit={isEdit}
           register={register}
-          isDisabled={userId !== authId}
+          isMyPage={userId === authId}
+          errorsForm={errors}
         />
       </form>
       <MyPosts />
+      <ErrorBar callback={resetError} error={error} />
     </div>
   );
 };

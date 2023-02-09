@@ -7,6 +7,7 @@ import {
   addPost,
   setIsProfileFetched,
   resetPosts,
+  resetError,
 } from './store/profileReducer';
 
 export const profileActions = {
@@ -18,6 +19,7 @@ export const profileActions = {
   addPost,
   setIsProfileFetched,
   resetPosts,
+  resetError,
 };
 
 export { profileReducer } from './store/profileReducer';
