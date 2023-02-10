@@ -4,4 +4,6 @@ export const buttonTitle = {
   logout: 'Log out',
   addPost: 'Add post',
   save: 'Save',
+  friends: 'Friends',
+  allUsers: 'All users',
 };

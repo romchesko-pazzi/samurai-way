@@ -9,7 +9,7 @@ import s from './myPosts.module.scss';
 import { useActions } from 'hooks/useActions';
 import { useAppSelector } from 'hooks/useAppSelector';
 
-export const MyPosts = memo(() => {
+export const MyPosts = memo(({ isMyPage }: IPostsProps) => {
   const posts = useAppSelector(selectPosts);
 
   const userName = useAppSelector(selectFullName);
@@ -24,7 +24,7 @@ export const MyPosts = memo(() => {
   return (
     <div className={s.main}>
       <h3>My posts</h3>
-      <AddPostForm />
+      {isMyPage && <AddPostForm />}
       <div>
         {posts.map(post => (
           <div key={post.id} className={s.postBox}>
@@ -37,3 +37,7 @@ export const MyPosts = memo(() => {
     </div>
   );
 });
+
+interface IPostsProps {
+  isMyPage: boolean;
+}

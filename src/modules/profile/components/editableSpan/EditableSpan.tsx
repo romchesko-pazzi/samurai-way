@@ -2,18 +2,19 @@ import React, { ChangeEvent, memo, useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
 
-import { selectError, selectStatus } from '../../store/profileSelectors';
+import { selectStatus } from '../../store/profileSelectors';
 
 import s from './editableSpan.module.scss';
 
 import { useAppSelector } from 'hooks/useAppSelector';
+import { maxStatusLength, statusError } from 'modules/profile/data/constants';
 import { SvgSelector } from 'ui/svgSelector';
 
 export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
   const status = useAppSelector(selectStatus);
-  const error = useAppSelector(selectError);
   const [field, setField] = useState<'span' | 'input'>('span');
   const [value, setValue] = useState(status);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     setValue(status);
@@ -24,8 +25,14 @@ export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
   };
 
   const onBlurHandler = () => {
+    if (value.length >= maxStatusLength) {
+      setError(statusError);
+
+      return;
+    }
     callback(value);
     setField('span');
+    setError('');
   };
 
   const onChangeHandler = (
@@ -48,6 +55,7 @@ export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
       ) : (
         <TextField
           InputProps={{ className: s.input }}
+          InputLabelProps={{ className: s.input }}
           onBlur={onBlurHandler}
           autoFocus
           variant="standard"
@@ -55,7 +63,7 @@ export const EditableSpan = memo(({ callback, isMyPage }: IProps) => {
           value={value}
           type="text"
           error={!!error}
-          helperText={error && 'Max length is 300'}
+          label={error}
         />
       )}
     </div>

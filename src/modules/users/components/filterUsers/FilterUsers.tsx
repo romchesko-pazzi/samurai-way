@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { usersActions } from '../../index';
 import { selectIsFriend } from '../../store/usersSelectors';
 
 import s from './filterUsers.module.scss';
 
+import { buttonTitle } from 'data/buttonTitle';
 import { useActions } from 'hooks/useActions';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { selectIsLoading } from 'modules/app/store/appSelectors';
 
-export const FilterUsers = () => {
+export const FilterUsers = memo(() => {
   const isLoading = useAppSelector(selectIsLoading);
   const isFriend = useAppSelector(selectIsFriend);
   const { setIsFriend } = useActions(usersActions);
@@ -27,7 +28,7 @@ export const FilterUsers = () => {
           type="button"
           disabled={isLoading}
         >
-          Friends
+          {buttonTitle.friends}
         </button>
         <button
           onClick={getAllUsers}
@@ -35,9 +36,9 @@ export const FilterUsers = () => {
           type="button"
           disabled={isLoading}
         >
-          All users
+          {buttonTitle.allUsers}
         </button>
       </div>
     </div>
   );
-};
+});

@@ -2,14 +2,15 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { path } from '../../../../data/paths';
-import { useActions } from '../../../../hooks/useActions';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
-import { ButtonComponent } from '../../../../ui/button';
 import { usersActions } from '../../index';
 import { selectUsers } from '../../store/usersSelectors';
 
 import s from './user.module.scss';
+
+import { path } from 'data/paths';
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { ButtonComponent } from 'ui/button';
 
 export const User = () => {
   const users = useAppSelector(selectUsers);

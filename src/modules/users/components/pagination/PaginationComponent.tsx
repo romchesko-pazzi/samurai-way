@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import {
   FormControl,
@@ -8,8 +8,6 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
-import { useActions } from '../../../../hooks/useActions';
-import { useAppSelector } from '../../../../hooks/useAppSelector';
 import { usersActions } from '../../index';
 import {
   selectCount,
@@ -19,7 +17,15 @@ import {
 
 import s from './pagination.module.scss';
 
-export const PaginationComponent = () => {
+import { useActions } from 'hooks/useActions';
+import { useAppSelector } from 'hooks/useAppSelector';
+import {
+  usersPerPageMax,
+  usersPerPageMin,
+  usersPerPageText,
+} from 'modules/users/data/constants';
+
+export const PaginationComponent = memo(() => {
   const totalCount = useAppSelector(selectTotalCount);
   const count = useAppSelector(selectCount);
   const currentPage = useAppSelector(selectCurrentPage);
@@ -27,7 +33,6 @@ export const PaginationComponent = () => {
   const { setCurrentPage, setUsersPerPage } = useActions(usersActions);
 
   const limit = Math.ceil(totalCount / count);
-  // const dispatch = useAppDispatch();
   const perPageValue = count.toString();
 
   const changePage = (event: React.ChangeEvent<unknown>, currentPage: number) => {
@@ -51,15 +56,15 @@ export const PaginationComponent = () => {
             onChange={perPageHandler}
           >
             <MenuItem className={s.menuItem} value={4}>
-              4
+              {usersPerPageMin}
             </MenuItem>
             <MenuItem className={s.menuItem} value={8}>
-              8
+              {usersPerPageMax}
             </MenuItem>
           </Select>
         </FormControl>
-        <div>users per page</div>
+        <div>{usersPerPageText}</div>
       </div>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import { RootStateType } from '../../../store/store';
+import { RootStateType } from 'store/store';
 
 export const selectTotalCount = (state: RootStateType) => state.users.totalCount;
 export const selectCount = (state: RootStateType) => state.users.queryParams.count;

@@ -101,7 +101,7 @@ export const Profile = () => {
           errorsForm={errors}
         />
       </form>
-      <MyPosts />
+      <MyPosts isMyPage={userId === authId} />
       <ErrorBar callback={resetError} error={error} />
     </div>
   );
