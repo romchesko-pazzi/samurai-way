@@ -11,7 +11,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { ButtonComponent } from 'ui/button';
 
 export const Contacts = memo(
-  ({ callback, isEdit, register, isMyPage }: IContactsProps) => {
+  ({ callback, isEdit, register, isMyPage, errorsForm }: IContactsProps) => {
     const contacts = useAppSelector(selectSocials);
 
     return (
@@ -37,7 +37,7 @@ export const Contacts = memo(
                   type="button"
                   variant="contained"
                 >
-                  edit
+                  {buttonTitle.edit}
                 </Button>
               )}
             </div>
@@ -51,11 +51,14 @@ export const Contacts = memo(
                 <TextField
                   sx={{ flex: 1 }}
                   InputProps={{ className: s.input }}
+                  InputLabelProps={{ className: s.input }}
                   variant="standard"
                   {...register(key as keyof typeof contacts, {
                     value: contacts[key as keyof typeof contacts],
                   })}
                   type="text"
+                  error={!!errorsForm[key]?.message}
+                  label={errorsForm[key]?.message}
                 />
               </div>
             ) : (
@@ -82,4 +85,5 @@ interface IContactsProps {
   isEdit: boolean;
   register: any;
   isMyPage: boolean;
+  errorsForm: any;
 }
