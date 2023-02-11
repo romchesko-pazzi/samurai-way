@@ -2,9 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { appActions } from '../../app';
 import { authAPI } from '../api/authAPI';
-import { AuthDataType, LoginDataType } from '../types';
 
-const initialState: AuthDataType = {
+import { IAuthData, ILoginData } from 'modules/auth/interfaces';
+
+const initialState: IAuthData = {
   id: null,
   email: '',
   login: '',
@@ -35,14 +36,12 @@ export const getAuthUserData = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (loginData: LoginDataType, { dispatch, rejectWithValue }) => {
+  async (loginData: ILoginData, { dispatch, rejectWithValue }) => {
     try {
       const response = await authAPI.login(loginData);
 
       if (response.data.resultCode !== 0) {
-        const error = response.data.messages[0];
-
-        return { error };
+        return rejectWithValue(response.data.messages[0]);
       }
       dispatch(getAuthUserData());
     } catch (err: any) {
@@ -67,7 +66,11 @@ export const logout = createAsyncThunk(
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    resetError: state => {
+      state.error = null;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAuthUserData.fulfilled, (state, action) => {
@@ -76,9 +79,13 @@ const slice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
       })
+      .addCase(login.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
       .addCase(initializeApp.fulfilled, (state, action) => {
         Object.assign(state, action.payload);
       }),
 });
 
 export const authReducer = slice.reducer;
+export const { resetError } = slice.actions;

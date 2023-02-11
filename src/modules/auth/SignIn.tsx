@@ -11,23 +11,25 @@ import { useNavigate } from 'react-router-dom';
 
 import { rememberMe, testAuthData } from './data/constants';
 import s from './signIn.module.scss';
-import { selectIsAuth } from './store/authSelectors';
-import { LoginDataType } from './types';
+import { selectError, selectIsAuth } from './store/authSelectors';
 import { signInValidate } from './utils/validators';
 
 import { authActions } from './index';
 
+import { ErrorBar } from 'components/errorBar/ErrorBar';
 import { buttonTitle } from 'data/buttonTitle';
 import { path } from 'data/paths';
 import { wrapperHeading } from 'data/wrapperHeadings';
 import { useActions } from 'hooks/useActions';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { ILoginData } from 'modules/auth/interfaces';
 import { ButtonComponent } from 'ui/button';
 import { Wrapper } from 'ui/wrapper/Wrapper';
 
 export const SignIn = () => {
   const isAuth = useAppSelector(selectIsAuth);
-  const { login } = useActions(authActions);
+  const error = useAppSelector(selectError);
+  const { login, resetError } = useActions(authActions);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -42,12 +44,12 @@ export const SignIn = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<LoginDataType>({
+  } = useForm<ILoginData>({
     mode: 'onBlur',
     resolver: yupResolver(signInValidate),
   });
 
-  const onSubmit = (data: LoginDataType) => {
+  const onSubmit = (data: ILoginData) => {
     login(data);
     reset();
   };
@@ -105,6 +107,7 @@ export const SignIn = () => {
           <div>{testAuthData.password}</div>
         </div>
       </form>
+      <ErrorBar error={error} callback={resetError} />
     </Wrapper>
   );
 };

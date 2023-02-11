@@ -1,13 +1,13 @@
-export type AuthDataType = {
+export interface IAuthData {
   id: number | null;
   email: string;
   login: string;
   isAuth: boolean;
-  error: string;
-};
+  error: string | null;
+}
 
-export type LoginDataType = {
+export interface ILoginData {
   email: string;
   password: string;
   rememberMe: boolean;
-};
+}
